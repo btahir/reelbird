@@ -14,7 +14,7 @@ const faq = [
 ---
 <Alt
   seoTitle="Free, open-source Screen Studio alternative: Reelbird"
-  description="Auto-zoom on clicks, a smooth cursor and captions in a free, MIT-licensed Mac app, plus a share link the moment you stop. No subscription, no watermark."
+  description="Free, MIT-licensed Screen Studio alternative for Mac: auto-zoom, smooth cursor, captions and a share link when you stop. Plus OpenScreen, Recordly and Cap."
   path="/screen-studio-alternative/"
   og="screen-studio-alternative"
   title="A free, open-source Screen Studio alternative"
@@ -44,5 +44,19 @@ const faq = [
     "You care about the sound: auto level to −16 LUFS, voice enhance and ducking, all on your Mac.",
     "You want an open project format, plus a <a href=\"/docs/cli/\">command line</a> and <a href=\"/docs/mcp/\">MCP server</a> your tools and agents can drive.",
   ]}
+  others={{
+    id: "others",
+    heading: "Other free and open-source Screen Studio alternatives",
+    intro: "These open-source apps also plan zooms for you. Most export a file you host yourself; Cap's links come from a separate Instant mode. The <a href=\"/compare/\">full comparison</a> covers the paid tools too.",
+    columns: ["App", "Licence", "Platforms", "Auto-zoom", "Share links", "Who it suits"],
+    rows: [
+      ["Reelbird", "MIT", "macOS 15 or later", "Planned from clicks and typing; every zoom editable", "Copied the moment you stop, then updated in place after you edit", "A link first and the polish later, in a native Mac app"],
+      ["<a href=\"https://github.com/getopenscreen/openscreen\">OpenScreen</a>", "MIT", "macOS 13+, Windows, Linux", "Automatic or manual", "No. Export MP4 or GIF and host it yourself", "A free, signed, cross-platform editor with annotations and an AI editing assistant. Built on Electron"],
+      ["<a href=\"https://github.com/webadderallorg/Recordly\">Recordly</a>", "AGPL-3.0", "macOS 14+, Windows, Linux", "Suggested from cursor activity, plus manual zooms", "No. Export MP4 or GIF", "Cursor polish, styled frames and a webcam bubble on any desktop system"],
+      ["<a href=\"https://cap.so/\">Cap</a>", "AGPLv3, some parts MIT", "macOS, Windows (beta), Linux", "Yes, in Studio mode", "Yes, in Instant mode. The free plan is for personal use, with 5-minute links", "Instant links and Studio polish on Mac, Windows and Linux. Commercial use needs a paid licence"],
+      ["<a href=\"https://github.com/syi0808/screenize\">Screenize</a>", "Apache-2.0", "macOS", "Yes", "No. Export MP4, MOV (ProRes) or GIF", "Trying a native Mac editor. Development has been paused since 22 May 2026, and the app isn't notarised"],
+    ],
+    caption: `OpenScreen and Cap checked ${CHECKED_LABEL}; Recordly and Screenize checked 2 November 2026, from each project's own page.`,
+  }}
   faq={faq}
 />

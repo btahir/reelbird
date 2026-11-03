@@ -34,6 +34,12 @@ export const FAQ: Faq[] = [
     a: "macOS 15 or later to run it. To build it, the Command Line Tools for Xcode 26 or later (Swift 6.2 and the macOS 26 SDK), which install on macOS 15.6 and later. It's tested on Apple silicon; it compiles for Intel but hasn't been tested there. Some features need newer systems: SpeechAnalyzer captions need macOS 26 (macOS 15 uses on-device speech recognition), and titles and chapters need macOS 26 with Apple Intelligence.",
   },
   {
+    id: "internal-audio",
+    q: "Can Reelbird record internal (system) audio?",
+    a: "Yes. On macOS 15 and later, Reelbird records the sound your Mac plays together with your screen and microphone, through Apple's ScreenCaptureKit, so there's no virtual audio driver such as BlackHole to install. System audio is its own track, so you can lower or mute it after recording.",
+    html: `Yes. On macOS 15 and later, Reelbird records the sound your Mac plays together with your screen and microphone, through Apple's ScreenCaptureKit, so there's no virtual audio driver such as BlackHole to install. System audio is its own track, so you can lower or mute it after recording. Step by step: <a href="/guides/record-mac-screen-with-internal-audio/">record your Mac screen with internal audio</a>.`,
+  },
+  {
     id: "windows",
     q: "Does it work on Windows or Linux?",
     a: "No, and it isn't planned. Reelbird is built on Apple frameworks throughout.",

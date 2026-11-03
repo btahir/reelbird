@@ -45,5 +45,19 @@ const faq = [
     "You'd rather your videos sit in your own storage than someone else's. <a href=\"/privacy/\">No account, no telemetry</a>.",
     "You want Loom-style hosted links and view counts without per-seat pricing: <a href=\"/pricing/\">Reelbird Pro</a> is $5 a month, and the recorder stays free.",
   ]}
+  others={{
+    id: "others",
+    heading: "Other Loom alternatives for Mac",
+    intro: "If Reelbird isn't the fit, these are the other common choices on a Mac. Only Cap and Tella host a link for you; OBS and the recorder built into macOS save a file you send yourself.",
+    columns: ["App", "Price", "Free plan", "Platforms", "Share links"],
+    rows: [
+      ["Reelbird", "Free, MIT. Optional Reelbird Pro, $5 a month, hosts your links", "Everything, with no length limit", "macOS 15 or later", "Copied when you stop. Your own bucket, or Reelbird Pro"],
+      ["<a href=\"https://cap.so/pricing\">Cap</a>", "Desktop licence $29 a year or $58 once. Pro $12 per user a month, or $8.16 billed yearly", "Personal use only. Share links up to 5 minutes", "macOS, Windows (beta), Linux", "Yes, in Instant mode, hosted by Cap. Your own S3 bucket needs Pro"],
+      ["<a href=\"https://www.tella.com/pricing\">Tella</a>", "Pro $13 and Premium $19 per user a month, billed yearly", "No free plan listed", "Mac, Windows, Chrome", "Yes, hosted by Tella, with viewer analytics"],
+      ["<a href=\"https://obsproject.com/\">OBS Studio</a>", "Free, GPL-2.0", "Everything", "macOS, Windows, Linux", "No. It records to a file. Made for streaming as well as recording, with more settings to learn"],
+      ["<a href=\"https://support.apple.com/en-us/102618\">Screenshot app and QuickTime Player</a>", "Built into macOS", "Everything", "macOS", "No. Shift-Command-5 records to a file. The Screenshot app records system audio on macOS 27 and later"],
+    ],
+    caption: `Cap and Tella checked ${CHECKED_LABEL}; OBS Studio and Apple's recorder checked 2 November 2026, from their own pages.`,
+  }}
   faq={faq}
 />

@@ -24,8 +24,10 @@ interface Props {
   better: string[];
   ours: string[];
   faq: FaqItem[];
+  /** Optional: other apps searchers weigh against the rival, as a short table. Cells may hold links. */
+  others?: { id: string; heading: string; intro: string; columns: string[]; rows: string[][]; caption: string };
 }
-const { seoTitle, description, path, og, title, answer, verdict, rival, rows, better, ours, faq } = Astro.props;
+const { seoTitle, description, path, og, title, answer, verdict, rival, rows, better, ours, faq, others } = Astro.props;
 const r = byId(rival);
 const crumbs = [{ name: title, path }];
 const schema = [
@@ -69,6 +71,22 @@ const schema = [
     </div>
   </section>
 
+  {others && (
+    <section class="wrap block" aria-labelledby={others.id}>
+      <h2 id={others.id}>{others.heading}</h2>
+      <p class="intro" set:html={others.intro} />
+      <div class="table-wrap">
+        <table class="facts others">
+          <caption set:html={others.caption} />
+          <thead><tr>{others.columns.map((c) => <th scope="col">{c}</th>)}</tr></thead>
+          <tbody>
+            {others.rows.map(([name, ...cells]) => <tr><th scope="row" set:html={name} />{cells.map((c) => <td set:html={c} />)}</tr>)}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  )}
+
   <section class="wrap block" aria-labelledby="clip">
     <h2 id="clip">An auto-zoom export, as it comes out</h2>
     <ClipLoop />
@@ -105,6 +123,11 @@ const schema = [
   .facts td { width: 39%; color: var(--text-muted); }
   .facts td:first-of-type { color: var(--text); }
   .facts thead th { font-size: 1rem; color: var(--text); }
+  .intro { max-width: 44rem; margin-bottom: 1.5rem; color: var(--text-muted); }
+  .others { min-width: 44rem; }
+  .others th[scope="row"] { width: 16%; }
+  .others td { width: auto; }
+  .others td:first-of-type { color: var(--text-muted); }
   .verdict { margin-top: 1.75rem; max-width: 44rem; font-size: 1.0625rem; }
   .two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3rem; }
   .two h3 { font-family: var(--font-display); font-weight: 520; font-size: var(--step-2); letter-spacing: -0.01em; margin-bottom: 1.25rem; }
