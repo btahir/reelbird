@@ -3,7 +3,7 @@ title: "Troubleshooting"
 seoTitle: "Reelbird troubleshooting: permissions and fixes"
 description: "Screen Recording permission after a rebuild, Keychain prompts, keystrokes, captions and recovering a take after a crash."
 order: 6
-updated: "2026-10-27"
+updated: "2026-11-02"
 source: "README.md"
 ---
 

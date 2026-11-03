@@ -3,7 +3,7 @@ title: "MCP server for Claude Code, Codex and Cursor"
 seoTitle: "Reelbird MCP server: setup for Claude Code and Cursor"
 description: "Add the Reelbird MCP server to Claude Code, Codex or Cursor and let agents list screens, record, export and share."
 order: 5
-updated: "2026-10-27"
+updated: "2026-11-02"
 source: "README.md"
 ---
 

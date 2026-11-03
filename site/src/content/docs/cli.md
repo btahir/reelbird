@@ -3,7 +3,7 @@ title: "Command line"
 seoTitle: "Reelbird command-line tool reference"
 description: "Record, edit, export, caption and share from the terminal. Every command takes --json for scripts and agents."
 order: 4
-updated: "2026-10-27"
+updated: "2026-11-02"
 source: "README.md"
 ---
 
