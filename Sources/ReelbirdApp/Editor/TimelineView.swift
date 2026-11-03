@@ -101,6 +101,13 @@ struct TimelineContent: View {
     let scale: TimeScale
     /// The zoom selection a box selection adds to (shift held when it started).
     @ViewState private var marqueeBase: Set<String>?
+    /// The trim edge being dragged and where it was when grabbed, so it follows the pointer from the grab point.
+    @ViewState private var trimGrab: TrimGrab?
+
+    struct TrimGrab {
+        let leading: Bool
+        let from: Double
+    }
 
     private var videoTop: CGFloat { TimelineView.rulerHeight + 6 }
     private var audioTop: CGFloat { videoTop + TimelineView.videoHeight + TimelineView.laneGap }
@@ -127,12 +134,15 @@ struct TimelineContent: View {
             SpeedLane(model: model, scale: scale).offset(y: speedTop)
             OverlaysLane(model: model, scale: scale).offset(y: overlayTop)
             cutsOverlay
-            trimOverlay
+            trimDim
             splitMarks
             cameraMoveMarks
             markerFlags
             segmentSelection
             Playhead(model: model, scale: scale, height: lanesBottom + 6)
+            // Edge handles above the playhead, which often sits on an edge (at 0 when a recording opens).
+            trimHandles
+            partHandles
         }
         .coordinateSpace(name: "timeline")
     }
@@ -307,29 +317,41 @@ struct TimelineContent: View {
         }
     }
 
-    private var trimOverlay: some View {
-        let trim = model.timelineTrim ?? TimeRange(start: 0, end: model.duration)
-        return ZStack(alignment: .topLeading) {
-            // Dim what's trimmed away.
+    private var trim: TimeRange { model.timelineTrim ?? TimeRange(start: 0, end: model.duration) }
+
+    /// Dims what's trimmed away.
+    private var trimDim: some View {
+        ZStack(alignment: .topLeading) {
             Rectangle().fill(Theme.panel.opacity(0.72))
                 .frame(width: max(0, scale.x(trim.start) - scale.x(0)), height: lanesBottom - videoTop)
                 .offset(x: scale.x(0), y: videoTop)
-                .allowsHitTesting(false)
             Rectangle().fill(Theme.panel.opacity(0.72))
                 .frame(width: max(0, scale.x(model.duration) - scale.x(trim.end)), height: lanesBottom - videoTop)
                 .offset(x: scale.x(trim.end), y: videoTop)
-                .allowsHitTesting(false)
-            TrimHandle(leading: true)
-                .offset(x: scale.x(trim.start) - 6, y: videoTop)
-                .gesture(DragGesture(coordinateSpace: .named("timeline")).onChanged { v in
-                    model.setTrim(start: scale.t(v.location.x))
-                })
-            TrimHandle(leading: false)
-                .offset(x: scale.x(trim.end) - 6, y: videoTop)
-                .gesture(DragGesture(coordinateSpace: .named("timeline")).onChanged { v in
-                    model.setTrim(end: scale.t(v.location.x))
-                })
         }
+        .allowsHitTesting(false)
+    }
+
+    private var trimHandles: some View {
+        ZStack(alignment: .topLeading) {
+            trimHandle(leading: true)
+            trimHandle(leading: false)
+        }
+    }
+
+    private func trimHandle(leading: Bool) -> some View {
+        let edge = leading ? trim.start : trim.end
+        return TrimHandle(leading: leading, dragging: trimGrab?.leading == leading)
+            .offset(x: scale.x(edge) - TrimHandle.hitWidth / 2, y: videoTop)
+            .gesture(DragGesture(minimumDistance: 1, coordinateSpace: .named("timeline"))
+                .onChanged { v in
+                    let grab = trimGrab ?? TrimGrab(leading: leading, from: edge)
+                    if trimGrab == nil { trimGrab = grab }
+                    // Moved by the pointer's travel, not to the pointer, so the edge doesn't jump to where it was grabbed.
+                    let t = scale.t(scale.x(grab.from) + v.translation.width)
+                    if leading { model.setTrim(start: t) } else { model.setTrim(end: t) }
+                }
+                .onEnded { _ in trimGrab = nil })
     }
 
     private var splitMarks: some View {
@@ -392,24 +414,32 @@ struct TimelineContent: View {
         }
     }
 
+    private var shownPart: TimeRange? {
+        model.partTrim?.result.part ?? { if case .segment(let r) = model.selection { r } else { nil } }()
+    }
+
     @ViewBuilder private var segmentSelection: some View {
-        let shown: TimeRange? = model.partTrim?.result.part ?? { if case .segment(let r) = model.selection { r } else { nil } }()
         pendingCuts
-        if let r = shown {
+        if let r = shownPart {
             RoundedRectangle(cornerRadius: 7, style: .continuous)
                 .strokeBorder(Theme.accent, lineWidth: 2)
                 .background(RoundedRectangle(cornerRadius: 7).fill(Theme.accent.opacity(0.08)))
                 .frame(width: max(4, scale.x(r.end) - scale.x(r.start)), height: TimelineView.videoHeight)
                 .offset(x: scale.x(r.start), y: videoTop)
                 .allowsHitTesting(false)
+        }
+    }
+
+    @ViewBuilder private var partHandles: some View {
+        if let r = shownPart {
             partHandle(leading: true, at: scale.x(r.start))
             partHandle(leading: false, at: scale.x(r.end))
         }
     }
 
     private func partHandle(leading: Bool, at x: CGFloat) -> some View {
-        PartHandle(leading: leading)
-            .offset(x: leading ? x : x - PartHandle.width, y: videoTop)
+        PartHandle(leading: leading, dragging: model.partTrim?.leading == leading)
+            .offset(x: leading ? x - PartHandle.outside : x - PartHandle.hitWidth + PartHandle.outside, y: videoTop)
             .gesture(DragGesture(minimumDistance: 1, coordinateSpace: .named("timeline"))
                 .onChanged { v in
                     if model.partTrim == nil { model.beginPartTrim(leading: leading) }
@@ -476,36 +506,63 @@ struct CutChip: View {
     }
 }
 
-/// An edge handle of the selected part.
-struct PartHandle: View {
-    static let width: CGFloat = 9
-    let leading: Bool
-    @ViewState private var hovering = false
-    var body: some View {
-        UnevenRoundedRectangle(topLeadingRadius: leading ? 7 : 1, bottomLeadingRadius: leading ? 7 : 1,
-                               bottomTrailingRadius: leading ? 1 : 7, topTrailingRadius: leading ? 1 : 7, style: .continuous)
-            .fill(Theme.accent.opacity(hovering ? 1 : 0.9))
-            .overlay(Capsule().fill(Color.white.opacity(0.9)).frame(width: 2, height: 14))
-            .frame(width: Self.width, height: TimelineView.videoHeight)
-            .contentShape(Rectangle().inset(by: -4))
-            .onHover { inside in
-                hovering = inside
-                if inside { NSCursor.resizeLeftRight.push() } else { NSCursor.pop() }
-            }
+extension View {
+    /// The left-right resize pointer over a draggable edge. A pointer style is held by the view (and through a drag),
+    /// where `NSCursor.set()` on hover is undone by the next mouse move.
+    func edgeResizePointer(leading: Bool) -> some View {
+        pointerStyle(.frameResize(position: leading ? .leading : .trailing))
     }
 }
 
-struct TrimHandle: View {
+/// An edge handle of the selected part: a bar just inside the edge, grabbable a little either side of it.
+struct PartHandle: View {
+    static let width: CGFloat = 9
+    /// How far the grab area reaches past the edge, and past the bar into the part.
+    static let outside: CGFloat = 8
+    static let inside: CGFloat = 6
+    static var hitWidth: CGFloat { outside + width + inside }
     let leading: Bool
+    let dragging: Bool
     @ViewState private var hovering = false
+
     var body: some View {
+        let active = hovering || dragging
+        UnevenRoundedRectangle(topLeadingRadius: leading ? 7 : 1, bottomLeadingRadius: leading ? 7 : 1,
+                               bottomTrailingRadius: leading ? 1 : 7, topTrailingRadius: leading ? 1 : 7, style: .continuous)
+            .fill(Theme.accent.opacity(active ? 1 : 0.9))
+            .overlay(Capsule().fill(Color.white.opacity(active ? 1 : 0.9)).frame(width: 2, height: active ? 20 : 14))
+            .frame(width: active ? Self.width + 2 : Self.width, height: TimelineView.videoHeight)
+            .shadow(color: .black.opacity(active ? 0.22 : 0), radius: 2, y: 0.5)
+            .frame(width: Self.width + Self.inside, alignment: leading ? .leading : .trailing)
+            .padding(leading ? .leading : .trailing, Self.outside)
+            .contentShape(Rectangle())
+            .edgeResizePointer(leading: leading)
+            .onHover { hovering = $0 }
+            .animation(Theme.snappy, value: active)
+    }
+}
+
+/// A trim handle: a bar centred on the trim edge, grabbable a little either side of it.
+struct TrimHandle: View {
+    static let width: CGFloat = 12
+    static let hitWidth: CGFloat = 28
+    let leading: Bool
+    let dragging: Bool
+    @ViewState private var hovering = false
+
+    var body: some View {
+        let active = hovering || dragging
         UnevenRoundedRectangle(topLeadingRadius: leading ? 6 : 1, bottomLeadingRadius: leading ? 6 : 1,
                                bottomTrailingRadius: leading ? 1 : 6, topTrailingRadius: leading ? 1 : 6, style: .continuous)
-            .fill(Theme.ink.opacity(hovering ? 0.95 : 0.8))
-            .overlay(Capsule().fill(Theme.panel).frame(width: 2, height: 16))
-            .frame(width: 12, height: TimelineView.videoHeight)
-            .contentShape(Rectangle().inset(by: -4))
-            .onHover { h in hovering = h; (h ? NSCursor.resizeLeftRight : NSCursor.arrow).set() }
+            .fill(Theme.ink.opacity(active ? 0.95 : 0.8))
+            .overlay(Capsule().fill(Theme.panel).frame(width: 2, height: active ? 22 : 16))
+            .frame(width: active ? Self.width + 2 : Self.width, height: TimelineView.videoHeight)
+            .shadow(color: .black.opacity(active ? 0.22 : 0), radius: 2, y: 0.5)
+            .frame(width: Self.hitWidth)
+            .contentShape(Rectangle())
+            .edgeResizePointer(leading: leading)
+            .onHover { hovering = $0 }
+            .animation(Theme.snappy, value: active)
             .help(leading ? "Drag to trim the start" : "Drag to trim the end")
             .accessibilityLabel(leading ? "Trim start" : "Trim end")
     }
@@ -643,7 +700,7 @@ struct ZoomRegionView: View {
         Color.clear
             .frame(width: 7)
             .contentShape(Rectangle())
-            .onHover { h in (h ? NSCursor.resizeLeftRight : NSCursor.arrow).set() }
+            .edgeResizePointer(leading: leading)
             .gesture(DragGesture(minimumDistance: 1, coordinateSpace: .named("timeline"))
                 .onChanged { v in
                     let t = scale.t(v.location.x)
@@ -788,7 +845,7 @@ struct LayoutSegmentView: View {
         Color.clear
             .frame(width: 7)
             .contentShape(Rectangle())
-            .onHover { h in (h ? NSCursor.resizeLeftRight : NSCursor.arrow).set() }
+            .edgeResizePointer(leading: leading)
             .gesture(DragGesture(minimumDistance: 1, coordinateSpace: .named("timeline"))
                 .onChanged { v in
                     let t = scale.t(v.location.x)

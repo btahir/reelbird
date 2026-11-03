@@ -194,7 +194,7 @@ struct SpeedSegmentView: View {
         Color.clear
             .frame(width: 7)
             .contentShape(Rectangle())
-            .onHover { h in (h ? NSCursor.resizeLeftRight : NSCursor.arrow).set() }
+            .edgeResizePointer(leading: leading)
             .gesture(DragGesture(minimumDistance: 1, coordinateSpace: .named("timeline"))
                 .onChanged { v in
                     let t = scale.t(v.location.x)
