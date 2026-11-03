@@ -331,6 +331,12 @@ test("paying through the Pro link makes the account Pro; cancelling ends it", as
   // Checkout links the customer to the account → Pro.
   expect((await stripeEvent("checkout.session.completed", checkout("cus_carol", "sub_carol", { client_reference_id: ref, customer_details: { email: "carol@example.com" } }))).status).toBe(200);
   expect(await plan(carol.token)).toBe("pro");
+  // Stripe sends the buyer back to /account?welcome=pro&session_id=cs_… (the link's After payment redirect). That
+  // address must answer with the page, not a redirect: Tiffin's analytics credits the payment to the visit that
+  // comes back with the Checkout Session id, and only a page view that answers 2xx counts.
+  const back = await call("/account?welcome=pro&session_id=cs_live_a1b2c3d4", { cookie: carol.cookie });
+  expect(back.status).toBe(200);
+  expect(await back.text()).toContain("Welcome to Pro");
   expect((await call("/upgrade", { cookie: carol.cookie })).headers.get("location")).toBe("/account");
   expect(await (await call("/account", { cookie: carol.cookie })).text()).toContain("Manage billing");
   expect((await call("/billing", { cookie: carol.cookie })).headers.get("location")).toContain("billing.stripe.com/p/login/test_portal?prefilled_email=carol%40example.com");

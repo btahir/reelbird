@@ -3,7 +3,7 @@ import { Font } from "astro:assets";
 import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import { SITE_NAME, SITE_URL, UMAMI, abs } from "../config/site";
+import { SITE_NAME, SITE_URL, TIFFIN_ANALYTICS, UMAMI, abs } from "../config/site";
 import { breadcrumbs, graph, organization, website } from "../lib/jsonld";
 
 interface Props {
@@ -66,6 +66,25 @@ const ld = JSON.stringify(graph(...nodes)).replace(/</g, "\\u003c");
     <meta name="twitter:image" content={ogImage} />
     <script type="application/ld+json" set:html={ld} />
     {UMAMI.websiteId && <script is:inline defer src={UMAMI.script} data-website-id={UMAMI.websiteId} data-domains={new URL(SITE_URL).hostname} data-exclude-search="true"></script>}
+    {TIFFIN_ANALYTICS.script && (
+      <script is:inline define:vars={{ tiffinScript: TIFFIN_ANALYTICS.script, siteHost: new URL(SITE_URL).hostname }}>
+        // Tiffin's script on the site's own host only (like Umami's data-domains). Every data-umami-event click
+        // also goes to tiffin.track() under the same name; calls made before the script loads wait in tiffin.q.
+        if (location.hostname === siteHost) {
+          window.tiffin = window.tiffin || { q: [], track: function () { this.q.push(arguments); } };
+          const s = document.createElement("script");
+          s.src = tiffinScript;
+          document.head.append(s);
+          document.addEventListener("click", (e) => {
+            const el = e.target instanceof Element ? e.target.closest("[data-umami-event]") : null;
+            if (!el) return;
+            const props = {};
+            for (const a of el.attributes) if (a.name.startsWith("data-umami-event-")) props[a.name.slice(17)] = a.value;
+            window.tiffin.track(el.getAttribute("data-umami-event"), Object.keys(props).length ? props : undefined);
+          }, true);
+        }
+      </script>
+    )}
     <slot name="head" />
   </head>
   <body>

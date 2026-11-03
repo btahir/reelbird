@@ -96,3 +96,13 @@ export const UMAMI = {
   script: import.meta.env.PUBLIC_UMAMI_SCRIPT ?? "https://project-analytics.shiptiffin.app/script.js",
   websiteId: import.meta.env.PUBLIC_UMAMI_WEBSITE_ID ?? "",
 } as const;
+
+/**
+ * Analytics of the ShipTiffin box that hosts the site (cookieless, no storage). The box counts page views
+ * itself; this script sends it the clicks marked data-umami-event as well, under the same names.
+ * It loads on the site's own host only, so forks and local builds load nothing. Set PUBLIC_TIFFIN_SCRIPT=""
+ * at build time to leave it out.
+ */
+export const TIFFIN_ANALYTICS = {
+  script: import.meta.env.PUBLIC_TIFFIN_SCRIPT ?? "https://t.shiptiffin.app/script.js",
+} as const;

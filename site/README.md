@@ -74,4 +74,10 @@ The template is `brand/src/og.html`. Each page names its image with the `og` pro
 ## Analytics (optional)
 
 Set `PUBLIC_UMAMI_WEBSITE_ID` (and optionally `PUBLIC_UMAMI_SCRIPT`) in `site/.env` or the build environment to add
-cookieless [Umami](https://umami.is) page counts. Without it the site ships no analytics script.
+cookieless [Umami](https://umami.is) page counts. Without it the site ships no Umami script.
+
+The ShipTiffin box that hosts the site counts page views itself, with no script. On `reelbird.app` only, the
+pages also load its cookieless script (`https://t.shiptiffin.app/script.js`) and send every click marked
+`data-umami-event` to it with `tiffin.track()`, under the same event name, so `tiffin analytics events` sees the
+download and Pro clicks. On any other host (a fork, `localhost`) nothing loads. `PUBLIC_TIFFIN_SCRIPT=""` at build
+time leaves it out.
