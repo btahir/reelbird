@@ -11,6 +11,19 @@ const newer = (a: string, b: string) => {
 
 const ALL: Release[] = [
   {
+    version: "0.4.1",
+    date: "2026-11-02",
+    title: "Timeline handles that are easier to grab",
+    summary: "The trim handles and the edges of a selected part are easier to catch and smoother to drag.",
+    notes: [
+      "Trim handles and the edges of a selected part can be grabbed a little either side of the bar, not just on it.",
+      "An edge moves from where you grab it as soon as you drag, instead of waiting and then jumping to the pointer.",
+      "The trim start handle can be grabbed while the playhead sits on it, as it does when a recording opens.",
+      "The resize pointer shows over every timeline edge (trim, parts, zooms, camera layouts, speed and overlays) and stays while you drag.",
+      "Handles widen a little on hover and while you drag them.",
+    ],
+  },
+  {
     version: "0.4.0",
     date: "2026-10-27",
     title: "Caption styles and one-click Clean Up",

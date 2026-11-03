@@ -107,7 +107,7 @@ Checked 12 October 2026 on each vendor's own pages: [Loom pricing](https://www.l
 
 ## Download
 
-[**Download Reelbird 0.3.1**](https://github.com/btahir/reelbird/releases/latest/download/Reelbird-0.3.1.zip) for Apple silicon Macs on macOS 15 or later (8.0 MB).
+[**Download Reelbird 0.4.1**](https://github.com/btahir/reelbird/releases/latest/download/Reelbird-0.4.1.zip) for Apple silicon Macs on macOS 15 or later (8.4 MB).
 
 Unzip it, drag **Reelbird** to your Applications folder and open it. It's signed with an Apple Developer ID and notarised by Apple, so it opens like any other app, and macOS keeps your permissions across updates. The SHA-256 of each zip is listed on its [release page](https://github.com/btahir/reelbird/releases).
 
