@@ -31,6 +31,13 @@ export const FEATURES = [
   "Optional Reelbird Pro ($5 a month): hosted share links with viewer analytics",
   "Auto level, on-device voice enhance and ducking of system audio",
   "On-device captions in six styles and one-click Clean Up",
+  "Step-by-step guide from every recording: a Guide and Click-through on the share link, exported as a web page, Markdown or a Claude skill",
+  "Find Sensitive Info: on-device suggestions to blur emails, API keys, card and phone numbers, following scrolling text",
+  "Blur, pixelate or redaction bar, plus arrows, boxes, labels and highlights",
+  "Camera layouts: bubble, camera only, side by side on a 9:16 canvas, or screen only",
+  "Speed any part from 0.25× to 4×, and Speed Up Typing for typing and waiting",
+  "Hide Browser Toolbar crops tabs and bookmarks off a browser recording",
+  "Export to MP4, HEVC, ProRes or GIF in 16:9, 9:16, 1:1 or 4:3",
   "Crash-safe recording in 2-second segments with live warnings",
   "reelbird command-line tool and MCP server for coding agents",
 ];
@@ -107,7 +114,7 @@ export const techArticle = (o: { title: string; description: string; path: strin
   publisher: { "@id": ORG_ID },
 });
 
-export const article = (o: { title: string; description: string; path: string; datePublished: string; dateModified?: string }) => ({
+export const article = (o: { title: string; description: string; path: string; datePublished: string; dateModified?: string; image?: string }) => ({
   "@type": "Article",
   headline: o.title,
   description: o.description,
@@ -118,7 +125,7 @@ export const article = (o: { title: string; description: string; path: string; d
   about: { "@id": APP_ID },
   author: { "@id": ORG_ID },
   publisher: { "@id": ORG_ID },
-  image: abs("/og/home.png"),
+  image: abs(o.image ?? "/og/home.png"),
 });
 
 export const faqPage = (items: { q: string; a: string }[]) => ({

@@ -8,7 +8,7 @@ import ClipLoop from "../components/ClipLoop.astro";
 import Faq from "../components/Faq.astro";
 import Icon from "../components/Icon.astro";
 import type { Faq as FaqItem } from "../data/faq";
-import { CHECKED, CHECKED_LABEL, byId } from "../data/compare";
+import { PRODUCTS, checkedOf, dateLabel, rivalById } from "../data/compare";
 import { GITHUB_URL, RELEASE_DATE } from "../config/site";
 import { article, faqPage } from "../lib/jsonld";
 
@@ -26,19 +26,31 @@ interface Props {
   faq: FaqItem[];
   /** Optional: other apps searchers weigh against the rival, as a short table. Cells may hold links. */
   others?: { id: string; heading: string; intro: string; columns: string[]; rows: string[][]; caption: string };
+  /** When this page was published, if after the first release. */
+  datePublished?: string;
+  /** When this page's text last changed, if later than the date the rival's facts were checked. */
+  dateModified?: string;
+  /** Show the auto-zoom clip (off for tools that aren't about polish). */
+  clip?: boolean;
+  /** Heading of the side-by-side table, if not "Reelbird vs <rival>, side by side". */
+  factsHeading?: string;
+  /** A sentence added to the table caption, e.g. rows checked on another date. */
+  factsNote?: string;
 }
-const { seoTitle, description, path, og, title, answer, verdict, rival, rows, better, ours, faq, others } = Astro.props;
-const r = byId(rival);
+const { seoTitle, description, path, og, title, answer, verdict, rival, rows, better, ours, faq, others, datePublished = RELEASE_DATE, dateModified, clip = true, factsHeading, factsNote } = Astro.props;
+const r = rivalById(rival);
+const checked = checkedOf(r);
+const updated = dateModified && dateModified > checked.iso ? dateModified : checked.iso;
 const crumbs = [{ name: title, path }];
 const schema = [
-  article({ title, description, path, datePublished: RELEASE_DATE, dateModified: CHECKED }),
+  article({ title, description, path, datePublished, dateModified: updated, image: `/og/${og}.png` }),
   faqPage(faq),
 ];
 ---
 <Base title={seoTitle} description={description} og={og} crumbs={crumbs} type="article" schema={schema}>
   <PageHead title={title} crumbs={crumbs}>
     <p class="answer">{answer}</p>
-    <p class="stamp">Updated <time datetime={CHECKED}>{CHECKED_LABEL}</time>. {r.name} facts from {r.sources.map((s, i) => <>{i > 0 && " and "}<a href={s.href}>{s.label}</a></>)}.</p>
+    <p class="stamp">Updated <time datetime={updated}>{dateLabel(updated)}</time>. {r.name} facts checked {checked.label} on {r.sources.map((s, i) => <>{i > 0 && " and "}<a href={s.href}>{s.label}</a></>)}.</p>
     <div class="cta">
       <a class="btn btn-primary" href="/download/"><Icon name="download" />Get Reelbird — free</a>
       <span class="caveat">Download for Apple silicon, or build from source. macOS 15 or later. Mac only.</span>
@@ -46,10 +58,10 @@ const schema = [
   </PageHead>
 
   <section class="wrap block" aria-labelledby="facts">
-    <h2 id="facts">Reelbird vs {r.name}, side by side</h2>
+    <h2 id="facts">{factsHeading ?? `Reelbird vs ${r.name}, side by side`}</h2>
     <div class="table-wrap">
       <table class="facts">
-        <caption>Prices and features checked {CHECKED_LABEL}. Sources: {r.sources.map((s, i) => <>{i > 0 && ", "}<a href={s.href}>{s.label}</a></>)}.</caption>
+        <caption>Prices and features checked {checked.label}. Sources: {r.sources.map((s, i) => <>{i > 0 && ", "}<a href={s.href}>{s.label}</a></>)}.{factsNote && ` ${factsNote}`}</caption>
         <thead><tr><th scope="col"><span class="sr-only">Fact</span></th><th scope="col">Reelbird</th><th scope="col">{r.name}</th></tr></thead>
         <tbody>
           {rows.map(([k, a, b]) => <tr><th scope="row">{k}</th><td>{a}</td><td>{b}</td></tr>)}
@@ -71,6 +83,8 @@ const schema = [
     </div>
   </section>
 
+  <slot />
+
   {others && (
     <section class="wrap block" aria-labelledby={others.id}>
       <h2 id={others.id}>{others.heading}</h2>
@@ -87,15 +101,17 @@ const schema = [
     </section>
   )}
 
-  <section class="wrap block" aria-labelledby="clip">
-    <h2 id="clip">An auto-zoom export, as it comes out</h2>
-    <ClipLoop />
-  </section>
+  {clip && (
+    <section class="wrap block" aria-labelledby="clip">
+      <h2 id="clip">An auto-zoom export, as it comes out</h2>
+      <ClipLoop />
+    </section>
+  )}
 
   <section class="wrap block faq" aria-labelledby="alt-faq">
     <h2 id="alt-faq">{r.name} and Reelbird: questions</h2>
     <Faq items={faq} />
-    <p class="more"><a class="link-arrow" href="/compare/">Compare eight Mac screen recorders</a></p>
+    <p class="more"><a class="link-arrow" href="/compare/">The best screen recorders for Mac: {PRODUCTS.length} compared</a></p>
   </section>
 
   <section class="wrap block end">
@@ -137,5 +153,12 @@ const schema = [
   .end { text-align: center; display: grid; justify-items: center; gap: 0.5rem; padding-bottom: var(--section); }
   .end h2 { margin-bottom: 0.5rem; }
   .end .cta { justify-content: center; }
+  /* Extra sections a page passes in its default slot: <section class="wrap alt-extra">. */
+  :global(.alt-extra) { padding-block: clamp(2.5rem, 2rem + 2vw, 4rem); border-top: 1px solid var(--line); }
+  :global(.alt-extra > *) { max-width: 46rem; }
+  :global(.alt-extra h2) { font-size: var(--step-3); margin-bottom: 1.25rem; }
+  :global(.alt-extra p) { color: var(--text-muted); margin-top: 1rem; }
+  :global(.alt-extra ul, .alt-extra ol) { margin-top: 1rem; padding-left: 1.1rem; display: grid; gap: 0.6rem; color: var(--text-muted); }
+  :global(.alt-extra strong) { color: var(--text); font-weight: 600; }
   @media (max-width: 48rem) { .two { grid-template-columns: minmax(0, 1fr); } }
 </style>

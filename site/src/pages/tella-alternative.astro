@@ -1,0 +1,44 @@
+---
+import Alt from "../layouts/Alt.astro";
+const faq = [
+  { id: "tella-free", q: "Is Tella free?", a: "No. As of 7 November 2026 Tella has no free plan, only a 7-day free trial. Pro is $13 and Premium $19 per user a month, billed yearly. Reelbird is free and MIT licensed; optional Reelbird Pro is $5 a month if you want your links hosted.", html: "No. As of 7 November 2026 Tella has no free plan, only a 7-day free trial. Pro is $13 and Premium $19 per user a month, billed yearly (<a href=\"https://www.tella.com/pricing\">Tella pricing</a>). Reelbird is free and MIT licensed; optional <a href=\"/pricing/\">Reelbird Pro</a> is $5 a month if you want your links hosted." },
+  { id: "free-tella", q: "Is there a free Tella alternative for Mac?", a: "Reelbird is one: free, open source and native to the Mac, with auto-zoom, captions, camera layouts and a share link the moment you stop. It doesn't have Tella's browser editor, team workspace or Windows app." },
+  { id: "auto-zoom", q: "Do both have auto-zoom?", a: "Yes. Tella lists zoom effects and auto zoom. Reelbird plans zooms from your clicks and typing, with one intensity slider, and every zoom is editable on the timeline." },
+  { id: "files", q: "Where do my videos live?", a: "With Tella, in Tella's cloud, and you can download them. With Reelbird, every take is a folder of MP4 files on your Mac from the start; a shared video also goes to your own bucket or to Reelbird Pro." },
+  { id: "teams", q: "Is Reelbird good for a team?", a: "It works for anyone who can open a link, but it has no shared workspace, comments or SSO. If your team edits and publishes together, Tella does more." },
+];
+---
+<Alt
+  seoTitle="Free Tella alternative for Mac: Reelbird"
+  description="Reelbird vs Tella: auto-zoom, captions and a share link, free and open source on the Mac, with your files on your disk. Tella has no free plan. Checked 7 Nov 2026."
+  path="/tella-alternative/"
+  og="tella-alternative"
+  title="A free Tella alternative for Mac"
+  answer="Reelbird is a free, open-source Tella alternative for the Mac. Like Tella, it zooms automatically, adds captions and gives you a link to share. Unlike Tella, which has no free plan and costs $13 or $19 per user a month billed yearly, Reelbird is free, copies the link the moment you stop, keeps every take as MP4 files on your Mac and hosts links in your own bucket or on Reelbird Pro for $5 a month. Tella is the better pick for teams that edit in the browser and work on Windows too."
+  verdict="Reelbird vs Tella in one line: Tella is a hosted team workspace for polished walkthroughs; Reelbird is a free Mac recorder that gives you the link first and the polish later."
+  rival="tella"
+  datePublished="2026-11-07"
+  rows={[
+    ["Price", "Free, MIT licensed. Optional Reelbird Pro, $5 a month, hosts your links", "Pro $13 and Premium $19 per user a month, billed yearly"],
+    ["Free plan", "Everything, with no limits set by Reelbird", "No free plan. A 7-day free trial"],
+    ["Share links", "Copied the moment you stop, then updated in place after editing. Your own bucket, or Reelbird Pro", "Hosted by Tella. Custom domain on Premium"],
+    ["Auto-zoom", "Planned from clicks and typing; every zoom editable", "Zoom effects and auto zoom"],
+    ["Captions", "On-device, in six styles, in the languages Apple supports on your Mac", "Transcription in 106 languages, with subtitle editing and export"],
+    ["Viewer analytics", "Views, unique viewers and where people stopped, with Reelbird Pro", "Analytics on Pro; advanced analytics on Premium"],
+    ["Keep the file", "Every take is MP4 files on your Mac. Export MP4, HEVC, ProRes or GIF", "Download videos, audio, clips and raw recordings. 4K export; 60 fps on Premium"],
+    ["Platforms", "macOS 15 or later", "macOS and Windows recorders, and a Chrome extension"],
+    ["Licence", "MIT, open source", "Proprietary"],
+  ]}
+  better={[
+    "Your team records on Windows or in Chrome as well as on Macs.",
+    "You want a shared, hosted workspace with a browser editor, branding removal and a custom domain.",
+    "You want Tella's AI agent and credits for editing.",
+  ]}
+  ours={[
+    "You want auto-zoom and captions without a per-user subscription.",
+    "You want a link the moment you stop, and the same link after you polish.",
+    "You want your recordings on your own disk and your links in <a href=\"/guides/self-host-screen-recording-links-cloudflare-r2/\">your own bucket</a>.",
+    "You want the take as a written how-to too: a <a href=\"/features/step-by-step-guides/\">step-by-step guide</a> and Click-through on the link.",
+  ]}
+  faq={faq}
+/>

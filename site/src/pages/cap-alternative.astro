@@ -1,0 +1,46 @@
+---
+import Alt from "../layouts/Alt.astro";
+const faq = [
+  { id: "cap-free", q: "Is Cap free?", a: "For personal use. As of 7 November 2026, Cap's free plan includes Studio mode and local recording, plus 25 share links a month of up to 5 minutes each, for personal use only. Commercial use needs the Desktop licence ($29 a year or $58 once) or Cap Pro ($12 per user a month, or $8.16 billed yearly). Reelbird is MIT licensed, so it's free for commercial use too.", html: "For personal use. As of 7 November 2026, Cap's free plan includes Studio mode and local recording, plus 25 share links a month of up to 5 minutes each, for personal use only. Commercial use needs the Desktop licence ($29 a year or $58 once) or Cap Pro ($12 per user a month, or $8.16 billed yearly), per <a href=\"https://cap.so/pricing\">Cap pricing</a>. Reelbird is MIT licensed, so it's free for commercial use too." },
+  { id: "cap-licence", q: "What licence is Cap under?", a: "Mostly AGPLv3. Cap's README says its cap-camera and scap crates are MIT, and everything else not listed is AGPLv3. Reelbird is MIT throughout." },
+  { id: "modes", q: "What's the difference between Cap's Instant and Studio modes?", a: "Instant mode uploads while you record and gives you a share link when you stop. Studio mode records locally and opens the editor, where you polish and then export or share. You choose the mode before recording. In Reelbird it's one take: the link exists when you stop, and after you polish, Update link replaces the video at the same URL." },
+  { id: "s3", q: "Can I use my own S3 bucket with Cap?", a: "On Cap Pro, yes: custom S3 buckets and Google Drive are Pro features. You can also self-host Cap's whole server with Docker Compose. Reelbird's free links go straight to any S3-compatible bucket you own, with no server to run." },
+  { id: "windows", q: "Does Reelbird run on Windows or Linux like Cap?", a: "No. Reelbird is Mac only, macOS 15 or later, and Windows and Linux aren't planned. Cap runs on macOS, Windows (beta) and Linux." },
+  { id: "import", q: "Can I import my Loom videos?", a: "Cap Pro has a Loom importer. Reelbird has none." },
+];
+---
+<Alt
+  seoTitle="Cap alternative for Mac: Reelbird vs Cap, both open source"
+  description="Reelbird vs Cap: both open-source recorders with instant links and auto-zoom. Reelbird is MIT, native to the Mac, and links to your own bucket for free. Checked 7 Nov 2026."
+  path="/cap-alternative/"
+  og="cap-alternative"
+  title="A Cap alternative for Mac, MIT licensed"
+  answer="Reelbird is an open-source alternative to Cap for the Mac. Both give you a share link when you stop and auto-zoom polish. The differences: Reelbird is MIT licensed and free for commercial use, where Cap's free plan is personal use only and its code is mostly AGPLv3. Reelbird does the link and the polish on the same take, while Cap splits them into Instant and Studio modes. And Reelbird's free links go to your own S3 or R2 bucket, which on Cap needs Pro. Cap runs on Windows and Linux too; Reelbird is Mac only."
+  verdict="Reelbird vs Cap in one line: Cap is the open-source pick across Mac, Windows and Linux with hosted plans; Reelbird is the MIT-licensed native Mac app where one take gives you the link, the polish and a guide."
+  rival="cap"
+  datePublished="2026-11-07"
+  rows={[
+    ["Price", "Free, MIT licensed, including commercial use. Optional Reelbird Pro, $5 a month, hosts your links", "Free for personal use. Desktop licence $29 a year or $58 once. Pro $12 per user a month, or $8.16 billed yearly"],
+    ["Free plan", "Everything, with no length or link limit set by Reelbird", "Personal use only. 25 share links a month, up to 5 minutes each"],
+    ["Licence", "MIT", "Mostly AGPLv3; the cap-camera and scap crates are MIT"],
+    ["Link and polish", "One take: the link is copied when you stop, then Update link swaps in the polished video at the same URL", "Separate modes: Instant uploads while you record and links when you stop; Studio records locally for the editor"],
+    ["Your own storage", "Any S3-compatible bucket, free: R2, S3, B2 or MinIO. No server to run", "Custom S3 bucket on Pro, or self-host Cap's server with Docker Compose"],
+    ["Viewer analytics", "With Reelbird Pro", "With Cap Pro"],
+    ["Step-by-step guide", "Every take: a Guide and Click-through on the link, exports as a web page, Markdown or a Claude skill", "Not listed on Cap's pricing page or README"],
+    ["Captions and AI", "On-device captions in six styles; titles and chapters from Apple's on-device model, from the CLI", "AI titles, summaries, chapters and transcription on Pro"],
+    ["Built with", "Native Swift, ScreenCaptureKit and Metal", "A native Rust desktop app, plus a Next.js web app"],
+    ["Platforms", "macOS 15 or later", "macOS, Windows (beta), Linux"],
+  ]}
+  better={[
+    "You or your team record on Windows or Linux as well as Mac.",
+    "You want a hosted plan with unlimited links, password-protected shares, a custom domain and a Loom importer.",
+    "You want to self-host a full video platform: web app, database and media server.",
+  ]}
+  ours={[
+    "You want to use it at work without buying a licence: MIT, free for commercial use.",
+    "You want the instant link and the polish from the same take, under the same URL.",
+    "You want free links in your own bucket, with nothing to deploy. <a href=\"/guides/self-host-screen-recording-links-cloudflare-r2/\">Set up R2</a> in about ten minutes.",
+    "You want a <a href=\"/features/step-by-step-guides/\">step-by-step guide</a> from each take, or a <a href=\"/features/agents/\">CLI and MCP server</a> your coding agent can drive.",
+  ]}
+  faq={faq}
+/>

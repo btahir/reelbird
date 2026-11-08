@@ -1,0 +1,47 @@
+---
+import Article from "../../../layouts/Article.astro";
+import Code from "../../../components/Code.astro";
+const path = "/guides/screen-recording-to-vertical-video/";
+---
+<Article
+  seoTitle="Turn a screen recording into a 9:16 vertical video on Mac, free"
+  description="How to make a 9:16 vertical video for Reels, Shorts and TikTok from a landscape Mac screen recording: the 9:16 canvas, auto-zoom, a stacked camera layout and big captions. Free."
+  path={path} og="guide-vertical-video"
+  title="How to turn a screen recording into a vertical 9:16 video"
+  lede="Your screen is landscape; Reels, Shorts and TikTok want 9:16. In Reelbird you record once as usual, then set the canvas to 9:16 for a vertical cut. Zooms keep the action readable, the side-by-side camera layout stacks your face under the screen, and captions in a big style carry the sound for people watching muted. Here's how, on a Mac, for free."
+  crumbs={[{ name: "Guides", path: "/guides/" }, { name: "Vertical video", path }]}
+  datePublished="2026-11-07"
+  stamp="Published 7 November 2026. Written for Reelbird 0.4.1."
+>
+  <h2 id="before">Before you record</h2>
+  <ul>
+    <li><strong>Record a window, or an area,</strong> rather than a whole wide display. The less there is around the action, the bigger it is in a narrow frame.</li>
+    <li><strong>Make text bigger</strong> than you would for a landscape video: browser zoom, a larger editor font.</li>
+    <li><strong>Turn on the camera</strong> if you want your face in the clip, and <strong>Record keystrokes</strong> if you'll type, so typing gets zooms too.</li>
+  </ul>
+
+  <h2 id="steps">Steps</h2>
+  <ol>
+    <li><strong>Record</strong> with <kbd>⌥</kbd><kbd>⇧</kbd><kbd>R</kbd> as you normally would.</li>
+    <li><strong>Open the Canvas tab</strong> (<kbd>⌘</kbd><kbd>5</kbd>) and pick <strong>9:16</strong>, the one marked Reels, Shorts.</li>
+    <li><strong>Check the zooms.</strong> On a narrow canvas the screen shows as a window onto part of the recording, and zooms happen inside it. Turn the zoom slider up for a punchier cut, and move or add zooms (<kbd>Z</kbd>) where the preview loses the action.</li>
+    <li><strong>Stack the camera.</strong> Press <kbd>C</kbd> to add a camera layout and choose the side-by-side one. On a 9:16 canvas it stacks: the screen on top, the camera below in about a third of the height. Use camera only for an intro and screen only for a dense part.</li>
+    <li><strong>Add captions</strong> (<kbd>⌘</kbd><kbd>7</kbd>, Generate Captions) in a short-form style: Pop, One Word or Slam, at a large size.</li>
+    <li><strong>Tighten it.</strong> Clean Up (<kbd>W</kbd>) shortens pauses and cuts ums, and the Speed control plays any part from 0.25× to 4×.</li>
+    <li><strong>Export</strong> with <kbd>⌘</kbd><kbd>E</kbd> as MP4 (H.264) for the widest support.</li>
+  </ol>
+
+  <h2 id="both">Keep the landscape version too</h2>
+  <p>The canvas is a setting on the edit, not a new recording. Export the 9:16 cut, switch the canvas back to 16:9 or As recorded, and export again. Blurs and drawings are anchored to the screen, so they stay on the right content in both. The share link plays whichever version you last published with <strong>Update link</strong>.</p>
+
+  <h2 id="cli">From the terminal</h2>
+  <Code code={"reelbird edit latest --set canvas.aspect=9:16 --set captions.style=oneWord --set captions.size=large\nreelbird edit latest --layout split@0:00-end\nreelbird export latest --format mp4"} />
+
+  <h2 id="caveats">Caveats</h2>
+  <ul>
+    <li>A wide, busy screen never reads well at phone size. Shorter clips of one action each work better than one long walkthrough.</li>
+    <li>Reelbird exports the file; it doesn't post to Instagram, YouTube or TikTok for you.</li>
+    <li>Square (1:1) and 4:3 are on the same Canvas tab, for feeds and slides.</li>
+  </ul>
+  <p>Related: <a href="/guides/add-captions-to-screen-recording-mac/">adding captions to a screen recording</a> and <a href="/guides/record-screen-with-webcam-mac/">recording your screen with a webcam overlay</a>.</p>
+</Article>

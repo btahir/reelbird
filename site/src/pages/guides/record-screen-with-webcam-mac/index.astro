@@ -1,0 +1,51 @@
+---
+import Article from "../../../layouts/Article.astro";
+import Shot from "../../../components/Shot.astro";
+import pickerL from "../../../assets/shots/picker-light.webp";
+import pickerD from "../../../assets/shots/picker-dark.webp";
+const path = "/guides/record-screen-with-webcam-mac/";
+---
+<Article
+  seoTitle="Record your Mac screen with a webcam overlay, free: Reelbird"
+  description="How to record your screen and webcam together on a Mac, free: a camera bubble you can move and reshape after recording, layouts for camera only or side by side, and zooms it moves out of the way of."
+  path={path} og="guide-webcam-overlay"
+  title="How to record your screen with a webcam overlay on Mac"
+  lede="Reelbird records your camera as its own track next to the screen, so the webcam bubble isn't baked in: after recording you can move it, change its shape and size, or switch to camera only or side by side for any part of the video. It's free and open source. Here's how."
+  crumbs={[{ name: "Guides", path: "/guides/" }, { name: "Webcam overlay", path }]}
+  datePublished="2026-11-07"
+  stamp="Published 7 November 2026. Written for Reelbird 0.4.1."
+>
+  <h2 id="steps">Steps</h2>
+  <ol>
+    <li><strong>Open the picker</strong> with <kbd>⌥</kbd><kbd>⇧</kbd><kbd>R</kbd>, and choose a display, a window or an area.</li>
+    <li><strong>Turn on Camera,</strong> and pick the camera if you have more than one. Turn on Microphone too. The first time, allow Camera and Microphone when macOS asks.</li>
+    <li><strong>Start recording.</strong> The camera bubble shows on screen. Drag it while you record and the video follows: it starts where the bubble was and glides each time you move it.</li>
+    <li><strong>Switch layouts while you talk</strong> with <kbd>⌥</kbd><kbd>⇧</kbd><kbd>L</kbd>: bubble, camera only, screen only. The editor starts with the layouts you switched to.</li>
+    <li><strong>Stop</strong> with <kbd>⌥</kbd><kbd>⇧</kbd><kbd>R</kbd>. The take opens with the screen and camera on separate tracks.</li>
+  </ol>
+
+  <Shot src={pickerL} dark={pickerD} alt="The picker with Microphone, Camera, System audio and Share while recording switches." sizes="(min-width: 60rem) 560px, 100vw" widths={[560, 1120, 1560]} />
+
+  <h2 id="after">Change it after recording</h2>
+  <ul>
+    <li><strong>Move it.</strong> Drag the bubble anywhere on the preview; it snaps to the edges and centre lines. Or pick a corner, delete single moves, or keep it in one place.</li>
+    <li><strong>Shape and size:</strong> a circle, a rounded square or a 3:4 portrait tile, at any size, in the Camera tab (<kbd>⌘</kbd><kbd>4</kbd>).</li>
+    <li><strong>Layouts for parts of the video:</strong> press <kbd>C</kbd> on the timeline's Layouts lane for the bubble, camera only, side by side or screen only, with a short spring between them. Side by side stacks the two on a 9:16 canvas.</li>
+    <li><strong>It makes room for zooms.</strong> While the screen is zoomed in, the bubble shrinks (to 70% by default) on the same curve, and if the zoomed cursor would pass under it, it glides to the nearest free corner and back. Both can be turned off in the Camera tab.</li>
+  </ul>
+  <p>What you see in the preview is what exports: one renderer draws both.</p>
+
+  <h2 id="tips">Tips</h2>
+  <ul>
+    <li>Put the camera near your screen's top edge so you look close to the lens while reading the screen.</li>
+    <li>Light your face from the front; a window behind you turns you into a silhouette.</li>
+    <li>Leave the corner where the bubble will sit free of buttons you'll click, or let smart framing move it for you.</li>
+  </ul>
+
+  <h2 id="limits">What it doesn't do</h2>
+  <ul>
+    <li>No background removal or blur behind you. Screen Studio and FocuSee have it.</li>
+    <li>The camera is recorded at 30 fps.</li>
+  </ul>
+  <p>Related: <a href="/guides/screen-recording-to-vertical-video/">turning a screen recording into a vertical video</a>, and <a href="/use-cases/product-demos/">recording a product demo</a>.</p>
+</Article>

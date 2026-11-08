@@ -14,20 +14,22 @@ const faq = [
 ];
 ---
 <Alt
-  seoTitle="Free, open-source Loom alternative for Mac: Reelbird"
-  description="Instant share links like Loom, with no 5-minute cap, no 25-video limit and no download paywall. Free, MIT, for Mac. Videos stay on your Mac."
+  seoTitle="Free, open-source, self-hosted Loom alternative for Mac: Reelbird"
+  description="Instant share links like Loom, hosted in your own S3 or R2 bucket, with no 5-minute cap, no 25-video limit and no download paywall. Free, MIT, for Mac."
   path="/loom-alternative/"
   og="loom-alternative"
   title="A free, open-source Loom alternative for Mac"
-  answer="Reelbird is a free, open-source Loom alternative for Mac. Like Loom, it copies a share link the moment you stop recording. Unlike Loom's free plan, it has no 5-minute limit, no 25-video cap and no 720p ceiling, every take stays on your Mac as MP4 files you can keep, and the link points at a storage bucket you own, or at Reelbird Pro's hosting for $5 a month. Later you can add auto-zoom and captions and update the video under the same link."
+  answer="Reelbird is a free, open-source Loom alternative for Mac that you can self-host. Like Loom, it copies a share link the moment you stop recording. Unlike Loom, the link points at a storage bucket you own, such as Cloudflare R2, with no server to run, or at Reelbird Pro's hosting for $5 a month. There's no 5-minute limit, no 25-video cap and no 720p ceiling, and every take stays on your Mac as MP4 files. Later you can add auto-zoom, captions and blurs and update the video under the same link."
   verdict="Reelbird vs Loom in one line: Loom is the better team tool on every platform; Reelbird is the free Mac recorder that gives you the link, the files and the polish without a plan to upgrade."
   rival="loom"
+  dateModified="2026-11-07"
   rows={[
     ["Price", "Free, MIT licensed. Optional Reelbird Pro, $5 a month, hosts your links", "Starter free. Business $18 and Business + AI $24 per user a month, billed monthly"],
     ["Free-plan limits", "None set by Reelbird", "25 videos per person, 5 minutes each, up to 720p"],
     ["Keep the file", "Every take is a folder of MP4s on your Mac. Export MP4, HEVC, ProRes or GIF", "Starter can't download. Business and up can"],
     ["Share links", "Copied when you stop. Hosted in your own S3 or R2 bucket for free, or by Reelbird Pro. The same link updates after you edit", "Copied when you stop. Hosted on Loom's cloud"],
-    ["Polish", "Auto-zoom from clicks, smooth cursor, backgrounds, on-device captions", "No auto-zoom"],
+    ["Polish", "Auto-zoom from clicks, smooth cursor, camera layouts, blur, speed-ups, backgrounds, on-device captions", "No auto-zoom"],
+    ["Self-hosting", "Free links to any S3-compatible bucket you own: Cloudflare R2, AWS S3, Backblaze B2 or your own MinIO. No server to run", "No. Videos live on Loom's cloud"],
     ["Comments and view counts", "No comments. Views, unique viewers and where people stopped, with Reelbird Pro", "Yes"],
     ["Platforms", "macOS 15 or later", "Mac, Windows, web and mobile"],
     ["Account", "None needed (Reelbird Pro uses your email)", "Required"],
@@ -42,7 +44,8 @@ const faq = [
     "You record on a Mac and want links without a subscription, a seat count or a 5-minute stop.",
     "You want to keep the original files: every take is MP4 on your disk, on day one.",
     "You want the link to get better after you send it: auto-zoom, trims and captions, then <strong>Update link</strong>.",
-    "You'd rather your videos sit in your own storage than someone else's. <a href=\"/privacy/\">No account, no telemetry</a>.",
+    "You'd rather your videos sit in your own storage than someone else's: a <a href=\"#self-hosted\">self-hosted Loom alternative</a> with no server to run. <a href=\"/privacy/\">No account, no telemetry</a>.",
+    "You want the link to read as a how-to too: every take has a <a href=\"/features/step-by-step-guides/\">step-by-step guide</a> and Click-through next to the video.",
     "You want Loom-style hosted links and view counts without per-seat pricing: <a href=\"/pricing/\">Reelbird Pro</a> is $5 a month, and the recorder stays free.",
   ]}
   others={{
@@ -52,12 +55,26 @@ const faq = [
     columns: ["App", "Price", "Free plan", "Platforms", "Share links"],
     rows: [
       ["Reelbird", "Free, MIT. Optional Reelbird Pro, $5 a month, hosts your links", "Everything, with no length limit", "macOS 15 or later", "Copied when you stop. Your own bucket, or Reelbird Pro"],
-      ["<a href=\"https://cap.so/pricing\">Cap</a>", "Desktop licence $29 a year or $58 once. Pro $12 per user a month, or $8.16 billed yearly", "Personal use only. Share links up to 5 minutes", "macOS, Windows (beta), Linux", "Yes, in Instant mode, hosted by Cap. Your own S3 bucket needs Pro"],
-      ["<a href=\"https://www.tella.com/pricing\">Tella</a>", "Pro $13 and Premium $19 per user a month, billed yearly", "No free plan listed", "Mac, Windows, Chrome", "Yes, hosted by Tella, with viewer analytics"],
+      ["<a href=\"https://cap.so/pricing\">Cap</a>", "Desktop licence $29 a year or $58 once. Pro $12 per user a month, or $8.16 billed yearly", "Personal use only. 25 share links a month, up to 5 minutes each", "macOS, Windows (beta), Linux", "Yes, in Instant mode, hosted by Cap. Your own S3 bucket needs Pro"],
+      ["<a href=\"https://www.tella.com/pricing\">Tella</a>", "Pro $13 and Premium $19 per user a month, billed yearly", "No free plan. A 7-day trial", "Mac, Windows, Chrome", "Yes, hosted by Tella, with viewer analytics"],
       ["<a href=\"https://obsproject.com/\">OBS Studio</a>", "Free, GPL-2.0", "Everything", "macOS, Windows, Linux", "No. It records to a file. Made for streaming as well as recording, with more settings to learn"],
       ["<a href=\"https://support.apple.com/en-us/102618\">Screenshot app and QuickTime Player</a>", "Built into macOS", "Everything", "macOS", "No. Shift-Command-5 records to a file. The Screenshot app records system audio on macOS 27 and later"],
     ],
-    caption: `Cap and Tella checked ${CHECKED_LABEL}; OBS Studio and Apple's recorder checked 2 November 2026, from their own pages.`,
+    caption: `Cap and Tella checked 7 November 2026; OBS Studio and Apple's recorder checked 2 November 2026, from their own pages.`,
   }}
   faq={faq}
-/>
+>
+  <section class="wrap alt-extra" aria-labelledby="self-hosted">
+    <h2 id="self-hosted">A self-hosted Loom alternative, with your own storage</h2>
+    <p>Loom keeps your videos on Loom's cloud. Reelbird's free links go to an S3-compatible bucket you own, and that's the whole setup: Reelbird uploads a small viewer page and the video to the bucket, signed with your keys, so there's no server, database or Docker container to run.</p>
+    <ul>
+      <li><strong>Any S3-compatible storage.</strong> Cloudflare R2 (recommended, because it doesn't charge when people watch), AWS S3, Backblaze B2, or MinIO on your own machine.</li>
+      <li><strong>What it costs.</strong> R2's free tier holds 10 GB a month with free egress, a few hours of shared video. Past that, 100 GB is about $1.35 a month (R2 pricing, October 2026).</li>
+      <li><strong>Your keys stay on your Mac,</strong> in the Keychain. Nothing goes through Reelbird's servers.</li>
+      <li><strong>Unlisted, not secret.</strong> Anyone with a link can watch it. Stop sharing deletes every file under that link.</li>
+      <li><strong>From the terminal and CI</strong> too: the <code>reelbird</code> command line tool uses the same settings, or environment variables.</li>
+    </ul>
+    <p>Setup takes about ten minutes, once. Follow <a href="/guides/self-host-screen-recording-links-cloudflare-r2/">self-hosted share links on Cloudflare R2</a>, step by step, or the <a href="/docs/sharing/">sharing docs</a> for S3, B2 and MinIO. If you'd rather not run anything, <a href="/pricing/">Reelbird Pro</a> hosts the links for $5 a month.</p>
+    <p>Cap is the other open-source option here. You can self-host its whole server (web app, database, media server and storage) with Docker Compose, and pointing Cap's hosted plan at your own S3 bucket needs Cap Pro (checked 7 November 2026). See <a href="/cap-alternative/">Reelbird vs Cap</a>.</p>
+  </section>
+</Alt>

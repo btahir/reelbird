@@ -3,7 +3,7 @@ import Base from "../layouts/Base.astro";
 import PageHead from "../components/PageHead.astro";
 import Faq from "../components/Faq.astro";
 import Icon from "../components/Icon.astro";
-import { PRODUCTS, CHECKED, CHECKED_LABEL, byId } from "../data/compare";
+import { PRODUCTS, CHECKED_LABEL, checkedOf } from "../data/compare";
 import { RELEASE_DATE, abs } from "../config/site";
 import { article, faqPage } from "../lib/jsonld";
 
@@ -12,63 +12,80 @@ const cols: [Key, string][] = [
   ["price", "Price"], ["freePlan", "Free plan"], ["platforms", "Platforms"], ["openSource", "Open source"],
   ["links", "Instant share links"], ["autoZoom", "Auto-zoom"], ["download", "Keep the file"],
 ];
-const loom = byId("loom");
-const ss = byId("screen-studio");
-const title = "Mac screen recorders compared";
-const seoTitle = "Mac screen recorders compared: Loom, Screen Studio, Cap";
-const description = "Prices, free-plan limits, licences, share links and auto-zoom for Reelbird, Loom, Screen Studio, Cap, OpenScreen, CleanShot X, Tella and Screenity.";
+const UPDATED = "2026-11-07";
+const UPDATED_LABEL = "7 November 2026";
+const title = "The best screen recorder for Mac, free and paid";
+const seoTitle = "Best screen recorder for Mac in 2026 (free and paid), compared";
+const description = `One pick per job, from the best free screen recorder for Mac to the best for demos, team links and streaming. ${PRODUCTS.length} recorders compared on price, limits, licence, links and auto-zoom.`;
 const path = "/compare/";
 const crumbs = [{ name: "Compare", path }];
 
+// One pick per job. Two of them aren't in the table (they aren't demo recorders), so they link out.
 const picks = [
-  { id: "loom", text: "a team tool with comments and view counts on every platform, and you're happy to pay per user" },
-  { id: "screen-studio", text: "the most mature auto-zoom editor on the Mac, and a subscription is fine" },
-  { id: "cap", text: "an open-source Loom alternative that also runs on Windows or Linux, with hosted plans" },
-  { id: "openscreen", text: "a free, signed, cross-platform editor and you'll host the files yourself" },
-  { id: "screenity", text: "free recording in Chrome on any operating system" },
-  { id: "reelbird", text: "a link the moment you stop and auto-zoom polish under the same link, free on a Mac, with links in your own storage or hosted for $5 a month" },
+  { job: "Free, with nothing to install", name: "The Screenshot app (Shift-Command-5)", href: "https://support.apple.com/en-us/102618", text: "is built into macOS and records the screen to a file. It records system audio on macOS 27 and later. No editing, zooms or links." },
+  { job: "Streaming, or many sources in one scene", name: "OBS Studio", href: "https://obsproject.com/", text: "is free (GPL-2.0) on macOS, Windows and Linux. It records to a file and has more settings to learn." },
+  { job: "Team video messages with comments", name: "Loom", href: "#loom", text: "gives you a link when you stop, plus comments, reactions and view counts on every platform. Paid plans are per user." },
+  { job: "The most mature polished-demo editor", name: "Screen Studio", href: "#screen-studio", text: "has auto-zoom, camera layouts with background removal, iPhone recording and editing by transcript, for $29 a month or $9 billed yearly." },
+  { job: "Open source on Windows and Linux too", name: "Cap", href: "#cap", text: "has instant links in one mode and auto-zoom in another, and you can self-host its server. Commercial use needs a paid licence." },
+  { job: "A free cross-platform editor, no links", name: "OpenScreen", href: "#openscreen", text: "is MIT licensed, signed on the Mac, and exports a file you host yourself." },
+  { job: "Auto-zoom on Mac and Windows, with a one-time option", name: "FocuSee", href: "#focusee", text: "zooms on clicks and typing, with camera layouts and AI captions. $49.99 a year, or $199.99 once for version 2.x." },
+  { job: "Screenshots first, video too", name: "CleanShot X", href: "#cleanshot", text: "is the screenshot tool that also records, with zooms you add and cloud links. $35 once." },
+  { job: "Hosted team walkthroughs", name: "Tella", href: "#tella", text: "records and edits in a hosted workspace with viewer analytics, from $13 per user a month billed yearly." },
+  { job: "Recording in Chrome on any computer", name: "Screenity", href: "#screenity", text: "is a free Chrome extension; links, the editor and auto-zoom need Pro." },
+  { job: "A link when you stop, polish and a written guide later, free on a Mac", name: "Reelbird", href: "#reelbird", text: "(ours) copies the link when you stop, then adds auto-zoom, captions and blurs under the same link, and turns the take into a step-by-step guide. MIT licensed; links in your own bucket, or hosted for $5 a month." },
 ];
 
+const altPages: Record<string, { href: string; label: string }> = {
+  loom: { href: "/loom-alternative/", label: "Reelbird vs Loom" },
+  "screen-studio": { href: "/screen-studio-alternative/", label: "Reelbird vs Screen Studio" },
+  cap: { href: "/cap-alternative/", label: "Reelbird vs Cap" },
+  focusee: { href: "/focusee-alternative/", label: "Reelbird vs FocuSee" },
+  cleanshot: { href: "/cleanshot-alternative/", label: "Reelbird vs CleanShot X" },
+  tella: { href: "/tella-alternative/", label: "Reelbird vs Tella" },
+};
+
 const faq = [
+  { id: "best-free", q: "What is the best free screen recorder for Mac?", a: "It depends on the job. For a quick file with nothing to install, use the Screenshot app built into macOS (Shift-Command-5). For streaming or complex scenes, OBS Studio. For a share link when you stop plus auto-zoom, captions and a step-by-step guide, Reelbird (MIT, macOS 15 or later). For a free editor that runs on Windows and Linux too, OpenScreen. Cap's free plan is for personal use only." },
+  { id: "best-demos", q: "What is the best screen recorder for product demos on a Mac?", a: `Screen Studio has the most mature editor if a subscription is fine ($29 a month, or $9 billed yearly, checked ${CHECKED_LABEL}). FocuSee does auto-zoom on Mac and Windows with a one-time option. Reelbird does auto-zoom for free and gives you a link before you've edited anything.`, html: `Screen Studio has the most mature editor if a subscription is fine ($29 a month, or $9 billed yearly, checked ${CHECKED_LABEL}). FocuSee does auto-zoom on Mac and Windows with a one-time option. Reelbird does auto-zoom for free and gives you a link before you've edited anything. More in <a href="/use-cases/product-demos/">recording product demos on a Mac</a>.` },
   { id: "loom-or-screen-studio", q: "Loom or Screen Studio: which should I use?", a: `They do different jobs. Loom is for quick, hosted links and team feedback: a link when you stop, comments and view counts, on Mac, Windows, the web and phones, with no auto-zoom. Its free plan stops videos at 5 minutes and can't download; Business is $18 per user a month. Screen Studio is for polished Mac product videos: auto-zoom, a smooth cursor and camera layouts, with a share link after you export, for $29 a month or $9 billed yearly. Reelbird does both jobs from one take on the Mac, free: the link when you stop, the polish later under the same link. Checked ${CHECKED_LABEL}.` },
-  { id: "free-auto-zoom", q: "Which free Mac screen recorders have auto-zoom?", a: "Reelbird (MIT, native Swift, with share links to your own bucket), OpenScreen (MIT, Electron, no share links) and Cap (free for personal use, with auto-zoom in Studio mode). Screenity's auto-zoom needs Pro, and Screen Studio, CleanShot X and Tella are paid." },
-  { id: "open-source", q: "Which of these screen recorders are open source?", a: "Reelbird (MIT), OpenScreen (MIT), Cap (AGPLv3, with some parts MIT) and Screenity's Chrome recorder (GPL-3.0). Loom, Screen Studio, CleanShot X and Tella are proprietary." },
+  { id: "free-auto-zoom", q: "Which free Mac screen recorders have auto-zoom?", a: "Reelbird (MIT, native Swift, with share links to your own bucket), OpenScreen (MIT, Electron, no share links) and Cap (free for personal use, with auto-zoom in Studio mode). Screenity's auto-zoom needs Pro, and Screen Studio, FocuSee, CleanShot X and Tella are paid." },
+  { id: "open-source", q: "Which of these screen recorders are open source?", a: "Reelbird (MIT), OpenScreen (MIT), Cap (AGPLv3, with some parts MIT) and Screenity's Chrome recorder (GPL-3.0). Loom, Screen Studio, FocuSee, CleanShot X and Tella are proprietary. OBS Studio, Kap and QuickRecorder are open source too.", html: "Reelbird (MIT), OpenScreen (MIT), Cap (AGPLv3, with some parts MIT) and Screenity's Chrome recorder (GPL-3.0). Loom, Screen Studio, FocuSee, CleanShot X and Tella are proprietary. For more, including OBS Studio, Kap and QuickRecorder, see the <a href=\"/open-source-screen-recorders-mac/\">open-source roundup</a>." },
   { id: "free-link", q: "Which free recorders give you a share link when you stop?", a: "Reelbird, with no limit from Reelbird, hosted in your own S3 or R2 bucket (or by Reelbird Pro, $5 a month). Loom's free Starter plan, with 5-minute videos and 25 per person. Cap's free plan, for personal use, with 5-minute links. Screenity's links need Pro, OpenScreen has none, and Screen Studio's come after export." },
   { id: "keep-files", q: "Which ones let me keep my video files for free?", a: "Reelbird saves every take as MP4 files on your Mac. OpenScreen, Screenity's free recorder and Cap's free plan (personal use) export files too. Loom's free Starter plan can't download videos; that needs Business or higher." },
 ];
 
 const schema = [
-  article({ title: seoTitle, description, path, datePublished: RELEASE_DATE, dateModified: CHECKED }),
-  { "@type": "ItemList", name: "Mac screen recorders compared", itemListOrder: "https://schema.org/ItemListUnordered", numberOfItems: PRODUCTS.length,
+  article({ title: seoTitle, description, path, datePublished: RELEASE_DATE, dateModified: UPDATED, image: "/og/compare.png" }),
+  { "@type": "ItemList", name: "Best screen recorders for Mac", itemListOrder: "https://schema.org/ItemListUnordered", numberOfItems: PRODUCTS.length,
     itemListElement: PRODUCTS.map((p, i) => ({ "@type": "ListItem", position: i + 1, name: p.name, url: abs(`${path}#${p.id}`) })) },
   faqPage(faq),
 ];
 ---
 <Base title={seoTitle} description={description} og="compare" brand={false} crumbs={crumbs} type="article" schema={schema}>
   <PageHead title={title} crumbs={crumbs}>
-    <p class="answer">Eight screen recorders, compared on price, free-plan limits, licence, share links and auto-zoom. In short: Loom is the team tool, Screen Studio the most mature Mac editor, Cap the open-source pick for Windows and Linux, and OpenScreen the free cross-platform editor without links. Reelbird, which we make, gives you a link the moment you stop and lets you polish the same take under the same link, free and open source, on the Mac, with optional hosting for $5 a month.</p>
-    <p class="stamp">Updated <time datetime={CHECKED}>{CHECKED_LABEL}</time> from each vendor's own pages. Every row links its source. Prices change, so check before you buy.</p>
+    <p class="answer">The best screen recorder for Mac depends on the job. For a quick file, the free recorder built into macOS is enough. For streaming, OBS Studio. For team messages with comments, Loom. For the most polished product videos, Screen Studio, if a subscription is fine. For open source on Windows and Linux too, Cap. Reelbird, which we make, is the free, open-source pick for a link the moment you stop, with auto-zoom, captions and a step-by-step guide added later under the same link, on the Mac.</p>
+    <p class="stamp">Updated <time datetime={UPDATED}>{UPDATED_LABEL}</time>. Facts come from each vendor's own pages, checked between 12 October and 7 November 2026; every row links its source and date. Prices change, so check before you buy.</p>
   </PageHead>
 
   <section class="wrap block" aria-labelledby="picks">
-    <h2 id="picks">Quick picks</h2>
-    <ul class="picks">
-      {picks.map((p) => <li><a href={`#${p.id}`}>{byId(p.id).name}</a><span> if you want {p.text}.</span></li>)}
-    </ul>
+    <h2 id="picks">The best Mac screen recorder for each job</h2>
+    <dl class="picks">
+      {picks.map((p) => <div><dt>{p.job}</dt><dd><a href={p.href}>{p.name}</a> {p.text}</dd></div>)}
+    </dl>
   </section>
 
   <section class="wrap block" aria-labelledby="table">
     <h2 id="table">The table</h2>
     <div class="table-wrap">
       <table class="cmp">
-        <caption class="sr-only">Screen recorders compared, checked {CHECKED_LABEL}</caption>
+        <caption class="sr-only">Screen recorders for Mac compared, checked between 12 October and 7 November 2026</caption>
         <thead><tr><th scope="col">App</th>{cols.map(([, l]) => <th scope="col">{l}</th>)}<th scope="col">Sources</th></tr></thead>
         <tbody>
           {PRODUCTS.map((p) => (
             <tr class:list={[p.id === "reelbird" && "ours"]}>
               <th scope="row">{p.name}</th>
               {cols.map(([k]) => <td>{p[k]}</td>)}
-              <td class="src">{p.sources.map((s) => <a href={s.href}>{s.label}</a>)}</td>
+              <td class="src">{p.sources.map((s) => <a href={s.href}>{s.label}</a>)}<span>Checked {checkedOf(p).label}</span></td>
             </tr>
           ))}
         </tbody>
@@ -95,13 +112,23 @@ const schema = [
             <div><dt>Best for</dt><dd>{p.bestFor}</dd></div>
             <div><dt>Keep in mind</dt><dd>{p.keepInMind}</dd></div>
             <div><dt>Price</dt><dd>{p.price}.</dd></div>
-            <div><dt>Source</dt><dd>{p.sources.map((s, i) => <>{i > 0 && ", "}<a href={s.href}>{s.label}</a></>)}</dd></div>
+            <div><dt>Source</dt><dd>{p.sources.map((s, i) => <>{i > 0 && ", "}<a href={s.href}>{s.label}</a></>)}, checked {checkedOf(p).label}</dd></div>
           </dl>
-          {p.id === "loom" && <p class="more-link"><a class="link-arrow" href="/loom-alternative/">Reelbird vs Loom</a></p>}
-          {p.id === "screen-studio" && <p class="more-link"><a class="link-arrow" href="/screen-studio-alternative/">Reelbird vs Screen Studio</a></p>}
+          {altPages[p.id] && <p class="more-link"><a class="link-arrow" href={altPages[p.id]!.href}>{altPages[p.id]!.label}</a></p>}
         </li>
       ))}
     </ol>
+  </section>
+
+  <section class="wrap block prose-sec" aria-labelledby="more-cmp">
+    <div class="prose">
+      <h2 id="more-cmp">More comparisons</h2>
+      <ul>
+        <li><a href="/open-source-screen-recorders-mac/">Open-source screen recorders for Mac</a>: Reelbird, Cap, OpenScreen, OBS Studio, Kap, QuickRecorder and Recordly, with licences and what each is for.</li>
+        <li><a href="/scribe-alternative/">A free Scribe and Tango alternative for Mac</a>: step-by-step guides made from a screen recording.</li>
+        <li><a href="/cap-alternative/">Reelbird vs Cap</a>, <a href="/focusee-alternative/">Reelbird vs FocuSee</a>, <a href="/tella-alternative/">Reelbird vs Tella</a> and <a href="/cleanshot-alternative/">Reelbird vs CleanShot X</a>.</li>
+      </ul>
+    </div>
   </section>
 
   <section class="wrap block prose-sec" aria-labelledby="limits">
@@ -132,8 +159,12 @@ const schema = [
   .block { padding-block: clamp(2.5rem, 2rem + 2vw, 4rem); border-top: 1px solid var(--line); }
   .block > h2, .prose h2 { font-size: var(--step-3); margin-bottom: 1.5rem; }
   .prose > h2:first-child { margin-top: 0; }
-  .picks { list-style: none; padding: 0; display: grid; gap: 0.6rem; max-width: 48rem; color: var(--text-muted); }
+  .picks { display: grid; max-width: 56rem; border-top: 1px solid var(--line); }
+  .picks > div { display: grid; grid-template-columns: 16rem 1fr; gap: 1.5rem; padding: 0.9rem 0; border-bottom: 1px solid var(--line); }
+  .picks dt { font-weight: 600; color: var(--text); }
+  .picks dd { color: var(--text-muted); }
   .picks a { color: var(--text); font-weight: 600; }
+  @media (max-width: 40rem) { .picks > div { grid-template-columns: minmax(0, 1fr); gap: 0.25rem; } }
   .cmp { min-width: 74rem; font-size: 0.9rem; }
   .cmp th[scope="row"] { font-weight: 600; white-space: nowrap; color: var(--text); position: sticky; left: 0; background: var(--bg); }
   .cmp td { color: var(--text-muted); }
@@ -141,6 +172,7 @@ const schema = [
   .cmp tr.ours th { box-shadow: inset 2px 0 0 var(--text); }
   .cmp th:first-child { padding-left: 0.75rem; }
   .src { min-width: 9rem; }
+  .src span { display: block; font-size: 0.8rem; margin-top: 0.25rem; }
   .src a { display: block; color: inherit; font-size: 0.85rem; margin-bottom: 0.25rem; overflow-wrap: anywhere; }
   .hint { font-size: var(--step--1); margin-top: 0.75rem; display: none; }
   .each { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 3rem; border-top: 1px solid var(--line); }

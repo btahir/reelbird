@@ -1,0 +1,43 @@
+---
+import Alt from "../layouts/Alt.astro";
+const faq = [
+  { id: "cleanshot-price", q: "How much does CleanShot X cost?", a: "As of 7 November 2026: CleanShot Basic is $35 once, with a year of updates and 1 GB of cloud storage, then $19 a year if you want more updates. CleanShot Pro is $10 per user a month billed yearly, with unlimited cloud storage. There's no free trial, and a 30-day money-back guarantee.", html: "As of 7 November 2026: CleanShot Basic is $35 once, with a year of updates and 1 GB of cloud storage, then $19 a year if you want more updates. CleanShot Pro is $10 per user a month billed yearly, with unlimited cloud storage. There's no free trial, and a 30-day money-back guarantee (<a href=\"https://cleanshot.com/pricing\">CleanShot pricing</a>)." },
+  { id: "screenshots", q: "Does Reelbird take screenshots?", a: "No. Reelbird only records video. If screenshots are most of what you do, CleanShot X is the better tool, and the two can live side by side." },
+  { id: "zoom", q: "How do the zooms differ?", a: "CleanShot X lets you add animated zooms to parts of a recording in its video editor. Reelbird plans zooms for you from your clicks and typing, and you can then move, resize or delete each one." },
+  { id: "free-cleanshot", q: "Is there a free alternative to CleanShot X for screen recording?", a: "For recording, yes: Reelbird is free and open source, with auto-zoom, captions and share links to your own bucket. For screenshots, the Screenshot app built into macOS (Shift-Command-5) is free but much simpler than CleanShot X." },
+];
+---
+<Alt
+  seoTitle="CleanShot X screen recording alternative for Mac, free: Reelbird"
+  description="For screen recording, Reelbird is a free, open-source alternative to CleanShot X: zooms planned from your clicks, captions and a link when you stop. CleanShot stays the screenshot pick."
+  path="/cleanshot-alternative/"
+  og="cleanshot-alternative"
+  title="A free CleanShot X alternative for screen recording"
+  answer="If you mostly record video, Reelbird is a free, open-source alternative to CleanShot X's screen recording. CleanShot X is a screenshot tool first, with a video editor where you add zooms yourself and links on CleanShot Cloud, for $35 once or $10 a user a month. Reelbird does only video, and does more of it: zooms planned from your clicks, a smooth cursor, captions, camera layouts, blur and a share link the moment you stop. For screenshots, CleanShot X is still the better tool."
+  verdict="Reelbird vs CleanShot X in one line: keep CleanShot X for screenshots; use Reelbird when the recording is the point."
+  rival="cleanshot"
+  datePublished="2026-11-07"
+  rows={[
+    ["What it is", "A screen recorder and editor, video only", "A screenshot tool that also records the screen"],
+    ["Price", "Free, MIT licensed. Optional Reelbird Pro, $5 a month, hosts your links", "Basic $35 once (a year of updates, then $19 a year). Pro $10 per user a month, billed yearly"],
+    ["Free version", "Everything", "No free trial; 30-day money-back guarantee"],
+    ["Zooms", "Planned from clicks and typing; every zoom editable", "Animated zooms you add in the video editor"],
+    ["Share links", "Copied the moment you stop, then updated in place. Your own bucket, or Reelbird Pro (100 GB)", "One-click upload to CleanShot Cloud: 1 GB on Basic, unlimited on Pro"],
+    ["Captions", "On-device, in six styles", "Video transcription"],
+    ["Screenshots", "No", "Yes, its main job"],
+    ["Platforms", "macOS 15 or later", "macOS 13 or later"],
+    ["Licence", "MIT, open source", "Proprietary"],
+  ]}
+  better={[
+    "Screenshots are most of what you do.",
+    "You want one app for screenshots and the occasional recording, paid for once.",
+    "Your Mac runs macOS 13 or 14. Reelbird needs macOS 15.",
+  ]}
+  ours={[
+    "Recording is the main job, and you want zooms planned for you rather than added by hand.",
+    "You want a link the moment you stop, then the same link after you polish.",
+    "You want captions, camera layouts, <a href=\"/features/blur-sensitive-info/\">blur for sensitive info</a> and a <a href=\"/features/step-by-step-guides/\">step-by-step guide</a> from the same take.",
+    "You want it free and open source, with links in your own bucket.",
+  ]}
+  faq={faq}
+/>

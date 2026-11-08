@@ -1,0 +1,70 @@
+---
+import Article from "../../../layouts/Article.astro";
+import Shot from "../../../components/Shot.astro";
+import Code from "../../../components/Code.astro";
+import sharingL from "../../../assets/shots/settings-sharing-light.webp";
+import sharingD from "../../../assets/shots/settings-sharing-dark.webp";
+const path = "/guides/self-host-screen-recording-links-cloudflare-r2/";
+---
+<Article
+  seoTitle="Self-host Loom-style screen recording links on Cloudflare R2"
+  description="Host your own Loom-style share links on Cloudflare R2: no server, no database, free egress. Set up a bucket, a public URL and a token, then Reelbird copies a link when you stop recording."
+  path={path} og="guide-r2-links"
+  title="Self-host Loom-style share links on Cloudflare R2"
+  lede="Reelbird copies a share link the moment you stop recording, like Loom, but the video and its viewer page live in a Cloudflare R2 bucket you own. There's no server or database to run: Reelbird uploads static files, signed with your keys. R2 doesn't charge when people watch, and its free tier holds a few hours of video. Setup takes about ten minutes, once."
+  crumbs={[{ name: "Guides", path: "/guides/" }, { name: "Self-host links on R2", path }]}
+  datePublished="2026-11-07"
+  stamp="Published 7 November 2026. Cloudflare's dashboard labels and R2 prices as of October 2026; the full reference is in the sharing docs."
+>
+  <h2 id="before">Before you start</h2>
+  <ul>
+    <li>Reelbird on <strong>macOS 15 or later</strong> (<a href="/download/">download</a>).</li>
+    <li>A Cloudflare account. R2 asks for a payment method even if you stay inside the free tier.</li>
+    <li>Optional: a domain on Cloudflare, for links like <code>video.example.com/r/…</code>.</li>
+  </ul>
+
+  <h2 id="bucket">1. Create a bucket</h2>
+  <p>In the Cloudflare dashboard, open <strong>R2 object storage</strong> and select <strong>Create bucket</strong>. Name it, for example <code>reelbird</code>, leave the location on Automatic, and create it.</p>
+
+  <h2 id="public">2. Give it a public URL</h2>
+  <p>Viewers read the files without credentials, so the bucket needs a public URL. Open the bucket, then <strong>Settings</strong>, and pick one:</p>
+  <ul>
+    <li><strong>Custom domain (recommended):</strong> under <strong>Custom Domains</strong>, select <strong>Add</strong>, enter a subdomain such as <code>video.example.com</code> and connect it. It gets Cloudflare's cache, and it's what you'd use for links you send to customers.</li>
+    <li><strong>r2.dev URL (to try it out):</strong> under <strong>Public Development URL</strong>, select <strong>Enable</strong>. Cloudflare rate-limits it and says it's for development, so switch to a custom domain later.</li>
+  </ul>
+  <p>The public URL makes files readable, not listable: nobody can browse the bucket.</p>
+
+  <h2 id="token">3. Create an API token</h2>
+  <p>Back on the R2 overview, select <strong>Manage</strong> next to API Tokens, then <strong>Create Account API token</strong>. Give it <strong>Object Read &amp; Write</strong> and limit it to your bucket, so Reelbird can't touch anything else in your account. Copy the <strong>Access Key ID</strong> and the <strong>Secret Access Key</strong>; Cloudflare shows the secret only once.</p>
+
+  <h2 id="connect">4. Connect Reelbird</h2>
+  <p>Click the robin in the menu bar, choose <strong>Settings…</strong>, then <strong>Sharing</strong>, and fill in:</p>
+  <ul>
+    <li><strong>Endpoint:</strong> <code>https://&lt;ACCOUNT_ID&gt;.r2.cloudflarestorage.com</code>. The account ID is on the R2 overview page.</li>
+    <li><strong>Bucket:</strong> your bucket's name. <strong>Region:</strong> <code>auto</code>.</li>
+    <li><strong>Access key ID</strong> and <strong>Secret access key</strong> from step 3.</li>
+    <li><strong>Public URL:</strong> your custom domain, or the <code>https://pub-….r2.dev</code> URL.</li>
+  </ul>
+  <p>Choose <strong>Test Connection</strong>. Reelbird uploads a small file, reads it back with your keys and through the public URL, then deletes it. If both work, choose <strong>Save</strong>. The secret goes into your macOS Keychain.</p>
+
+  <Shot src={sharingL} dark={sharingD} variant="frame" alt="Reelbird's Sharing settings: endpoint, bucket, region, access key, secret, public URL and prefix, with Test Connection and Save." sizes="(min-width: 60rem) 520px, 100vw" widths={[520, 1040, 1120]} />
+
+  <h2 id="record">5. Record and get a link</h2>
+  <p>In the picker, turn on <strong>Share while recording</strong>. Reelbird uploads a 1080p stream in 2-second segments as you record, and when you stop, the link is on your clipboard: <code>https://video.example.com/r/&lt;id&gt;/</code>. Later, edit the take and choose <strong>Update link</strong>. The same URL plays the polished version, and the old files are deleted.</p>
+
+  <h2 id="cost">What it costs</h2>
+  <p>As of October 2026, R2's free tier includes 10 GB of storage a month, a million uploads and ten million reads, and egress is always free. The stream uploaded while recording uses roughly 30 MB a minute, so the free 10 GB holds a few hours of shared video. Past that, 100 GB is about $1.35 a month. Stop sharing a link to delete its files.</p>
+
+  <h2 id="cli">From the terminal or CI</h2>
+  <p>The command line tool uses the settings you saved in the app, or you can set them from a terminal. On a CI machine without a Keychain, set the <code>REELBIRD_S3_*</code> environment variables instead; the <a href="/docs/sharing/#command-line-and-ci">sharing docs</a> list them.</p>
+  <Code code={"reelbird config share --endpoint https://<ACCOUNT_ID>.r2.cloudflarestorage.com --bucket reelbird --access-key <ACCESS_KEY_ID> --public-base https://video.example.com --test\nreelbird share latest"} />
+
+  <h2 id="caveats">Caveats</h2>
+  <ul>
+    <li><strong>Links are unlisted, not secret.</strong> Anyone with a link can watch and forward it. There's no password.</li>
+    <li>With a custom domain, Cloudflare's cache may serve a deleted file for a short time.</li>
+    <li>AWS S3, Backblaze B2 and a self-hosted MinIO work too, set up the same way. S3 charges for every view. See the <a href="/docs/sharing/">sharing docs</a>.</li>
+    <li>If you'd rather not run a bucket, <a href="/pricing/">Reelbird Pro</a> hosts links for $5 a month, with view analytics.</li>
+  </ul>
+  <p>Related: <a href="/loom-alternative/#self-hosted">a self-hosted Loom alternative</a> and <a href="/features/share-links/">how share links work</a>.</p>
+</Article>

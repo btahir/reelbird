@@ -1,0 +1,84 @@
+---
+import Feature from "../../layouts/Feature.astro";
+import Code from "../../components/Code.astro";
+---
+<Feature
+  seoTitle="Blur sensitive info in a screen recording on Mac, free: Reelbird"
+  description="Find Sensitive Info spots emails, API keys, card and phone numbers in your Mac screen recording and suggests blurs that follow scrolling text. On-device, free, open source."
+  path="/features/blur-sensitive-info/" og="features-blur-sensitive-info" name="Blur sensitive info"
+  title="Blur sensitive info in a screen recording"
+  lede="Recorded a real inbox, a terminal with a key in it, or a customer's account? Find Sensitive Info reads the text on screen on your Mac and suggests a blur for every email, API key, card number and phone number, following the text as it scrolls. Keep them all in one click, or blur anything by hand."
+  datePublished="2026-11-07"
+>
+  <section class="fsec wrap fgrid">
+    <div>
+      <h2>Find Sensitive Info</h2>
+      <p>In the Overlays panel, <strong>Find Sensitive Info</strong> reads the text on screen with Apple's on-device text recognition, sampling the video twice a second and more often while text scrolls, and looks for:</p>
+      <ul class="plain">
+        <li><strong>Email addresses.</strong></li>
+        <li><strong>API keys and tokens:</strong> known key prefixes, <code>key = value</code> pairs and long random-looking strings.</li>
+        <li><strong>Card numbers,</strong> checked with the Luhn checksum so order numbers aren't flagged.</li>
+        <li><strong>Phone numbers.</strong></li>
+        <li><strong>Words you add,</strong> such as a client's name or a project codename.</li>
+      </ul>
+      <p>Each finding becomes a suggested blur that tracks the text while it scrolls or moves. Keep each one, or <strong>Keep All</strong>. Nothing is uploaded to find them.</p>
+    </div>
+    <div class="finds" aria-label="Example findings">
+      <p class="label">What a list of findings looks like</p>
+      <ul>
+        <li><span class="k">Email</span><span class="v">j…@acme.com</span><span class="t">0:04–0:11</span></li>
+        <li><span class="k">API key</span><span class="v">sk-p…F2</span><span class="t">0:18–0:26</span></li>
+        <li><span class="k">Card number</span><span class="v">•••• 4242</span><span class="t">0:41–0:44</span></li>
+        <li><span class="k">Phone number</span><span class="v">••• 199</span><span class="t">1:02–1:05</span></li>
+      </ul>
+      <p class="note">An illustration. The command line and MCP server show findings masked like this, and the full text never leaves your Mac.</p>
+    </div>
+  </section>
+
+  <section class="fsec wrap fgrid flip">
+    <div>
+      <h2>Blur anything by hand</h2>
+      <p>Press <kbd>B</kbd> and drag over the area: a name, a URL, a notification. The blur gets its own bar in the Overlays lane of the timeline, so you set how long it lasts by dragging its ends.</p>
+      <ul class="plain">
+        <li><strong>Blur, pixelate or a solid redaction bar.</strong></li>
+        <li><strong>Square, rounded or oval,</strong> with an optional soft edge that fades out around the area, never into it.</li>
+        <li><strong>Anchored to the screen,</strong> so a blur stays on its content through auto-zoom, crop and any aspect ratio, including 9:16.</li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="h3">It can't be undone by a viewer</h2>
+      <p>Every blur strength leaves text unreadable. The area is split into cells and each cell keeps one averaged colour, so what was under it can't be recovered from the video. The redaction bar covers it completely.</p>
+    </div>
+  </section>
+
+  <section class="fsec wrap">
+    <h2>Blurs reach everything you share</h2>
+    <ul class="plain narrow-list">
+      <li><strong>Update link replaces the old files.</strong> A link shared while recording plays the raw take until you update it, and the editor reminds you. When you choose <strong>Update link</strong>, the earlier version's files, including the quick stream, are deleted from the bucket or from Reelbird Pro, so the unblurred original can't be fetched.</li>
+      <li><strong>The step guide respects blurs.</strong> Step pictures are rendered with your blurs, a label under a blur is dropped, and viewers can't copy text out of a blurred area.</li>
+      <li><strong>The keystroke overlay</strong> never shows typing while a blur is on screen.</li>
+    </ul>
+    <p class="narrow-list">Find Sensitive Info checks what's on the screen. It doesn't check your narration, captions or the overlays you draw, so listen back if you read a key out loud.</p>
+  </section>
+
+  <section class="fsec wrap fgrid">
+    <div>
+      <h2>From the terminal</h2>
+      <p>The same scan runs from the command line and the MCP server, so an agent recording a demo can find and blur secrets before it shares the link. Findings show masked, such as <code>sk-p…F2</code> and <code>•••• 4242</code>.</p>
+      <p><a class="link-arrow" href="/features/agents/">CLI and MCP for agents</a></p>
+    </div>
+    <Code code={"reelbird redact latest --auto              # list findings, masked\nreelbird redact latest --auto --keep-all   # blur them all\nreelbird blur latest --rect 0.1,0.2,0.3,0.05 --from 0:05 --to 0:12"} />
+  </section>
+</Feature>
+
+<style>
+  .label { font-size: var(--step--1); font-weight: 600; color: var(--text); margin-bottom: 0.6rem; }
+  .finds ul { list-style: none; padding: 0; border-top: 1px solid var(--line); }
+  .finds li { display: grid; grid-template-columns: 7rem 1fr auto; gap: 1rem; padding: 0.7rem 0; border-bottom: 1px solid var(--line); font-size: 0.9375rem; }
+  .finds .k { font-weight: 600; }
+  .finds .v { font-family: var(--font-mono); color: var(--text-muted); }
+  .finds .t { color: var(--text-muted); font-variant-numeric: tabular-nums; }
+  .note { font-size: var(--step--1); color: var(--text-muted); margin-top: 0.75rem; }
+  .h3 { font-size: var(--step-2) !important; }
+  .narrow-list { max-width: 46rem; }
+</style>

@@ -1,0 +1,62 @@
+---
+import Article from "../../layouts/Article.astro";
+const path = "/use-cases/product-demos/";
+---
+<Article
+  seoTitle="Record a product demo video on Mac, free: Reelbird"
+  description="How to record a SaaS product demo on a Mac with auto-zoom, captions, camera and a share link, then make 16:9, 9:16 and a step-by-step guide from the same take. Free."
+  path={path} og="use-case-product-demos"
+  title="Record a product demo video on your Mac"
+  lede="A good product demo is short, zoomed in on what matters, captioned, and easy to send. Reelbird gets you a link the moment you stop, then lets you add the zooms, captions and blurs and update the same link. It's free and open source. Here's a workflow that works for launches, sales follow-ups and help docs."
+  crumbs={[{ name: "Use cases", path: "/use-cases/" }, { name: "Product demos", path }]}
+  datePublished="2026-11-07"
+  stamp="Published 7 November 2026."
+>
+  <h2 id="before">Before you record</h2>
+  <ul>
+    <li><strong>Record a window, not the whole display.</strong> Pick the browser or app window in the picker. Notifications and other windows stay out, and Reelbird records it even if it's on another desktop.</li>
+    <li><strong>Use a demo account.</strong> If you can't, plan to run <a href="/features/blur-sensitive-info/">Find Sensitive Info</a> afterwards; it finds emails, keys, card and phone numbers on screen and suggests blurs.</li>
+    <li><strong>Decide on your face.</strong> Turn on the camera if a person helps (sales, launches). You can change its layout per part later, so you don't have to decide where it goes now.</li>
+    <li><strong>Turn on Record keystrokes</strong> (Settings › Recording) if you'll type or use shortcuts. Typing then gets its own zooms and becomes steps in the guide.</li>
+  </ul>
+
+  <h2 id="record">Record</h2>
+  <ol>
+    <li>Press <kbd>⌥</kbd><kbd>⇧</kbd><kbd>R</kbd>, choose the window, and turn on <strong>Share while recording</strong> if you want the link straight away.</li>
+    <li>Click through the flow at a normal pace and talk as you go. Don't slow down for the zooms; they're planned from your clicks afterwards.</li>
+    <li>Press <kbd>⌥</kbd><kbd>⇧</kbd><kbd>M</kbd> to drop a marker at each new section. Markers can become the chapters on the share page.</li>
+    <li>With the camera on, <kbd>⌥</kbd><kbd>⇧</kbd><kbd>L</kbd> switches between the bubble, camera only and screen only, for an intro to camera or a section that needs the full screen.</li>
+    <li>Stop with <kbd>⌥</kbd><kbd>⇧</kbd><kbd>R</kbd>. The link is on your clipboard.</li>
+  </ol>
+
+  <h2 id="polish">Polish the same take</h2>
+  <ul>
+    <li><strong>Zooms:</strong> one slider from subtle to punchy, then move, resize or delete any zoom on the timeline. <a href="/features/auto-zoom/">More on auto-zoom</a>.</li>
+    <li><strong>Pace:</strong> <strong>Clean Up</strong> (<kbd>W</kbd>) shortens long pauses, cuts ums and dead time at the ends, and speeds up silent typing and waiting. Review any change, or undo it all.</li>
+    <li><strong>Frame:</strong> background, padding, rounded corners and shadow. <strong>Hide Browser Toolbar</strong> crops tabs and bookmarks off a browser window in one click.</li>
+    <li><strong>Captions:</strong> made on your Mac in the language you pick, in six styles. Most people watch demos muted in feeds.</li>
+    <li><strong>Callouts:</strong> arrows, boxes, labels and highlights, drawn on the preview.</li>
+    <li><strong>Sound:</strong> auto level to −16 LUFS and on-device voice enhance, so a laptop mic sounds steady.</li>
+  </ul>
+  <p>Then choose <strong>Update link</strong>. Everyone who already has the link sees the polished version.</p>
+
+  <h2 id="formats">One take, several formats</h2>
+  <ul>
+    <li><strong>16:9</strong> for your website, YouTube or a sales email. Export MP4 (H.264) or HEVC, at the recording's resolution or a height you pick.</li>
+    <li><strong>9:16</strong> for Reels, Shorts and TikTok: set the canvas to 9:16, and use the side-by-side camera layout to stack the screen and your face. See <a href="/guides/screen-recording-to-vertical-video/">turning a screen recording into a vertical video</a>.</li>
+    <li><strong>1:1</strong> for feeds, and <strong>GIF</strong> for a README or changelog.</li>
+    <li><strong>A step-by-step guide</strong> for your help centre: every click is a step with a screenshot. Export it as a web page or Markdown, or point people at the Guide and Click-through on the link. <a href="/features/step-by-step-guides/">More on guides</a>.</li>
+  </ul>
+
+  <h2 id="send">Send it and see who watched</h2>
+  <p>Share links play in any browser, with no account or app for the viewer. Free links live in a bucket you own; <a href="/pricing/">Reelbird Pro</a> ($5 a month) hosts them for you and shows views, daily unique viewers and where people stopped watching, which tells you where a demo loses people. Viewers are counted without cookies, and you never see who they are.</p>
+
+  <h2 id="limits">What Reelbird doesn't do</h2>
+  <ul>
+    <li>No webcam background removal and no iPhone or iPad recording. Screen Studio has both.</li>
+    <li>No joining several takes into one video in the editor yet. Record the demo in one go, or join exports in another editor.</li>
+    <li>No comments on links and no team workspace. Loom and Tella have them.</li>
+    <li>Mac only, macOS 15 or later.</li>
+  </ul>
+  <p>See <a href="/compare/">the best screen recorders for Mac</a> for which tool fits which job, or <a href="/screen-studio-alternative/">Reelbird vs Screen Studio</a> for the closest paid option.</p>
+</Article>

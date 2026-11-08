@@ -1,0 +1,45 @@
+---
+import Alt from "../layouts/Alt.astro";
+const faq = [
+  { id: "focusee-price", q: "How much does FocuSee cost?", a: "As of 7 November 2026: Standard is $49.99 a year or $19.99 a month for one computer, with no AI credits. Advanced is $79.99 a year or $24.99 a month for up to three computers, or $199.99 once for up to five computers, covering version 2.x. Every plan includes 5 GB of cloud storage.", html: "As of 7 November 2026: Standard is $49.99 a year or $19.99 a month for one computer, with no AI credits. Advanced is $79.99 a year or $24.99 a month for up to three computers, or $199.99 once for up to five computers, covering version 2.x. Every plan includes 5 GB of cloud storage (<a href=\"https://focusee.ai/go/store.php?product=fs&id=1\">FocuSee pricing</a>)." },
+  { id: "focusee-free", q: "Is FocuSee free?", a: "No. FocuSee's free trial covers the standard features and one exported video. Reelbird is free and MIT licensed, with no export limit and no watermark." },
+  { id: "free-focusee", q: "Is there a free FocuSee alternative for Mac?", a: "Reelbird is one: free, open source and native to the Mac, with auto-zoom from clicks and typing, a smooth cursor, camera layouts, captions and blur. OpenScreen is another free, open-source auto-zoom editor that runs on Windows and Linux too, without share links.", html: "Reelbird is one: free, open source and native to the Mac, with auto-zoom from clicks and typing, a smooth cursor, camera layouts, captions and blur. OpenScreen is another free, open-source auto-zoom editor that runs on Windows and Linux too, without share links. See the <a href=\"/compare/\">comparison</a>." },
+  { id: "windows", q: "Does Reelbird run on Windows like FocuSee?", a: "No. Reelbird is Mac only, macOS 15 or later. FocuSee runs on macOS and Windows." },
+  { id: "background", q: "Can Reelbird remove my webcam background?", a: "No. FocuSee can; Reelbird has camera layouts (bubble, camera only, side by side and screen only) but no background removal." },
+];
+---
+<Alt
+  seoTitle="Free FocuSee alternative for Mac: Reelbird"
+  description="Reelbird vs FocuSee: auto-zoom from clicks and typing, camera layouts and captions, free and open source on the Mac, with a link when you stop. Prices checked 7 Nov 2026."
+  path="/focusee-alternative/"
+  og="focusee-alternative"
+  title="A free FocuSee alternative for Mac"
+  answer="Reelbird is a free, open-source FocuSee alternative for the Mac. Like FocuSee, it zooms in on your clicks and typing, smooths the cursor, and has camera layouts, captions, blur and a speed-up for typing. Unlike FocuSee, which costs $49.99 a year or $199.99 once, Reelbird is free and MIT licensed, and it copies a share link the moment you stop, then updates that link after you polish. FocuSee runs on Windows too and has more AI tools."
+  verdict="Reelbird vs FocuSee in one line: FocuSee is the paid auto-zoom editor for Mac and Windows with a one-time option and AI extras; Reelbird is the free, open-source Mac recorder with a link first and polish later."
+  rival="focusee"
+  datePublished="2026-11-07"
+  rows={[
+    ["Price", "Free, MIT licensed. Optional Reelbird Pro, $5 a month, hosts your links", "Standard $49.99 a year or $19.99 a month (one computer). Advanced $79.99 a year, $24.99 a month, or $199.99 once for version 2.x"],
+    ["Free version", "Everything, no watermark, no export limit", "A free trial with the standard features and one exported video"],
+    ["Auto-zoom", "Planned from clicks and typing. One intensity slider; every zoom editable", "Zooms on clicks and typing, with cursor styles and click effects"],
+    ["Camera", "Bubble, camera only, side by side (stacked on 9:16) or screen only, per part of the video", "Picture-in-picture and other layouts, background removal"],
+    ["Captions", "On-device, six styles", "AI subtitles in 50+ languages; SRT import"],
+    ["Audio", "Auto level, on-device voice enhance, ducking; Clean Up shortens pauses and cuts ums", "AI voice enhancement, filler and silence removal, noise reduction"],
+    ["Share links", "Copied the moment you stop, then updated in place. Your own bucket, or Reelbird Pro", "Shareable links with password and permission controls; 5 GB of cloud storage"],
+    ["Step-by-step guide", "Every take: a Guide and Click-through on the link", "Not listed on focusee.ai"],
+    ["Platforms", "macOS 15 or later", "macOS and Windows; records iOS and Android over USB"],
+    ["Licence", "MIT, open source", "Proprietary"],
+  ]}
+  better={[
+    "You record on Windows, or record phones over USB.",
+    "You want webcam background removal, 3D tilt effects or a teleprompter.",
+    "You'd rather pay once for a licence than set anything up.",
+  ]}
+  ours={[
+    "You want auto-zoom on a Mac without a subscription or licence.",
+    "You want a link the moment you stop, before you've polished anything, and the same link after.",
+    "You want your files on your disk and your links in <a href=\"/guides/self-host-screen-recording-links-cloudflare-r2/\">your own bucket</a>.",
+    "You want the code open, a <a href=\"/features/step-by-step-guides/\">step-by-step guide</a> from each take, or a <a href=\"/features/agents/\">CLI and MCP server</a> for agents.",
+  ]}
+  faq={faq}
+/>

@@ -27,7 +27,7 @@ const sitemap = () => ({
         }
       };
       walk(root, "");
-      const prio = (u) => (u === "/" ? "1.0" : /^\/(download|pricing|features|docs|loom-alternative|screen-studio-alternative|compare)\/$/.test(u) ? "0.8" : "0.6");
+      const prio = (u) => (u === "/" ? "1.0" : /^\/(download|pricing|features|docs|[a-z-]+-alternative|compare|open-source-screen-recorders-mac)\/$/.test(u) ? "0.8" : "0.6");
       const entry = ({ path, lastmod }) => `  <url><loc>${SITE}${path}</loc>${lastmod ? `<lastmod>${lastmod}</lastmod>` : ""}<priority>${prio(path)}</priority></url>`;
       const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.sort((a, b) => a.path.localeCompare(b.path)).map(entry).join("\n")}\n</urlset>\n`;
       writeFileSync(join(root, "sitemap.xml"), xml);

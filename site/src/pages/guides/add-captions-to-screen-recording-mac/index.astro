@@ -1,0 +1,58 @@
+---
+import Article from "../../../layouts/Article.astro";
+import Shot from "../../../components/Shot.astro";
+import Code from "../../../components/Code.astro";
+import capL from "../../../assets/shots/editor-captions-light.webp";
+import capD from "../../../assets/shots/editor-captions-dark.webp";
+const path = "/guides/add-captions-to-screen-recording-mac/";
+---
+<Article
+  seoTitle="Add captions to a screen recording on Mac, free and on-device"
+  description="How to add captions to a Mac screen recording for free: on-device transcription in your language, six caption styles burned into the video, a captions track on share links, and SRT or VTT files."
+  path={path} og="guide-captions"
+  title="How to add captions to a screen recording on Mac"
+  lede="Reelbird writes captions for your screen recording on your Mac, with Apple's on-device speech recognition: no upload, no API key, no subscription. Pick a style, fix any misheard words, and the captions are drawn into the export, offered as a track on your share link, or saved as a VTT or SRT file. Here's how."
+  crumbs={[{ name: "Guides", path: "/guides/" }, { name: "Add captions", path }]}
+  datePublished="2026-11-07"
+  stamp="Published 7 November 2026. Written for Reelbird 0.4.1."
+>
+  <h2 id="before">Before you start</h2>
+  <ul>
+    <li>A Mac on <strong>macOS 15 or later</strong>, with Reelbird installed (<a href="/download/">download</a>).</li>
+    <li>A recording with your microphone on. Captions are made from the microphone track.</li>
+    <li>On <strong>macOS 26 and later</strong>, captions use Apple's SpeechAnalyzer, which downloads the language model the first time. On <strong>macOS 15</strong>, they use on-device speech recognition, and macOS asks for the Speech Recognition permission once.</li>
+  </ul>
+
+  <h2 id="steps">Steps</h2>
+  <ol>
+    <li><strong>Open the take</strong> in the editor, from the card that appears when you stop or from the library (<kbd>⇧</kbd><kbd>⌘</kbd><kbd>L</kbd>).</li>
+    <li><strong>Open the Captions tab</strong> with <kbd>⌘</kbd><kbd>7</kbd>.</li>
+    <li><strong>Pick the spoken language</strong> next to <strong>Generate Captions</strong>. The menu lists the languages Apple supports on your Mac, downloaded ones first, and remembers your choice.</li>
+    <li><strong>Press Generate Captions.</strong> The transcript appears below, with a timing for every word.</li>
+    <li><strong>Choose a style:</strong> Classic, Highlight (the spoken word lights up) or Marker (a highlighter box follows your words) for tutorials and demos; Pop, One Word or Slam for short social clips. Then a colour set (five) and a size (three).</li>
+    <li><strong>Choose a position.</strong> Auto puts captions under the video when there's room, otherwise at the bottom, moving to the top while you work near the bottom of the screen. Or pin them to the bottom, below the video or the top.</li>
+    <li><strong>Fix mistakes.</strong> Double-click a line in the transcript to edit it; the words keep their timing. Fix a misheard word everywhere at once, or hide a line from the captions.</li>
+    <li><strong>Export</strong> with <kbd>⌘</kbd><kbd>E</kbd>, or choose <strong>Update link</strong> if you've shared the take.</li>
+  </ol>
+
+  <Shot src={capL} dark={capD} alt="The Captions inspector: English (US) with Change, a grid of caption styles with Highlight selected, colour, size and position controls, and the transcript; the preview shows a Highlight caption with the spoken word in yellow." sizes="(min-width: 60rem) 720px, 100vw" widths={[720, 1080, 1440, 2160]} />
+
+  <h2 id="where">Where the captions end up</h2>
+  <ul>
+    <li><strong>In the video.</strong> Any style other than None is drawn into the exported MP4, HEVC, ProRes or GIF, so captions show wherever the file plays, including feeds that autoplay muted.</li>
+    <li><strong>On your share link.</strong> Viewers also get a captions track they can turn on or off in the player.</li>
+    <li><strong>As a file.</strong> The command line tool writes <code>captions.vtt</code>, and <code>captions.srt</code> too with <code>--srt</code>, into the recording's folder, for YouTube or another editor.</li>
+  </ul>
+  <Code code={"reelbird captions latest --locale en-US --srt\nreelbird edit latest --set captions.style=highlight --set captions.size=large"} />
+
+  <h2 id="which-style">Which style to pick</h2>
+  <p>For a walkthrough people read along with, <strong>Classic</strong> or <strong>Highlight</strong>. For a demo where you want the eye on one phrase at a time, <strong>Marker</strong>. For a 9:16 clip in a feed, <strong>Pop</strong> (words pop in as you say them), <strong>One Word</strong> (one big word at a time) or <strong>Slam</strong> (words land hard). See all six on the <a href="/features/audio-captions/">audio and captions</a> page, and <a href="/guides/screen-recording-to-vertical-video/">turning a screen recording into a vertical video</a> for the rest of a social cut.</p>
+
+  <h2 id="caveats">Caveats</h2>
+  <ul>
+    <li>Accuracy depends on your microphone and the language. A wired or built-in microphone does better than a Bluetooth headset, which switches to a low-quality mode while its microphone is in use.</li>
+    <li>Product names and jargon are where it slips. Fix a word once with <strong>fix everywhere</strong>.</li>
+    <li>If you change the language, generate the captions again.</li>
+    <li>If the Captions tab says it needs a newer macOS, see <a href="/docs/troubleshooting/">troubleshooting</a>.</li>
+  </ul>
+</Article>

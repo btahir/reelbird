@@ -1,0 +1,100 @@
+---
+import Feature from "../../layouts/Feature.astro";
+import Code from "../../components/Code.astro";
+---
+<Feature
+  seoTitle="Turn a screen recording into a step-by-step guide, free on Mac: Reelbird"
+  description="Every Reelbird recording becomes a step-by-step guide: each click a step with a screenshot. Share it as a Guide and Click-through, or export HTML, Markdown or a Claude skill."
+  path="/features/step-by-step-guides/" og="features-step-by-step-guides" name="Step-by-step guides"
+  title="Turn a screen recording into a step-by-step guide"
+  lede="Record once, the way you'd show someone. Reelbird turns each click, run of typing and shortcut into a numbered step with a picture of the screen, and your share link shows it as a Guide and a Click-through next to the video. It's made on your Mac, and it's free."
+  datePublished="2026-11-07"
+>
+  <section class="fsec wrap fgrid">
+    <div>
+      <h2>Every take is already a guide</h2>
+      <p>Reelbird logs your clicks, typing and shortcuts next to the video while you record. Open the take and the <strong>Guide</strong> panel (<kbd>⌘</kbd><kbd>9</kbd>) lists them as steps. Each one has:</p>
+      <ul class="plain">
+        <li><strong>A picture of the screen</strong> just before the action, with your crop, blurs and drawn overlays. On the link, the spot you clicked is marked on it.</li>
+        <li><strong>What you clicked,</strong> read from the screen on your Mac, such as Click "Save".</li>
+        <li><strong>What you said</strong> while you did it, if you narrated. On Macs with Apple Intelligence, your reason is worked into the step: Click "Save" to keep the draft.</li>
+      </ul>
+      <p>Rewrite a step, hide the ones nobody needs, or read the screen again. Cuts and trims in the editor apply to the guide too.</p>
+    </div>
+    <div class="steps" aria-label="An example guide">
+      <p class="label">An example guide</p>
+      <ol>
+        <li><span class="n">1</span><span>Click <q>Settings</q> in the sidebar.</span></li>
+        <li><span class="n">2</span><span>Click <q>Team</q> to open the members list.</span></li>
+        <li><span class="n">3</span><span>Click <q>Invite</q>, then type the new member's email.</span></li>
+        <li><span class="n">4</span><span>Press <kbd>⌘</kbd><kbd>Return</kbd> to send the invite.</span></li>
+      </ol>
+      <p class="note">Illustration of the step format. In the app, each step also has its screenshot.</p>
+    </div>
+  </section>
+
+  <section class="fsec wrap fgrid flip">
+    <div>
+      <h2>Guide and Click-through on your link</h2>
+      <p>The guide goes up with the edited video: when you share a take from the editor, or choose <strong>Update link</strong> on one you shared while recording. The viewer page then has three views:</p>
+      <ul class="plain">
+        <li><strong>Video:</strong> the recording, with captions if you made them.</li>
+        <li><strong>Guide:</strong> the steps with their pictures, to read at the viewer's own pace.</li>
+        <li><strong>Click-through:</strong> an interactive walkthrough. Viewers click the highlighted spot to move to the next step, like using the app themselves.</li>
+      </ul>
+      <p>Viewers can also pause the video and select text straight out of the frame, such as a command or an error message. Text under a blur is never included. Both the guide and copyable text can be turned off in the Guide panel.</p>
+    </div>
+    <div>
+      <p class="label">What a viewer gets from one link</p>
+      <pre class="tree" tabindex="0"><code>{`watch.reelbird.app/r/7Hk2pQx9/          Video
+watch.reelbird.app/r/7Hk2pQx9/#guide    Guide
+watch.reelbird.app/r/7Hk2pQx9/#demo     Click-through`}</code></pre>
+      <p class="note">The same works on links in your own bucket.</p>
+    </div>
+  </section>
+
+  <section class="fsec wrap fgrid">
+    <div>
+      <h2>Export a web page, Markdown or a Claude skill</h2>
+      <p>Export the guide on its own, to paste into docs, a help centre, a pull request or a wiki:</p>
+      <ul class="plain">
+        <li><strong>Web page:</strong> an <code>index.html</code> with the Guide and Click-through and the step images next to it. Host it anywhere.</li>
+        <li><strong>Markdown with images:</strong> a <code>guide.md</code> and a folder of numbered JPEGs.</li>
+        <li><strong>Claude skill:</strong> a <code>SKILL.md</code> with the steps, so an agent can learn the task you showed it.</li>
+      </ul>
+      <p>Exports are free. There's no paid tier for them.</p>
+    </div>
+    <Code code={"reelbird steps latest                  # each click, typing and shortcut, with what was clicked\nreelbird steps latest --hide c9876     # hide a step\nreelbird guide latest --format html    # also md or skill"} />
+  </section>
+
+  <section class="fsec wrap">
+    <h2>What stays out</h2>
+    <ul class="plain narrow-list">
+      <li><strong>Typed text,</strong> unless you turn on <strong>Show what was typed</strong>. Even then, anything that looks like an email, key, card or phone number is masked, and so is anything typed while a blur is on screen.</li>
+      <li><strong>Anything under a blur.</strong> Step pictures are rendered with your blurs, and a label under a blur is dropped. Use <a href="/features/blur-sensitive-info/">Find Sensitive Info</a> to catch emails and keys first.</li>
+      <li><strong>Nothing is uploaded to make it.</strong> Reading the screen and wording steps happen on your Mac, with Apple's on-device text recognition and, where available, Apple's on-device model.</li>
+    </ul>
+    <p>Steps come from clicks. Typing and shortcuts become steps when <strong>Record keystrokes</strong> is on (it needs Accessibility and Input Monitoring). A take with no clicks has no steps.</p>
+  </section>
+
+  <section class="fsec wrap">
+    <h2>Next to Scribe and Tango</h2>
+    <p class="wide">Scribe and Tango build guides from clicks in your browser, and both are good team tools with shared workspaces. Their free plans capture in the browser only; desktop capture and PDF, HTML and Markdown exports are on paid plans (checked 7 November 2026). Reelbird works in any Mac app, gives you the video and the guide from one take, and exports for free. It's Mac only, with no team workspace.</p>
+    <p><a class="link-arrow" href="/scribe-alternative/">Reelbird vs Scribe and Tango</a></p>
+  </section>
+
+  <section class="fsec wrap">
+    <h2>From an agent</h2>
+    <p class="wide">The MCP server has <code>get_steps</code>, <code>edit_step</code>, <code>export_guide</code> and <code>describe_take</code>, so Claude Code, Codex or Cursor can read what a recording shows, tidy the steps and export them. See <a href="/features/agents/">CLI and MCP for agents</a>.</p>
+  </section>
+</Feature>
+
+<style>
+  .label { font-size: var(--step--1); font-weight: 600; color: var(--text); margin-bottom: 0.6rem; }
+  .steps ol { list-style: none; padding: 0; display: grid; gap: 0.6rem; }
+  .steps li { display: grid; grid-template-columns: 2rem 1fr; gap: 0.75rem; align-items: center; padding: 0.75rem 1rem; background: var(--bg-raised); border: 1px solid var(--line); border-radius: var(--radius-lg, 12px); }
+  .steps .n { display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 999px; background: var(--text); color: var(--bg); font-weight: 600; font-size: 0.875rem; }
+  .note { font-size: var(--step--1); color: var(--text-muted); margin-top: 0.75rem; }
+  .tree { font-size: 0.8125rem; white-space: pre; overflow-x: auto; }
+  .narrow-list, .wide { max-width: 46rem; }
+</style>

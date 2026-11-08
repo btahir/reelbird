@@ -24,7 +24,7 @@ export const REQUIREMENTS = {
 
 /** One-line description, reused by meta tags, JSON-LD and llms.txt. */
 export const SITE_DESCRIPTION =
-  "Reelbird is a free, open-source screen recorder for macOS that copies a share link the moment you stop recording, then lets you polish the same take with auto-zoom, a smooth cursor and captions without changing the link.";
+  "Reelbird is a free, open-source screen recorder for macOS that copies a share link the moment you stop recording, then lets you polish the same take with auto-zoom, a smooth cursor and captions without changing the link, and turns every take into a step-by-step guide.";
 
 /** The canonical three-sentence description (homepage intro, llms.txt, directories). */
 export const SITE_DESCRIPTION_LONG = `${SITE_DESCRIPTION} It is a native Swift app with no account needed and no telemetry: share links point at a storage bucket you own, such as Cloudflare R2, for free, or, if you'd rather not set one up, at Reelbird Pro's hosting ($5 a month, with viewer analytics). It includes a command-line tool and an MCP server so coding agents can record and share demos, and you can download it, signed and notarised by Apple, or build it from source, on macOS 15 or later.`;

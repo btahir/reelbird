@@ -4,9 +4,14 @@ import PageHead from "../../components/PageHead.astro";
 const crumbs = [{ name: "Guides", path: "/guides/" }];
 const guides = [
   { href: "/guides/record-mac-screen-with-internal-audio/", title: "Record your Mac screen with internal audio", text: "System audio, microphone and screen together on macOS 15 and later, with no virtual audio driver." },
+  { href: "/guides/add-captions-to-screen-recording-mac/", title: "Add captions to a screen recording on Mac", text: "On-device transcription, six caption styles drawn into the video, a captions track on links, and SRT or VTT files." },
+  { href: "/guides/screen-recording-to-vertical-video/", title: "Turn a screen recording into a vertical 9:16 video", text: "For Reels, Shorts and TikTok: the 9:16 canvas, zooms, a stacked camera layout and big captions." },
+  { href: "/guides/record-screen-with-webcam-mac/", title: "Record your screen with a webcam overlay", text: "A camera bubble you can move and reshape after recording, plus camera-only and side-by-side layouts." },
+  { href: "/guides/self-host-screen-recording-links-cloudflare-r2/", title: "Self-host Loom-style share links on Cloudflare R2", text: "A bucket, a public URL and a token: links on your own storage, with no server to run." },
+  { href: "/features/step-by-step-guides/", title: "Turn a screen recording into a step-by-step guide", text: "Every click becomes a step with a screenshot; share a Click-through or export Markdown." },
 ];
 ---
-<Base title="Reelbird guides" description="Step-by-step guides for recording your Mac screen with Reelbird, the free, open-source screen recorder." og="home" crumbs={crumbs}>
+<Base title="Reelbird guides" description="Step-by-step guides for recording your Mac screen with Reelbird, the free, open-source screen recorder." og="guides" crumbs={crumbs}>
   <PageHead title="Guides" lede="Step by step, with the caveats." crumbs={crumbs} />
   <div class="wrap list">
     <ul>{guides.map((g) => <li><a href={g.href}><strong>{g.title}</strong></a><span>{g.text}</span></li>)}</ul>

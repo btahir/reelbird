@@ -1,0 +1,38 @@
+---
+// Guides and use-case pages: an H1 with the buyer's phrase, a lede that answers it, prose,
+// and the install CTA. Article JSON-LD carries the dates, so the sitemap gets a real lastmod.
+import Base from "./Base.astro";
+import PageHead from "../components/PageHead.astro";
+import Icon from "../components/Icon.astro";
+import { article } from "../lib/jsonld";
+
+interface Props {
+  seoTitle: string; description: string; path: string; og: string;
+  title: string; lede: string;
+  crumbs: { name: string; path: string }[];
+  datePublished: string; dateModified?: string;
+  /** Shown under the article, e.g. "Published 7 November 2026." */
+  stamp?: string;
+}
+const { seoTitle, description, path, og, title, lede, crumbs, datePublished, dateModified, stamp } = Astro.props;
+---
+<Base title={seoTitle} description={description} og={og} crumbs={crumbs} type="article" schema={[article({ title: seoTitle, description, path, datePublished, dateModified, image: `/og/${og}.png` })]}>
+  <PageHead title={title} lede={lede} crumbs={crumbs} />
+  <div class="wrap">
+    <div class="prose body">
+      <slot />
+      {stamp && <p class="muted stamp">{stamp}</p>}
+    </div>
+    <div class="cta">
+      <a class="btn btn-primary" href="/download/"><Icon name="download" />Get Reelbird — free</a>
+      <span class="muted">Download or build from source. macOS 15 or later. Mac only.</span>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .body { padding-bottom: 1rem; }
+  .body > :global(h2:first-child) { margin-top: 0; }
+  .stamp { margin-top: 2.5rem; font-size: var(--step--1); }
+  .cta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.25rem; padding-block: 3rem var(--section); font-size: var(--step--1); }
+</style>

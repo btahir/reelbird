@@ -1,0 +1,46 @@
+---
+import Article from "../../layouts/Article.astro";
+import Code from "../../components/Code.astro";
+const path = "/use-cases/dev-demos/";
+---
+<Article
+  seoTitle="Record a coding demo or PR demo on Mac, or let Claude Code record it: Reelbird"
+  description="Record a demo of a code change or pull request on your Mac, with keys blurred and a link to paste. Or let Claude Code, Codex or Cursor record it through Reelbird's MCP server."
+  path={path} og="use-case-dev-demos"
+  title="Record a coding demo or PR demo, or let your agent record it"
+  lede="A 30-second video in a pull request saves a reviewer from checking out the branch. Reelbird records it, blurs any keys that were on screen, and hands you a link to paste. Its command line tool and MCP server let Claude Code, Codex or Cursor record the demo of the change they just made. Free and open source, for the Mac."
+  crumbs={[{ name: "Use cases", path: "/use-cases/" }, { name: "Dev demos", path }]}
+  datePublished="2026-11-07"
+  stamp="Published 7 November 2026."
+>
+  <h2 id="pr">A demo for a pull request</h2>
+  <ol>
+    <li>Press <kbd>⌥</kbd><kbd>⇧</kbd><kbd>R</kbd> and pick the browser window with your change, or the terminal. Turn on <strong>Share while recording</strong>.</li>
+    <li>Show the change. Stop with <kbd>⌥</kbd><kbd>⇧</kbd><kbd>R</kbd>; the link is on your clipboard.</li>
+    <li>Paste it into the pull request. The page plays in any browser, and the reviewer needs no account.</li>
+    <li>If you want, open the take, run <strong>Find Sensitive Info</strong> and <strong>Clean Up</strong>, then <strong>Update link</strong>. The URL in the PR stays the same.</li>
+  </ol>
+  <p>Keep the recording short: <strong>Speed Up Typing</strong> finds stretches of typing and waiting for a build, and speeds them all up in one click.</p>
+
+  <h2 id="secrets">Keys, tokens and emails</h2>
+  <p>Terminals and dashboards are full of things you shouldn't post. <a href="/features/blur-sensitive-info/">Find Sensitive Info</a> reads the screen on your Mac and suggests a blur for every email, API key or token, card number and phone number, following the text as it scrolls. The blur can't be reversed from the video, and Update link deletes the earlier, unblurred files. The keystroke overlay shows only shortcuts unless you turn on typed text, and never shows typing while a blur is on screen.</p>
+
+  <h2 id="agent">Let your coding agent record it</h2>
+  <p>The <code>reelbird</code> command line tool ships inside the app, and <code>reelbird mcp</code> runs an MCP server. Add it to your agent once:</p>
+  <Code code="claude mcp add reelbird -- /Applications/Reelbird.app/Contents/Helpers/reelbird mcp" />
+  <p>Then ask: "Record a 20-second demo of the settings page you just changed, blur any keys and give me the share link." The agent can list screens and windows, start and stop a recording, find and blur sensitive info, set zooms and captions, export and share. Recording through an agent needs Screen Recording permission for the app that runs it, such as your terminal or editor. Setup for Codex and Cursor is in the <a href="/docs/mcp/">MCP docs</a>.</p>
+  <p>The same steps from a script or CI job:</p>
+  <Code code={"reelbird record --display 1 --duration 20 --share\nreelbird redact latest --auto --keep-all   # blur emails, keys, card and phone numbers\nreelbird share latest --polished           # same link, polished video"} />
+
+  <h2 id="read">Agents can read a recording too</h2>
+  <p>Record yourself reproducing a bug, then hand the take to your agent. <code>describe_take</code> gives it the steps (each click, typing and shortcut, with what was clicked), what you said and your markers, so it can follow what you showed without watching a video. <code>get_steps</code> and <code>export_guide</code> turn the same take into a <a href="/features/step-by-step-guides/">step-by-step guide</a>, as Markdown for the PR description or a Claude skill.</p>
+
+  <h2 id="tips">Tips for code on screen</h2>
+  <ul>
+    <li>Make the editor or terminal font bigger before recording. Auto-zoom helps, but small text is still small.</li>
+    <li>Use <strong>Hide Browser Toolbar</strong> to crop tabs and bookmarks off a browser window.</li>
+    <li>Turn on <strong>Record keystrokes</strong> so typing bursts get their own zooms and shortcuts show as an overlay.</li>
+    <li>A GIF export works where video doesn't, such as a README.</li>
+  </ul>
+  <p>More on the tools: <a href="/features/agents/">CLI and MCP for agents</a> and the <a href="/docs/cli/">command line docs</a>.</p>
+</Article>

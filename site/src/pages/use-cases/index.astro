@@ -1,0 +1,25 @@
+---
+import Base from "../../layouts/Base.astro";
+import PageHead from "../../components/PageHead.astro";
+const crumbs = [{ name: "Use cases", path: "/use-cases/" }];
+const items = [
+  { href: "/use-cases/product-demos/", title: "Product demo videos", text: "Record a SaaS demo with auto-zoom, captions and your camera, then make 16:9, 9:16 and a step-by-step guide from one take." },
+  { href: "/use-cases/dev-demos/", title: "Coding and PR demos", text: "A link to paste in a pull request, with keys blurred. Or let Claude Code, Codex or Cursor record the demo through the MCP server." },
+  { href: "/features/step-by-step-guides/", title: "How-to guides and docs", text: "Every recording becomes a step-by-step guide with a screenshot per click, shared as a Click-through or exported as Markdown." },
+  { href: "/loom-alternative/", title: "Quick video messages", text: "A link on your clipboard the moment you stop, hosted in your own bucket or by Reelbird Pro." },
+];
+---
+<Base title="What people record with Reelbird" description="Product demos, coding and PR demos, step-by-step guides and quick video messages, recorded on a Mac with Reelbird, the free, open-source screen recorder." og="use-cases" crumbs={crumbs}>
+  <PageHead title="Use cases" lede="What Reelbird is good at, with a workflow for each." crumbs={crumbs} />
+  <div class="wrap list">
+    <ul>{items.map((g) => <li><a href={g.href}><strong>{g.title}</strong></a><span>{g.text}</span></li>)}</ul>
+  </div>
+</Base>
+<style>
+  .list { padding-bottom: var(--section); }
+  ul { list-style: none; padding: 0; border-top: 1px solid var(--line); max-width: 46rem; }
+  li { display: grid; gap: 0.25rem; padding: 1.25rem 0; border-bottom: 1px solid var(--line); }
+  a { text-decoration: none; font-size: 1.125rem; }
+  strong { font-weight: 600; }
+  span { color: var(--text-muted); }
+</style>

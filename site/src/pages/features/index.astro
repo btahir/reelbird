@@ -19,10 +19,16 @@ const main = [
   { href: "/features/share-links/", short: "share links", title: "Instant share links", text: "The link is on your clipboard when you stop. Update it after editing and the URL stays the same. Files live in your own bucket, or Reelbird Pro hosts them.", img: shareL, dark: shareD, alt: "The Shared popover with the link, Copy and Update Link." },
   { href: "/features/audio-captions/", short: "audio and captions", title: "Audio and captions", text: "Auto level to −16 LUFS, on-device voice enhance, ducking, one-click Clean Up, and styled captions made on your Mac.", img: audioL, dark: audioD, alt: "The Audio inspector with Enhance voice, Auto level and ducking." },
 ];
+const newer = [
+  { href: "/features/step-by-step-guides/", title: "Step-by-step guides", text: "Every click, run of typing and shortcut becomes a step with a picture of the screen. The link shows a Guide and a Click-through; export a web page, Markdown or a Claude skill." },
+  { href: "/features/blur-sensitive-info/", title: "Blur sensitive info", text: "Find Sensitive Info reads the screen on your Mac and suggests blurs for emails, API keys, card and phone numbers, following the text as it scrolls." },
+];
 const more = [
   ["Display, window or area", "Pick any display, any window (even on another desktop) or drag out an area. Return starts, Esc closes."],
   ["Separate tracks", "Screen, camera, microphone and system audio, each on its own track, with no virtual audio driver."],
-  ["Camera bubble", "Its own 30 fps track, so size, shape and corner can change after recording."],
+  ["Camera layouts", "The camera is its own 30 fps track. Bubble, camera only, side by side (stacked on 9:16) or screen only, for any part, switched while recording with ⌥⇧L or on the timeline."],
+  ["Speed and Speed Up Typing", "Any part from 0.25× to 4×. Speed Up Typing finds typing and waiting and speeds it all up in one click."],
+  ["Arrows, boxes and labels", "Draw them on the preview, pick a colour, trim them on the timeline."],
   ["Crash-safe takes", "2-second segments on disk from the first frame. A crash costs at most two seconds."],
   ["Hide the browser toolbar", "Reelbird finds the browser chrome at the top of a recording and crops it in one click. The media is never changed."],
   ["Keystroke overlay", "Optional. Shows the shortcuts you press, and lets auto-zoom follow typing."],
@@ -56,6 +62,16 @@ const crumbs = [{ name: "Features", path: "/features/" }];
       </div>
       <pre class="mini" tabindex="0"><code><span class="d">$</span> reelbird record --display 1 --duration 20 --share{"\n"}<span class="d">$</span> reelbird edit latest --set zoom.intensity=0.7{"\n"}<span class="d">$</span> reelbird share latest --polished{"\n"}<span class="d"># same link, polished video</span></code></pre>
     </section>
+
+    {newer.map((m) => (
+      <section class="row text-only" data-reveal>
+        <div>
+          <h2><a href={m.href}>{m.title}</a></h2>
+          <p>{m.text}</p>
+          <p><a class="link-arrow" href={m.href}>More on {m.title.toLowerCase()}</a></p>
+        </div>
+      </section>
+    ))}
 
     <section class="row flip" data-reveal>
       <div>
@@ -93,7 +109,8 @@ const crumbs = [{ name: "Features", path: "/features/" }];
   <section class="wrap more" aria-labelledby="vs-title">
     <h2 id="vs-title">Next to Loom and Screen Studio</h2>
     <p class="muted vs">Loom gives you a link when you stop but no auto-zoom, and its free plan stops videos at 5 minutes with no downloads. Screen Studio has the polish for $29 a month, with the link after export. Reelbird does both from one take, free.</p>
-    <p class="vs-links"><a class="link-arrow" href="/loom-alternative/">Reelbird vs Loom</a><a class="link-arrow" href="/screen-studio-alternative/">Reelbird vs Screen Studio</a><a class="link-arrow" href="/compare/">Eight recorders compared</a></p>
+    <p class="vs-links"><a class="link-arrow" href="/loom-alternative/">Reelbird vs Loom</a><a class="link-arrow" href="/screen-studio-alternative/">Reelbird vs Screen Studio</a><a class="link-arrow" href="/cap-alternative/">Reelbird vs Cap</a><a class="link-arrow" href="/scribe-alternative/">Reelbird vs Scribe and Tango</a><a class="link-arrow" href="/compare/">The best screen recorders for Mac</a><a class="link-arrow" href="/open-source-screen-recorders-mac/">Open-source recorders</a></p>
+    <p class="vs-links"><a class="link-arrow" href="/use-cases/product-demos/">Product demos</a><a class="link-arrow" href="/use-cases/dev-demos/">Coding and PR demos</a><a class="link-arrow" href="/guides/">Guides</a></p>
   </section>
 
   <CtaBand />
@@ -105,6 +122,7 @@ const crumbs = [{ name: "Features", path: "/features/" }];
   .row.flip > :first-child { order: 2; }
   .row h2 { font-size: var(--step-3); }
   .row h2 a { text-decoration: none; }
+  .row.text-only { grid-template-columns: minmax(0, 1fr); max-width: 44rem; }
   .row p { margin-top: 1rem; color: var(--text-muted); }
   .mini { background: #1a1512; color: #fff4e8; border-radius: var(--radius-lg); padding: 1.5rem; font-size: 0.8125rem; line-height: 1.8; white-space: pre-wrap; box-shadow: var(--shadow-frame); }
   .mini .d { color: #a69c93; }

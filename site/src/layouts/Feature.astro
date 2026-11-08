@@ -3,18 +3,27 @@
 import Base from "./Base.astro";
 import PageHead from "../components/PageHead.astro";
 import CtaBand from "../components/CtaBand.astro";
+import { article } from "../lib/jsonld";
 
-interface Props { seoTitle: string; description: string; path: string; og: string; title: string; lede: string; name: string }
-const { seoTitle, description, path, og, title, lede, name } = Astro.props;
+interface Props {
+  seoTitle: string; description: string; path: string; og: string; title: string; lede: string; name: string;
+  /** When the page was first published. With it, the page gets Article JSON-LD and a sitemap lastmod. */
+  datePublished?: string;
+  dateModified?: string;
+}
+const { seoTitle, description, path, og, title, lede, name, datePublished, dateModified } = Astro.props;
+const schema = datePublished ? [article({ title, description, path, datePublished, dateModified, image: `/og/${og}.png` })] : [];
 const crumbs = [{ name: "Features", path: "/features/" }, { name, path }];
 const others = [
   { href: "/features/auto-zoom/", label: "Auto-zoom and smooth cursor" },
   { href: "/features/share-links/", label: "Instant share links" },
+  { href: "/features/step-by-step-guides/", label: "Step-by-step guides" },
+  { href: "/features/blur-sensitive-info/", label: "Blur sensitive info" },
   { href: "/features/audio-captions/", label: "Audio and captions" },
   { href: "/features/agents/", label: "CLI and MCP for agents" },
 ].filter((o) => o.href !== path);
 ---
-<Base title={seoTitle} description={description} og={og} crumbs={crumbs} type="article">
+<Base title={seoTitle} description={description} og={og} crumbs={crumbs} type="article" schema={schema}>
   <PageHead title={title} lede={lede} crumbs={crumbs} />
   <slot name="hero" />
   <div class="feature-body">

@@ -1,0 +1,75 @@
+---
+import Alt from "../layouts/Alt.astro";
+import { GUIDE_TOOLS } from "../data/compare";
+const scribe = GUIDE_TOOLS.find((t) => t.id === "scribe")!;
+const tango = GUIDE_TOOLS.find((t) => t.id === "tango")!;
+const faq = [
+  { id: "free-scribe", q: "Is there a free Scribe alternative for Mac?", a: "Reelbird is one. It's a free, MIT-licensed Mac screen recorder, and every recording also becomes a step-by-step guide: each click, run of typing and shortcut is a step with a picture of the screen. The share link shows it as a Guide and a Click-through, and exporting it as a web page, Markdown or a Claude skill is free." },
+  { id: "scribe-free", q: "Is Scribe free?", a: `Scribe's Basic plan is free and captures in Chrome and Edge, with sharing by link and embed. As of 7 November 2026 the desktop app, screenshot redaction and PDF, HTML and Markdown exports need Pro: ${scribe.price}.`, html: `Scribe's Basic plan is free and captures in Chrome and Edge, with sharing by link and embed. As of 7 November 2026 the desktop app, screenshot redaction and PDF, HTML and Markdown exports need Pro: ${scribe.price} (<a href="https://scribe.com/pricing">Scribe pricing</a>).` },
+  { id: "tango-free", q: "What does Tango's free plan include?", a: `As of 7 November 2026: browser capture only, up to 5 shared workflows and up to 10 users. Blur, screenshot redaction, desktop capture and PDF, HTML and Markdown exports are on Pro, from $15 a user a month billed yearly for 3 or more users.` },
+  { id: "desktop", q: "Does Reelbird work outside the browser?", a: "Yes. It records any display, window or area on your Mac, so steps can come from a desktop app, a terminal, System Settings or a browser alike." },
+  { id: "pdf", q: "Can Reelbird export a guide as a PDF?", a: "Not directly. It exports a web page, Markdown with images, or a Claude skill. To get a PDF, open the exported web page in a browser and print it to PDF." },
+  { id: "video", q: "Do I have to make a video to get a guide?", a: "Yes. The guide comes from a recording, so you get both from one take. You can share the link for the guide alone (it has its own view, at #guide), or export the guide and never send the video." },
+  { id: "typed", q: "Will my passwords or emails end up in the guide?", a: "Typed text stays out of guides unless you turn on Show what was typed, and even then anything that looks like an email, key, card or phone number is masked. Step pictures are rendered with your blurs, and Find Sensitive Info can find emails and keys on screen to blur first." },
+  { id: "windows", q: "Is Reelbird on Windows?", a: "No. Reelbird is Mac only (macOS 15 or later), and Windows isn't planned. If your team is on Windows or Chromebooks, Scribe and Tango run in the browser on any of them." },
+];
+---
+<Alt
+  seoTitle="Free Scribe and Tango alternative for Mac: Reelbird"
+  description="Turn a screen recording into a step-by-step guide on your Mac, free: screenshots per click, a Click-through, and HTML, Markdown or Claude skill exports. Reelbird vs Scribe and Tango."
+  path="/scribe-alternative/"
+  og="scribe-alternative"
+  title="A free Scribe and Tango alternative for Mac"
+  answer="Reelbird is a free, open-source alternative to Scribe and Tango for the Mac. Like them, it turns your clicks into a step-by-step guide with a screenshot for each step. Unlike them, it works in any Mac app rather than the browser, gives you the video and the guide from one take, shows the guide as an interactive Click-through on the share link, and exports it as a web page, Markdown or a Claude skill without a paid plan. It's Mac only, with no team workspace."
+  verdict="Reelbird vs Scribe and Tango in one line: Scribe and Tango are browser-first documentation tools for teams; Reelbird is a free Mac recorder whose every take is also a guide."
+  rival="scribe"
+  datePublished="2026-11-07"
+  clip={false}
+  factsHeading="Reelbird vs Scribe, side by side"
+  rows={[
+    ["Price", "Free, MIT licensed. Optional Reelbird Pro, $5 a month, hosts your links", scribe.price],
+    ["Free plan", "Everything, including exports and desktop capture", scribe.freePlan],
+    ["What it captures", "Any display, window or area on your Mac, with camera, mic and system audio. Steps from clicks, and from typing and shortcuts when keystroke recording is on", "Clicks in the browser; desktop apps on Pro"],
+    ["What you share", "One link with Video, Guide and Click-through views. Viewers can copy text out of the paused video", "A guide with screenshots, by link or embed"],
+    ["Exports", "Web page, Markdown with images, or a Claude skill. Free", scribe.exports],
+    ["Hiding private info", "Typed text left out by default. Find Sensitive Info suggests blurs for emails, keys, card and phone numbers", "Edit and redact screenshots on Pro. Automatic redaction of personal and health data on Enterprise"],
+    ["Teams", "No workspace, comments or roles", "Branding on Pro; comments on Pro Team; SSO and roles on Enterprise"],
+    ["Platforms", "macOS 15 or later", scribe.platforms],
+    ["Open source", "Yes, MIT", "No"],
+  ]}
+  better={[
+    "Your team works in the browser on Windows or Chromebooks. Reelbird is Mac only.",
+    "You want a shared library of guides with branding, comments, roles and SSO.",
+    "You want guides without recording a video, or a PDF export in one click.",
+  ]}
+  ours={[
+    "You document Mac apps, terminals or settings, not only web pages, and don't want to pay for desktop capture.",
+    "You want the video and the written steps from one take, on one link, with an interactive <a href=\"/features/step-by-step-guides/\">Click-through</a>.",
+    "You want the guide as Markdown for your docs or a pull request, or as a Claude skill, for free.",
+    "You'd rather the screen be read on your Mac than uploaded. The app is MIT licensed, with no account and no telemetry.",
+  ]}
+  others={{
+    id: "others",
+    heading: "Scribe and Tango next to Reelbird",
+    intro: "Tango works much like Scribe: guides from clicks in the browser, with desktop capture and exports on paid plans.",
+    columns: ["App", "Price", "Free plan", "Capture", "Exports"],
+    rows: [
+      ["Reelbird", "Free, MIT. Optional Reelbird Pro, $5 a month, hosts your links", "Everything", "Any Mac app, as video plus steps", "Web page, Markdown, Claude skill"],
+      ["<a href=\"https://scribe.com/pricing\">Scribe</a>", scribe.price, scribe.freePlan, "Browser; desktop on Pro", scribe.exports],
+      ["<a href=\"https://www.tango.ai/pricing\">Tango</a>", tango.price, tango.freePlan, "Browser; desktop on Pro", tango.exports],
+    ],
+    caption: "Scribe and Tango checked 7 November 2026, from their own pricing pages.",
+  }}
+  faq={faq}
+>
+  <section class="wrap alt-extra" aria-labelledby="how">
+    <h2 id="how">How to turn a screen recording into a guide</h2>
+    <ol>
+      <li><strong>Record</strong> the task once with <kbd>⌥</kbd><kbd>⇧</kbd><kbd>R</kbd>, talking through it if you like. Turn on Record keystrokes first if typing should become steps.</li>
+      <li><strong>Open the Guide panel</strong> (<kbd>⌘</kbd><kbd>9</kbd>). Each click, run of typing and shortcut is a step with its picture and what you clicked.</li>
+      <li><strong>Tidy it:</strong> rewrite a step, hide the ones nobody needs, and blur anything private.</li>
+      <li><strong>Share or export.</strong> The link shows the Guide and Click-through next to the video, or export a web page, Markdown or a Claude skill.</li>
+    </ol>
+    <p><a href="/features/step-by-step-guides/">More on step-by-step guides</a></p>
+  </section>
+</Alt>

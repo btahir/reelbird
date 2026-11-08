@@ -1,0 +1,164 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHead from "../components/PageHead.astro";
+import Faq from "../components/Faq.astro";
+import Icon from "../components/Icon.astro";
+import { abs } from "../config/site";
+import { article, faqPage } from "../lib/jsonld";
+
+const PUBLISHED = "2026-11-07";
+const title = "Open-source screen recorders for Mac";
+const seoTitle = "Open-source screen recorders for Mac (2026): 9 free picks compared";
+const description = "Reelbird, Cap, OpenScreen, OBS Studio, Kap, QuickRecorder, Recordly, Screenity and Screenize: licences, platforms, auto-zoom, share links and when each last shipped.";
+const path = "/open-source-screen-recorders-mac/";
+const crumbs = [{ name: "Compare", path: "/compare/" }, { name: "Open-source recorders", path }];
+
+interface Tool { id: string; name: string; href: string; licence: string; platforms: string; zoom: string; links: string; release: string; goodFor: string; keepInMind: string; ours?: boolean }
+const tools: Tool[] = [
+  { id: "obs", name: "OBS Studio", href: "https://obsproject.com/", licence: "GPL-2.0", platforms: "macOS 13+, Windows, Linux", zoom: "No", links: "No. Records to a file, or streams", release: "October 2026",
+    goodFor: "Streaming, and recordings that combine window captures, webcams, images, text and browser windows in scenes you switch between.",
+    keepInMind: "Made for streaming as well as recording, so there are more settings to learn. No editor, zooms or share links." },
+  { id: "kap", name: "Kap", href: "https://getkap.co/", licence: "MIT", platforms: "macOS 12 or later", zoom: "No", links: "Through plugins (Giphy, Vercel, Streamable)", release: "October 2022 (3.6.0)",
+    goodFor: "Quick GIFs and short clips: export GIF, MP4, WebM or APNG, with click highlighting and trimming.",
+    keepInMind: "Built on Electron. The last release was in October 2022." },
+  { id: "quickrecorder", name: "QuickRecorder", href: "https://github.com/lihaoyun6/QuickRecorder", licence: "AGPL-3.0", platforms: "macOS 12.3 or later", zoom: "No", links: "No. Records to a file", release: "June 2025 (1.6.9)",
+    goodFor: "A light native recorder: system audio without a driver, a camera overlay, mouse highlighting, and HEVC with alpha.",
+    keepInMind: "A recorder, not an editor. The last release was in June 2025." },
+  { id: "openscreen", name: "OpenScreen", href: "https://github.com/getopenscreen/openscreen", licence: "MIT", platforms: "macOS 13+, Windows, Linux", zoom: "Automatic or manual", links: "No. Export MP4 or GIF and host it yourself", release: "November 2026",
+    goodFor: "A free, signed, cross-platform Screen Studio-style editor, with annotations, a CLI, MCP and an AI editing assistant (bring your own key).",
+    keepInMind: "No share links. Built on Electron." },
+  { id: "recordly", name: "Recordly", href: "https://github.com/webadderallorg/Recordly", licence: "AGPL-3.0", platforms: "macOS 14+, Windows, Linux", zoom: "Suggested from cursor activity, plus manual", links: "No. Export MP4 or GIF", release: "September 2026",
+    goodFor: "Cursor polish, styled frames and a webcam bubble on any desktop system.",
+    keepInMind: "No share links." },
+  { id: "cap", name: "Cap", href: "https://cap.so/", licence: "AGPLv3, some parts MIT", platforms: "macOS, Windows (beta), Linux", zoom: "Yes, in Studio mode", links: "Yes, in Instant mode, hosted by Cap. Or self-host Cap's server", release: "October 2026",
+    goodFor: "An open-source Loom alternative on Mac, Windows and Linux, with hosted plans and a server you can self-host.",
+    keepInMind: "The free plan is for personal use, with 25 links a month of up to 5 minutes. Instant links and Studio polish are separate modes." },
+  { id: "screenity", name: "Screenity", href: "https://screenity.io/", licence: "GPL-3.0 (the recorder)", platforms: "Chrome, on any desktop system", zoom: "Pro only", links: "Pro only", release: "October 2026",
+    goodFor: "Free recording in Chrome on any computer, with downloads and no account.",
+    keepInMind: "Runs in the browser. Share links, the editor and auto-zoom need Pro ($10 a month)." },
+  { id: "screenize", name: "Screenize", href: "https://github.com/syi0808/screenize", licence: "Apache-2.0", platforms: "macOS", zoom: "Yes", links: "No. Export MP4, MOV (ProRes) or GIF", release: "March 2026",
+    goodFor: "Trying a native Mac auto-zoom editor.",
+    keepInMind: "Development has been paused since 22 May 2026, and the app isn't notarised." },
+  { id: "reelbird", name: "Reelbird", href: "/", licence: "MIT", platforms: "macOS 15 or later", zoom: "Planned from clicks and typing; every zoom editable", links: "Copied the moment you stop. Your own S3 or R2 bucket, free, or Reelbird Pro ($5 a month)", release: "November 2026", ours: true,
+    goodFor: "A link the moment you stop, then auto-zoom, captions, blur and a step-by-step guide under the same link. Native Swift, with a CLI and MCP server.",
+    keepInMind: "Mac only, macOS 15 or later. Free links need a bucket you own. No comments or team workspace." },
+];
+
+const picks = [
+  ["Streaming or many sources", "obs"],
+  ["Quick GIFs", "kap"],
+  ["A light native recorder, no editing", "quickrecorder"],
+  ["An auto-zoom editor on Windows and Linux too", "openscreen"],
+  ["Instant links on Windows and Linux too", "cap"],
+  ["Recording in Chrome", "screenity"],
+  ["A link when you stop, polish and a guide later, on a Mac", "reelbird"],
+] as const;
+const byTool = (id: string) => tools.find((t) => t.id === id)!;
+
+const faq = [
+  { id: "best-os", q: "What is the best open-source screen recorder for Mac?", a: "It depends on the job. OBS Studio for streaming and complex scenes. Kap for quick GIFs. QuickRecorder for a light native recorder. OpenScreen for a free auto-zoom editor that also runs on Windows and Linux. Cap for open-source instant links across platforms. Reelbird for a share link the moment you stop plus auto-zoom, captions and a step-by-step guide, on a Mac." },
+  { id: "screen-studio", q: "Is there an open-source Screen Studio alternative?", a: "Yes, several. Reelbird (MIT, native Mac), OpenScreen (MIT, Electron, cross-platform), Recordly (AGPL-3.0) and Cap's Studio mode (mostly AGPLv3) all plan zooms for you. Only Reelbird and Cap give you share links.", html: "Yes, several. Reelbird (MIT, native Mac), OpenScreen (MIT, Electron, cross-platform), Recordly (AGPL-3.0) and Cap's Studio mode (mostly AGPLv3) all plan zooms for you. Only Reelbird and Cap give you share links. See <a href=\"/screen-studio-alternative/\">Reelbird vs Screen Studio</a>." },
+  { id: "loom", q: "Is there an open-source Loom alternative?", a: "Cap and Reelbird both copy a share link when you stop. Cap hosts links on its cloud (free for personal use, 5-minute links) or on a Cap server you self-host. Reelbird puts them in an S3-compatible bucket you own, for free, with no server to run.", html: "Cap and Reelbird both copy a share link when you stop. Cap hosts links on its cloud (free for personal use, 5-minute links) or on a Cap server you self-host. Reelbird puts them in an S3-compatible bucket you own, for free, with no server to run. See <a href=\"/loom-alternative/\">Reelbird vs Loom</a> and <a href=\"/cap-alternative/\">Reelbird vs Cap</a>." },
+  { id: "licences", q: "Does the licence matter?", a: "For using the app, mostly no. MIT and Apache-2.0 let you do almost anything, including changing the code and shipping it in a commercial product. GPL and AGPL let you use and change the app freely, but changed versions you distribute (and, for AGPL, run as a network service) must share their source. Cap's free plan separately limits use to personal use." },
+  { id: "builtin", q: "Do I need any of these, or is the built-in recorder enough?", a: "For a quick recording to a file, the Screenshot app built into macOS (Shift-Command-5) is enough. It records system audio on macOS 27 and later. You need one of these for zooms, editing, captions or share links." },
+];
+
+const schema = [
+  article({ title: seoTitle, description, path, datePublished: PUBLISHED, image: "/og/open-source-screen-recorders-mac.png" }),
+  { "@type": "ItemList", name: title, itemListOrder: "https://schema.org/ItemListUnordered", numberOfItems: tools.length,
+    itemListElement: tools.map((t, i) => ({ "@type": "ListItem", position: i + 1, name: t.name, url: abs(`${path}#${t.id}`) })) },
+  faqPage(faq),
+];
+---
+<Base title={seoTitle} description={description} og="open-source-screen-recorders-mac" brand={false} crumbs={crumbs} type="article" schema={schema}>
+  <PageHead title={title} crumbs={crumbs}>
+    <p class="answer">Nine open-source screen recorders that run on a Mac, and what each is for. OBS Studio is the pick for streaming, Kap for quick GIFs, QuickRecorder for a light native recorder, OpenScreen for a free auto-zoom editor that also runs on Windows and Linux, and Cap for open-source instant links across platforms. Reelbird, which we make, is the MIT-licensed Mac app that copies a link when you stop and polishes the same take later.</p>
+    <p class="stamp">Published <time datetime={PUBLISHED}>7 November 2026</time>. Facts from each project's own site or GitHub page, checked between 2 and 7 November 2026. Release dates from GitHub Releases.</p>
+  </PageHead>
+
+  <section class="wrap block" aria-labelledby="picks">
+    <h2 id="picks">One pick per job</h2>
+    <dl class="picks">
+      {picks.map(([job, id]) => <div><dt>{job}</dt><dd><a href={`#${id}`}>{byTool(id).name}</a></dd></div>)}
+    </dl>
+  </section>
+
+  <section class="wrap block" aria-labelledby="table">
+    <h2 id="table">The table</h2>
+    <div class="table-wrap">
+      <table class="cmp">
+        <caption class="sr-only">Open-source screen recorders for Mac, checked November 2026</caption>
+        <thead><tr><th scope="col">App</th><th scope="col">Licence</th><th scope="col">Platforms</th><th scope="col">Auto-zoom</th><th scope="col">Share links</th><th scope="col">Last release</th></tr></thead>
+        <tbody>
+          {tools.map((t) => (
+            <tr class:list={[t.ours && "ours"]}>
+              <th scope="row">{t.name}</th><td>{t.licence}</td><td>{t.platforms}</td><td>{t.zoom}</td><td>{t.links}</td><td>{t.release}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="wrap block" aria-labelledby="each">
+    <h2 id="each">Each recorder</h2>
+    <ol class="each">
+      {tools.map((t) => (
+        <li id={t.id}>
+          <h3><a href={t.href}>{t.name}</a>{t.ours && <span class="kind">Ours</span>}</h3>
+          <dl>
+            <div><dt>Good for</dt><dd>{t.goodFor}</dd></div>
+            <div><dt>Keep in mind</dt><dd>{t.keepInMind}</dd></div>
+            <div><dt>Licence</dt><dd>{t.licence}</dd></div>
+          </dl>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="wrap block prose-sec" aria-labelledby="paid">
+    <div class="prose">
+      <h2 id="paid">And the paid ones</h2>
+      <p>Loom, Screen Studio, FocuSee, CleanShot X and Tella are closed source. They're compared with the open-source options, prices included, in <a href="/compare/">the best screen recorders for Mac</a>.</p>
+    </div>
+  </section>
+
+  <section class="wrap block faqsec" aria-labelledby="os-faq">
+    <h2 id="os-faq">Questions</h2>
+    <Faq items={faq} />
+    <div class="cta">
+      <a class="btn btn-primary" href="/download/"><Icon name="download" />Get Reelbird — free</a>
+      <span class="muted caveat">Download or build from source. macOS 15 or later.</span>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .answer { margin-top: 1.25rem; max-width: 46rem; font-size: var(--step-1); line-height: 1.5; color: var(--text-muted); }
+  .stamp { margin-top: 0.9rem; font-size: var(--step--1); color: var(--text-muted); }
+  .block { padding-block: clamp(2.5rem, 2rem + 2vw, 4rem); border-top: 1px solid var(--line); }
+  .block > h2, .prose h2 { font-size: var(--step-3); margin-bottom: 1.5rem; }
+  .prose > h2:first-child { margin-top: 0; }
+  .picks { display: grid; max-width: 46rem; border-top: 1px solid var(--line); }
+  .picks > div { display: grid; grid-template-columns: 1fr 12rem; gap: 1.5rem; padding: 0.8rem 0; border-bottom: 1px solid var(--line); }
+  .picks dt { color: var(--text-muted); }
+  .picks a { color: var(--text); font-weight: 600; }
+  .cmp { min-width: 60rem; font-size: 0.9rem; }
+  .cmp th[scope="row"] { font-weight: 600; white-space: nowrap; color: var(--text); position: sticky; left: 0; background: var(--bg); }
+  .cmp td { color: var(--text-muted); }
+  .cmp tr.ours th, .cmp tr.ours td { color: var(--text); background: var(--bg-raised); }
+  .each { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 3rem; border-top: 1px solid var(--line); }
+  .each li { padding: 1.75rem 0; border-bottom: 1px solid var(--line); scroll-margin-top: 5rem; }
+  .each h3 { font-family: var(--font-display); font-weight: 520; font-size: var(--step-2); letter-spacing: -0.01em; display: flex; gap: 0.75rem; align-items: baseline; }
+  .each h3 a { text-decoration: none; }
+  .kind { font-family: var(--font-sans); font-size: var(--step--1); font-weight: 500; color: var(--text-muted); }
+  .each dl { margin-top: 1rem; display: grid; gap: 0.55rem; font-size: 0.9375rem; }
+  .each dl > div { display: grid; grid-template-columns: 7.5rem 1fr; gap: 1rem; }
+  .each dt { color: var(--text); font-weight: 600; }
+  .each dd { color: var(--text-muted); }
+  .faqsec { max-width: 52rem; margin-inline: auto; padding-bottom: var(--section); }
+  .cta { display: flex; flex-wrap: wrap; gap: 0.75rem 1.25rem; align-items: center; margin-top: 3rem; }
+  .caveat { font-size: var(--step--1); }
+  @media (max-width: 52rem) { .each { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 30rem) { .each dl > div, .picks > div { grid-template-columns: minmax(0, 1fr); gap: 0.1rem; } }
+</style>

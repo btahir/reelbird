@@ -9,6 +9,8 @@ const faq = [
   { id: "watermark", q: "Does Reelbird add a watermark?", a: "No. There's no watermark or export limit, and recording, editing and exporting are free." },
   { id: "edit-zooms", q: "Can I change the automatic zooms?", a: "Yes. One slider sets how strong they are, from subtle to punchy. On the timeline you can add, move, resize or delete any zoom, and set its depth and focus." },
   { id: "follow", q: "Do zooms follow typing as well as clicks?", a: "Yes, when Record keystrokes is on: a burst of typing gets its own zoom, framed around where you clicked to type. Zooms that track the focused text field as it moves are on the roadmap." },
+  { id: "layouts", q: "Does Reelbird have camera layouts like Screen Studio?", a: "Yes. For any part of the video you can show the camera bubble over the screen, only the camera, the screen and camera side by side (stacked on a 9:16 canvas), or only the screen. Switch while recording with ⌥⇧L, or add layouts on the timeline with C. Screen Studio also removes the background behind you; Reelbird doesn't." },
+  { id: "blur", q: "Can I blur sensitive info, as with Screen Studio's masks?", a: "Yes. Press B and drag over anything to blur, pixelate or cover it with a solid bar. Find Sensitive Info reads the text on screen on your Mac and suggests blurs for emails, API keys, card numbers and phone numbers, following the text when it scrolls.", html: "Yes. Press B and drag over anything to blur, pixelate or cover it with a solid bar. <a href=\"/features/blur-sensitive-info/\">Find Sensitive Info</a> reads the text on screen on your Mac and suggests blurs for emails, API keys, card numbers and phone numbers, following the text when it scrolls." },
   { id: "export", q: "What can Reelbird export?", a: "MP4 (H.264), HEVC, ProRes and GIF, with hardware encoding, at your recording's resolution or a height you pick. Landscape, square, vertical or 4:3." },
 ];
 ---
@@ -18,15 +20,21 @@ const faq = [
   path="/screen-studio-alternative/"
   og="screen-studio-alternative"
   title="A free, open-source Screen Studio alternative"
-  answer="Reelbird is a free, open-source Screen Studio alternative for Mac. Like Screen Studio, it plans zooms from your clicks, redraws the cursor so it glides, and frames the recording with a background, padding and shadow. Unlike Screen Studio, the app costs nothing (Screen Studio is $29 a month, or $9 billed yearly), it's MIT licensed, and it copies a share link the moment you stop, before you've edited anything. Polish later and the same link plays the new version."
+  answer="Reelbird is a free, open-source Screen Studio alternative for Mac. Like Screen Studio, it plans zooms from your clicks, redraws the cursor so it glides, frames the recording with a background, padding and shadow, and has camera layouts, blur and a speed-up for typing. Unlike Screen Studio, the app costs nothing (Screen Studio is $29 a month, or $9 billed yearly), it's MIT licensed, and it copies a share link the moment you stop, before you've edited anything. Polish later and the same link plays the new version."
   verdict="Reelbird vs Screen Studio in one line: Screen Studio is the more mature editor; Reelbird gives you the link first and the polish later, for free, with the code open."
   rival="screen-studio"
+  dateModified="2026-11-07"
+  factsNote="Camera, sensitive info, speed, captions and guide rows checked 7 November 2026 on screen.studio."
   rows={[
     ["Price", "Free, MIT licensed. Optional Reelbird Pro, $5 a month, hosts your links", "$29 a month, or $9 a month billed yearly. No one-time licence for new buyers"],
     ["Share links", "Copied the moment you stop, then updated in place after editing. Hosted in your own bucket, or by Reelbird Pro", "After export. 1080p60, up to 30 minutes, with timestamped comments"],
     ["Auto-zoom", "Planned from clicks and typing. One intensity slider. Every zoom editable on the timeline", "From clicks and activity, plus manual zooms"],
     ["Cursor", "Redrawn from the event log: smooth, resizable, can be hidden", "Smoothed paths, motion blur, click effects"],
-    ["Camera", "A bubble on its own track: change its size, shape and corner later", "Layouts, background removal, face tracking"],
+    ["Camera", "Layouts for any part: bubble, camera only, side by side (stacked on a 9:16 canvas) or screen only. Switch while recording with ⌥⇧L or on the timeline. The bubble shrinks and steps aside during zooms", "Camera overlay, fullscreen camera and split screen, with background removal and face tracking"],
+    ["Hide sensitive info", "Find Sensitive Info suggests blurs for emails, API keys, card and phone numbers and follows scrolling text. Blur, pixelate or a solid bar", "Masks cover sensitive data after you record"],
+    ["Speed", "Any part from 0.25× to 4×. Speed Up Typing finds typing and waiting and speeds them up in one click", "Spots long typing stretches to play faster"],
+    ["Captions", "On-device, in six styles. A track viewers can turn on in share links; SRT from the command line", "Captions and transcript editing; export the transcript as SRT"],
+    ["Step-by-step guide", "Every take becomes a Guide and a Click-through on its link. Export as a web page, Markdown or a Claude skill", "Not listed on screen.studio"],
     ["Audio", "Auto level to −16 LUFS, voice enhance and ducking, on your Mac", "Noise reduction, background music"],
     ["Keep the file", "Every take is MP4s on your Mac. Export MP4, HEVC, ProRes or GIF", "MP4 up to 4K, or GIF"],
     ["Licence", "MIT, open source", "Proprietary"],
@@ -34,7 +42,7 @@ const faq = [
     ["Install", "Notarised download, or build from source", "Signed download"],
   ]}
   better={[
-    "You want the most mature editor: camera layouts and background removal, iPhone and iPad recording, transcript editing and more presets.",
+    "You want the most mature editor: camera background removal, iPhone and iPad recording, editing by transcript and more presets.",
     "You want timestamped comments on your share links.",
     "You need editor features Reelbird doesn't have yet, such as joining clips.",
   ]}
@@ -42,6 +50,8 @@ const faq = [
     "You want click-driven auto-zoom without a subscription.",
     "You want a link the moment you stop, before you've polished anything, and the same link after you have.",
     "You care about the sound: auto level to −16 LUFS, voice enhance and ducking, all on your Mac.",
+    "You want the same take as a written how-to: a <a href=\"/features/step-by-step-guides/\">step-by-step guide</a> and Click-through on the link.",
+    "You record real accounts and want help finding what to hide: <a href=\"/features/blur-sensitive-info/\">Find Sensitive Info</a> suggests blurs for emails, keys and card numbers.",
     "You want an open project format, plus a <a href=\"/docs/cli/\">command line</a> and <a href=\"/docs/mcp/\">MCP server</a> your tools and agents can drive.",
   ]}
   others={{
@@ -53,10 +63,10 @@ const faq = [
       ["Reelbird", "MIT", "macOS 15 or later", "Planned from clicks and typing; every zoom editable", "Copied the moment you stop, then updated in place after you edit", "A link first and the polish later, in a native Mac app"],
       ["<a href=\"https://github.com/getopenscreen/openscreen\">OpenScreen</a>", "MIT", "macOS 13+, Windows, Linux", "Automatic or manual", "No. Export MP4 or GIF and host it yourself", "A free, signed, cross-platform editor with annotations and an AI editing assistant. Built on Electron"],
       ["<a href=\"https://github.com/webadderallorg/Recordly\">Recordly</a>", "AGPL-3.0", "macOS 14+, Windows, Linux", "Suggested from cursor activity, plus manual zooms", "No. Export MP4 or GIF", "Cursor polish, styled frames and a webcam bubble on any desktop system"],
-      ["<a href=\"https://cap.so/\">Cap</a>", "AGPLv3, some parts MIT", "macOS, Windows (beta), Linux", "Yes, in Studio mode", "Yes, in Instant mode. The free plan is for personal use, with 5-minute links", "Instant links and Studio polish on Mac, Windows and Linux. Commercial use needs a paid licence"],
+      ["<a href=\"https://cap.so/\">Cap</a>", "AGPLv3, some parts MIT", "macOS, Windows (beta), Linux", "Yes, in Studio mode", "Yes, in Instant mode. The free plan is for personal use, with 25 links a month of up to 5 minutes", "Instant links and Studio polish on Mac, Windows and Linux. Commercial use needs a paid licence"],
       ["<a href=\"https://github.com/syi0808/screenize\">Screenize</a>", "Apache-2.0", "macOS", "Yes", "No. Export MP4, MOV (ProRes) or GIF", "Trying a native Mac editor. Development has been paused since 22 May 2026, and the app isn't notarised"],
     ],
-    caption: `OpenScreen and Cap checked ${CHECKED_LABEL}; Recordly and Screenize checked 2 November 2026, from each project's own page.`,
+    caption: `OpenScreen checked ${CHECKED_LABEL}; Cap checked 7 November 2026; Recordly and Screenize checked 2 November 2026, from each project's own page.`,
   }}
   faq={faq}
 />
