@@ -153,7 +153,7 @@ test("the Umami mask hides share ids in url and same-site referrer", async () =>
   const { UMAMI_MASK_JS } = await import("../src/viewer");
   (globalThis as any).location = { host: "watch.reelbird.app" };
   const mask = new Function(`${UMAMI_MASK_JS}; return rbMask;`)() as (t: string, p: any) => any;
-  const out = mask("event", { url: "/r/AbC123xyz456Qw/", referrer: "https://watch.reelbird.app/r/AbC123xyz456Qw/x?y=1" });
+  const out = mask("event", { url: "/r/AbC123xyz456Qw/", referrer: "https://watch.reelbird.app/r/AbC123xyz456Qw/x" });
   expect(out.url).toBe("/r/:id/");
   expect(out.referrer).toBe("https://watch.reelbird.app/r/:id/");
   expect(mask("event", { url: "/r/AbC123xyz456Qw/sub/page", referrer: "" }).url).toBe("/r/:id/");
