@@ -222,11 +222,19 @@ export function renderViewer(meta: Meta, nonce: string) {
     .replace("</body>", `<script nonce="${nonce}" src="/e.js" data-share="${meta.id}" defer></script>\n</body>`);
 }
 
+/**
+ * Umami data-before-send handler (global function `rbMask`, called as (type, payload)). Share ids are the
+ * only secret on a hosted link, so /r/<id>/... is sent as /r/:id/ and /account/s/<id> as /account/s/:id,
+ * in the page url and in a same-site referrer.
+ */
+export const UMAMI_MASK_JS = `function rbMask(t,p){var f=function(u,h){if(typeof u!=="string"||(h&&u.indexOf(location.host)<0))return u;return u.replace(/\\/r\\/[^?#]*/,"/r/:id/").replace(/\\/account\\/s\\/[^\\/?#]+/,"/account/s/:id")};if(p){p.url=f(p.url);p.referrer=f(p.referrer,1)}return p}`;
+
 /** Umami page-analytics tag; empty when PUBLIC_UMAMI_WEBSITE_ID is unset. */
 export function umamiTag(nonce?: string) {
   if (!config.umamiWebsiteId) return "";
   const host = new URL(config.publicURL).hostname;
-  return `<script${nonce ? ` nonce="${nonce}"` : ""} defer src="${UMAMI_ORIGIN}/script.js" data-website-id="${config.umamiWebsiteId}" data-domains="${esc(host)}" data-exclude-search="true"></script>\n`;
+  const n = nonce ? ` nonce="${nonce}"` : "";
+  return `<script${n}>${UMAMI_MASK_JS}</script>\n<script${n} defer src="${UMAMI_ORIGIN}/script.js" data-website-id="${config.umamiWebsiteId}" data-domains="${esc(host)}" data-exclude-search="true" data-before-send="rbMask"></script>\n`;
 }
 
 /** CSP for the viewer page: its own scripts, hls.js from jsDelivr, media from R2 and this server. */

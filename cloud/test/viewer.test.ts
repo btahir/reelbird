@@ -139,11 +139,24 @@ test("Umami tag and CSP appear only when the website id is set", async () => {
     config.umamiWebsiteId = "415f1047-be59-47fa-a877-e57c2f25e010";
     const html = renderViewer(m, "N");
     expect(html).toContain(`<script nonce="N" defer src="https://project-analytics.shiptiffin.app/script.js" data-website-id="415f1047-be59-47fa-a877-e57c2f25e010"`);
-    expect(html).toContain(`data-exclude-search="true"`);
+    expect(html).toContain(`data-exclude-search="true" data-before-send="rbMask"`);
+    for (const tag of html.match(/<script(?=[\s>])[^>]*>/g)!) expect(tag).toContain(`nonce="N"`);
     const csp = viewerCSP("N", "https://r2.example");
     expect(csp).toMatch(/script-src [^;]*project-analytics\.shiptiffin\.app/);
     expect(csp).toMatch(/connect-src [^;]*project-analytics\.shiptiffin\.app/);
   } finally {
     config.umamiWebsiteId = before;
   }
+});
+
+test("the Umami mask hides share ids in url and same-site referrer", async () => {
+  const { UMAMI_MASK_JS } = await import("../src/viewer");
+  (globalThis as any).location = { host: "watch.reelbird.app" };
+  const mask = new Function(`${UMAMI_MASK_JS}; return rbMask;`)() as (t: string, p: any) => any;
+  const out = mask("event", { url: "/r/AbC123xyz456Qw/", referrer: "https://watch.reelbird.app/r/AbC123xyz456Qw/x?y=1" });
+  expect(out.url).toBe("/r/:id/");
+  expect(out.referrer).toBe("https://watch.reelbird.app/r/:id/");
+  expect(mask("event", { url: "/r/AbC123xyz456Qw/sub/page", referrer: "" }).url).toBe("/r/:id/");
+  expect(mask("event", { url: "/account/s/AbC123xyz456Qw", referrer: "https://other.example/r/keep" })).toEqual({ url: "/account/s/:id", referrer: "https://other.example/r/keep" });
+  expect(mask("event", { url: "/account", referrer: "" }).url).toBe("/account");
 });
