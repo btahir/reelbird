@@ -3,6 +3,7 @@
 // to press, Fraunces headings, Instrument Sans text, Commit Mono for codes. Fonts and icons are served
 // from /assets (see assets.ts), so the pages load nothing from other hosts.
 import { config } from "./config";
+import { umamiTag } from "./viewer";
 import { asset } from "./assets";
 import type { Stats } from "./stats";
 import type { User } from "./auth";
@@ -205,7 +206,7 @@ function layout(title: string, body: string, opts: LayoutOpts = {}) {
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fff4e8"><meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1a1512">
 <link rel="icon" href="${asset("favicon.svg")}" type="image/svg+xml"><link rel="apple-touch-icon" href="${asset("apple-touch-icon.png")}">
 <link rel="preload" href="${asset("fraunces.woff2")}" as="font" type="font/woff2" crossorigin><link rel="preload" href="${asset("instrument-sans.woff2")}" as="font" type="font/woff2" crossorigin>
-<style>${CSS}</style></head>
+${umamiTag()}<style>${CSS}</style></head>
 <body><header class="wrap top"><a class="brand" href="${u ? "/account" : "/"}" aria-label="Reelbird Pro, home">${LOGO}<span class="tag" aria-hidden="true">Pro</span></a>${nav}</header>
 <main${opts.narrow ? ' class="narrow"' : ""}>${body}</main>
 <footer class="foot"><div class="wrap"><span>Reelbird Pro${config.dev ? " · development server" : ""}</span><nav aria-label="Reelbird"><a href="${SITE}/">reelbird.app</a><a href="${SITE}/pricing/">Pricing</a><a href="${SITE}/docs/sharing/">Help</a><a href="${SITE}/terms/">Terms</a><a href="${SITE}/privacy/">Privacy</a><a href="mailto:${CONTACT}">Contact</a></nav></div></footer></body></html>`;

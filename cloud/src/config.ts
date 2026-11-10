@@ -5,7 +5,12 @@ function need(name: string): string {
   return v;
 }
 
+/** Self-hosted Umami page analytics (same website id as reelbird.app). Nothing is rendered when the id is unset. */
+export const UMAMI_ORIGIN = "https://project-analytics.shiptiffin.app";
+const umamiId = process.env.PUBLIC_UMAMI_WEBSITE_ID?.trim() ?? "";
+
 export const config = {
+  umamiWebsiteId: /^[0-9a-f-]{36}$/i.test(umamiId) ? umamiId : "",
   port: Number(process.env.PORT ?? 8788),
   /** Origin that serves the viewer and the API, e.g. https://watch.reelbird.app. No trailing slash. */
   publicURL: need("PUBLIC_URL").replace(/\/+$/, ""),

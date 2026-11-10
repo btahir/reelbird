@@ -6,7 +6,7 @@
 // its URLs are replaced with this server's, and the page is filled from the same template the app
 // uses (src/viewer-template.ts, generated from ViewerPage.swift). It's served with a CSP whose nonce
 // covers only this page's own scripts.
-import { config } from "./config";
+import { config, UMAMI_ORIGIN } from "./config";
 import { HLS_SRI, HLS_URL, VIEWER_TEMPLATE } from "./viewer-template";
 
 export { HLS_URL };
@@ -218,18 +218,26 @@ export function renderViewer(meta: Meta, nonce: string) {
     // Hosted links can be reported to us (links in your own bucket are yours alone).
     .replace(`<button type="button" id="keys-open"`, `<a href="/report?link=${meta.id}" rel="nofollow" style="margin-left:auto">Report</a>\n<button type="button" id="keys-open"`)
     .replace(/<script(?=[\s>])/g, `<script nonce="${nonce}"`)
+    .replace("</head>", `${umamiTag(nonce)}</head>`)
     .replace("</body>", `<script nonce="${nonce}" src="/e.js" data-share="${meta.id}" defer></script>\n</body>`);
+}
+
+/** Umami page-analytics tag; empty when PUBLIC_UMAMI_WEBSITE_ID is unset. */
+export function umamiTag(nonce?: string) {
+  if (!config.umamiWebsiteId) return "";
+  const host = new URL(config.publicURL).hostname;
+  return `<script${nonce ? ` nonce="${nonce}"` : ""} defer src="${UMAMI_ORIGIN}/script.js" data-website-id="${config.umamiWebsiteId}" data-domains="${esc(host)}" data-exclude-search="true"></script>\n`;
 }
 
 /** CSP for the viewer page: its own scripts, hls.js from jsDelivr, media from R2 and this server. */
 export function viewerCSP(nonce: string, r2Origin: string) {
   return [
     "default-src 'none'",
-    `script-src 'nonce-${nonce}' ${HLS_URL}`, // the one pinned hls.js file, not all of jsDelivr
+    `script-src 'nonce-${nonce}' ${HLS_URL}${config.umamiWebsiteId ? ` ${UMAMI_ORIGIN}` : ""}`, // the one pinned hls.js file, not all of jsDelivr
     "style-src 'unsafe-inline'",
     `img-src 'self' data: ${r2Origin}`,
     `media-src 'self' blob: ${r2Origin}`,
-    `connect-src 'self' ${r2Origin}`,
+    `connect-src 'self' ${r2Origin}${config.umamiWebsiteId ? ` ${UMAMI_ORIGIN}` : ""}`,
     "worker-src blob:",
     "base-uri 'none'",
     "form-action 'none'",

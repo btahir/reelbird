@@ -126,3 +126,24 @@ test("the server's viewer template matches the app's", async () => {
   const { generated, out } = await import("../scripts/sync-viewer");
   expect(await Bun.file(out).text()).toBe(generated());
 });
+
+test("Umami tag and CSP appear only when the website id is set", async () => {
+  const { config } = await import("../src/config");
+  const { viewerCSP } = await import("../src/viewer");
+  const m = meta({});
+  const before = config.umamiWebsiteId;
+  try {
+    config.umamiWebsiteId = "";
+    expect(renderViewer(m, "N")).not.toContain("project-analytics");
+    expect(viewerCSP("N", "https://r2.example")).not.toContain("project-analytics");
+    config.umamiWebsiteId = "415f1047-be59-47fa-a877-e57c2f25e010";
+    const html = renderViewer(m, "N");
+    expect(html).toContain(`<script nonce="N" defer src="https://project-analytics.shiptiffin.app/script.js" data-website-id="415f1047-be59-47fa-a877-e57c2f25e010"`);
+    expect(html).toContain(`data-exclude-search="true"`);
+    const csp = viewerCSP("N", "https://r2.example");
+    expect(csp).toMatch(/script-src [^;]*project-analytics\.shiptiffin\.app/);
+    expect(csp).toMatch(/connect-src [^;]*project-analytics\.shiptiffin\.app/);
+  } finally {
+    config.umamiWebsiteId = before;
+  }
+});
