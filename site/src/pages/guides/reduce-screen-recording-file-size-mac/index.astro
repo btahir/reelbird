@@ -1,0 +1,69 @@
+---
+import Article from "../../../layouts/Article.astro";
+import { PRO } from "../../../config/site";
+const path = "/guides/reduce-screen-recording-file-size-mac/";
+---
+<Article
+  seoTitle="How to compress a screen recording on Mac: file size options"
+  description="Shrink a Mac screen recording with QuickTime's Export As or Reelbird's HEVC, resolution and frame rate settings, or share a link instead of a file."
+  path={path} og="guide-file-size"
+  title="How to reduce the file size of a screen recording on Mac"
+  lede="Three things set the size of a screen recording: its resolution, its frame rate and its codec, plus how long it runs. QuickTime Player can re-export it at a lower resolution, and Reelbird lets you pick the codec, resolution and frame rate and shows an estimated size before it exports. Or send a link and no file."
+  crumbs={[{ name: "Guides", path: "/guides/" }, { name: "Reduce file size", path }]}
+  datePublished="2026-11-15"
+  stamp="Published 15 November 2026."
+>
+  <h2 id="why">Why Mac recordings are big</h2>
+  <p>A Retina screen has a lot of pixels, and a recording stores them for every frame, at 30 or 60 frames a second, for as long as you record. Cut any of those and the file shrinks: fewer pixels (lower resolution), fewer frames a second, a more efficient codec, or a shorter video.</p>
+
+  <h2 id="quicktime">With QuickTime Player</h2>
+  <ol>
+    <li>Open the recording and choose <strong>File &gt; Export As</strong>.</li>
+    <li>Pick <strong>4K</strong>, <strong>1080p</strong>, <strong>720p</strong> or <strong>480p</strong>. Apple suggests 480p for posting online. Options larger than your recording are dimmed.</li>
+    <li>For 4K and 1080p, the <strong>Format</strong> menu offers <strong>Smaller File Size</strong> (HEVC) or <strong>Greater Compatibility</strong> (H.264). 720p and 480p are H.264.</li>
+    <li>Name it, choose a folder and click <strong>Save</strong>.</li>
+  </ol>
+  <p>Per <a href="https://support.apple.com/guide/quicktime-player/export-movies-qtp20e395859/mac">Apple's guide</a>, the result is a .mov file, and QuickTime Player doesn't export MP4 video. Apple's guide lists no frame rate setting. Apple says the exact resolution and data rate depend on the original.</p>
+
+  <h2 id="reelbird">With Reelbird</h2>
+  <ol>
+    <li><strong>Trim the dead time first</strong> (<a href="/guides/trim-crop-screen-recording-mac/">how</a>). The estimate is based on the length of the edited video, and <strong>Clean Up</strong> (<kbd>W</kbd>) shortens long pauses in one go.</li>
+    <li><strong>Press <kbd>⌘</kbd><kbd>E</kbd>.</strong> Choose the format. <strong>HEVC</strong> makes smaller files than <strong>MP4</strong> (H.264). The panel says it plays on Apple devices and modern browsers, while MP4 plays everywhere. <strong>ProRes</strong> is an edit-ready master and the panel warns of large files. Skip it unless you're editing further.</li>
+    <li><strong>Lower the Resolution.</strong> Choices are Original, 4K (2160p), 1440p, 1080p and 720p.</li>
+    <li><strong>Lower the Frame rate.</strong> Original, 60 fps or 30 fps. A screen recording with little motion looks fine at 30.</li>
+    <li><strong>Read the Estimated size line</strong>, adjust until you're happy, then press <strong>Export</strong>.</li>
+  </ol>
+  <p>The same size and frame rate settings are on the Canvas tab (<kbd>⌘</kbd><kbd>5</kbd>). From the terminal, <code>reelbird export latest --format hevc --height 1080 --fps 30</code> does the same. See the <a href="/docs/cli/">command-line reference</a>.</p>
+
+  <h2 id="compare">Which setting does most</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Change</th><th>Effect on size</th></tr></thead>
+      <tbody>
+        <tr><td>Lower resolution</td><td>Fewer pixels per frame; the biggest lever</td></tr>
+        <tr><td>30 fps instead of 60</td><td>Half as many frames</td></tr>
+        <tr><td>HEVC instead of H.264</td><td>Smaller at the same quality, less compatible</td></tr>
+        <tr><td>Trim and cut</td><td>Less video</td></tr>
+        <tr><td>ProRes</td><td>Much larger, by design</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 id="link">Or don't send a file</h2>
+  <p>If the file is going to a colleague, a link beats an attachment. Reelbird uploads a 1080p stream while you record and copies a <a href="/features/share-links/">share link</a> when you stop. Links to your own storage bucket are free. Reelbird Pro hosts them for {PRO.price} a month. After you edit, <strong>Update link</strong> replaces the video and keeps the same URL.</p>
+
+  <h2 id="caveats">Caveats</h2>
+  <ul>
+    <li>Lower resolution makes text softer. Check a frame with small text before you send the file, and keep 1080p if people need to read code.</li>
+    <li>The Estimated size is an estimate. The real file can differ, so check it in Finder after exporting.</li>
+    <li>Re-exporting a file that was already compressed loses a little quality each time. Export from the original Reelbird project when you can, since your edits are stored separately from the recorded tracks.</li>
+  </ul>
+
+  <h2 id="faq">Related questions</h2>
+  <h3>Why is my QuickTime screen recording so large?</h3>
+  <p>Resolution and frame rate set most of it. Re-export at 1080p or 720p as above, or trim the recording first.</p>
+  <h3>Is HEVC safe to send?</h3>
+  <p>Macs, iPhones and modern browsers play it. If the recipient may use older software, choose MP4.</p>
+  <h3>Can I make a smaller file as a GIF?</h3>
+  <p>Usually not, since GIFs store every frame as an image. See the <a href="/guides/screen-recording-to-gif-mac/">GIF guide</a>.</p>
+</Article>

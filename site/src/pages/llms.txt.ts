@@ -58,11 +58,22 @@ ${docs.map((d) => `- [${d.data.title}](${u(`/docs/${d.id}.md`)}): ${d.data.descr
 - [Turn a screen recording into a vertical 9:16 video](${u("/guides/screen-recording-to-vertical-video/")})
 - [Record your screen with a webcam overlay on Mac](${u("/guides/record-screen-with-webcam-mac/")})
 - [Self-host Loom-style share links on Cloudflare R2](${u("/guides/self-host-screen-recording-links-cloudflare-r2/")})
+- [Record a specific window on Mac](${u("/guides/record-specific-window-mac/")})
+- [Share a screen recording from your Mac](${u("/guides/share-screen-recording-mac/")})
+- [Trim, cut and crop a screen recording on Mac](${u("/guides/trim-crop-screen-recording-mac/")})
+- [Make a Mac screen recording smaller](${u("/guides/reduce-screen-recording-file-size-mac/")})
+- [Turn a Mac screen recording into a GIF](${u("/guides/screen-recording-to-gif-mac/")})
+- [Screen record on Mac without background noise](${u("/guides/screen-record-mac-without-background-noise/")})
+- [Remove ums and pauses from a screen recording](${u("/guides/remove-ums-and-pauses-from-screen-recording/")})
+- [Hide the cursor in a Mac screen recording](${u("/guides/hide-cursor-screen-recording-mac/")})
+- [Show keystrokes in a Mac screen recording](${u("/guides/show-keystrokes-screen-recording-mac/")})
+- [Can Claude Code record the screen?](${u("/guides/claude-code-screen-recording/")})
 
 ## Use cases
 
 - [Record a product demo video on Mac](${u("/use-cases/product-demos/")})
 - [Record a coding or PR demo, or let a coding agent record it](${u("/use-cases/dev-demos/")})
+- [Record a tutorial or training video on Mac](${u("/use-cases/tutorial-videos/")})
 
 ## Comparisons
 

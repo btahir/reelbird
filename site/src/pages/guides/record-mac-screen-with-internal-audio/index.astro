@@ -14,7 +14,7 @@ const title = "Record your Mac screen with internal audio, free";
 const description = "How to record system audio, mic and screen together on macOS 15 and later, with no virtual audio driver, using Reelbird. Step by step, with caveats.";
 const crumbs = [{ name: "Guides", path: "/guides/" }, { name: "Record with internal audio", path }];
 ---
-<Base title={title} description={description} og="guide-internal-audio" crumbs={crumbs} type="article" schema={[article({ title, description, path, datePublished: "2026-10-12" })]}>
+<Base title={title} description={description} og="guide-internal-audio" crumbs={crumbs} type="article" schema={[article({ title, description, path, datePublished: "2026-10-12", dateModified: "2026-11-15" })]}>
   <PageHead title="How to record your Mac screen with internal audio" lede="On macOS 15 and later, Reelbird records the sound your Mac plays (system audio) together with your screen and microphone, with no virtual audio driver to install. It's free and open source. Here's how, start to finish." crumbs={crumbs} />
   <div class="wrap">
     <div class="prose body">
@@ -46,6 +46,18 @@ const crumbs = [{ name: "Guides", path: "/guides/" }, { name: "Record with inter
       <h2 id="why-separate">Why separate tracks help</h2>
       <p>Reelbird keeps system audio and your microphone as separate tracks. If a notification chimes or the music is too loud, you can turn system audio down or off after recording without touching your voice. Ducking lowers system audio by about 12 dB while you speak.</p>
 
+      <h2 id="internal-only">Record only internal audio, without the microphone</h2>
+      <p>To capture what your Mac plays and none of your own voice or room noise, leave the microphone out. Two ways in Reelbird:</p>
+      <ol>
+        <li><strong>Before recording.</strong> In the picker (<kbd>⌥</kbd><kbd>⇧</kbd><kbd>R</kbd>), turn <strong>System audio</strong> on and <strong>Microphone</strong> off. No microphone track is recorded.</li>
+        <li><strong>After recording.</strong> If you left the microphone on, open the Audio inspector (<kbd>⌘</kbd><kbd>6</kbd>) and press the speaker button on the <strong>Voice</strong> header to mute it. The microphone file stays on disk, so you can unmute it later.</li>
+      </ol>
+      <p>Either way you export a video with only the system audio. This needs macOS 15 or later, as above. Apple's own Screenshot toolbar can also include system audio, but only on macOS 27 or later (see the next section).</p>
+
+      <h2 id="quicktime-no-sound">Why does my QuickTime screen recording have no sound?</h2>
+      <p>QuickTime Player's screen recording records a microphone, not the sound your Mac plays. In Apple's instructions for QuickTime Player, the audio option is choosing a microphone in the recording window's Options menu, and system audio isn't mentioned. So a recording of a video or a call, made without a microphone picked, comes out silent, or picks up only what the microphone hears.</p>
+      <p>The Screenshot toolbar (<kbd>⌘</kbd><kbd>⇧</kbd><kbd>5</kbd>) has the same microphone choice. Apple says that on <strong>macOS 27 Golden Gate or later</strong> you can also choose <strong>Include System Audio</strong> in its Options. On earlier versions, Apple's page lists no system audio option. For earlier versions, or to keep the two sounds on separate tracks, use Reelbird as above. <a href="https://support.apple.com/en-us/102618">Apple Support: Take a screenshot or screen recording on your Mac</a>, checked 15 November 2026.</p>
+
       <h2 id="terminal">From the terminal</h2>
       <p>The command line tool records the same way. Run <code>reelbird sources</code> to see IDs, then record a display for a set time. When you record from a terminal, macOS asks for Screen Recording permission for the terminal app, not for Reelbird.</p>
       <Code code={"reelbird sources\nreelbird record --display 1 --duration 30"} />
@@ -57,7 +69,7 @@ const crumbs = [{ name: "Guides", path: "/guides/" }, { name: "Record with inter
         <li>macOS asks every so often to confirm apps that record the screen. Choose to keep allowing Reelbird.</li>
         <li>If the recording bar warns that the microphone is silent, check that the right input is selected and not muted.</li>
       </ul>
-      <p class="muted">Published 12 October 2026.</p>
+      <p class="muted">Published 12 October 2026. Updated 15 November 2026.</p>
     </div>
 
     <div class="cta">

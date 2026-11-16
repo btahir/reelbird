@@ -1,0 +1,68 @@
+---
+import Article from "../../../layouts/Article.astro";
+const path = "/guides/hide-cursor-screen-recording-mac/";
+---
+<Article
+  seoTitle="Hide the cursor in a Mac screen recording (free)"
+  description="How to hide the mouse pointer in a Mac screen recording: the Screenshot toolbar and QuickTime options, and how to hide or resize it after recording."
+  path={path} og="guide-hide-cursor"
+  title="How to hide the mouse cursor in a Mac screen recording"
+  lede="macOS's own recorder has a Show Mouse Pointer option in the Screenshot toolbar (⌘⇧5), so you can leave the pointer out before you record. After the fact it's another matter: most recorders bake the pointer into the video, and you can't remove it. Reelbird records the cursor separately, so you can hide it, resize it or smooth it afterwards."
+  crumbs={[{ name: "Guides", path: "/guides/" }, { name: "Hide the cursor", path }]}
+  datePublished="2026-11-15"
+  stamp="Published 15 November 2026."
+>
+  <h2 id="options">The options compared</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Tool</th><th>Hide the pointer?</th><th>Change your mind later?</th></tr></thead>
+      <tbody>
+        <tr><td>Screenshot toolbar (<kbd>⌘</kbd><kbd>⇧</kbd><kbd>5</kbd>)</td><td>Yes, before recording: Options, then untick Show Mouse Pointer</td><td>No. The pointer is in the video or it isn't.</td></tr>
+        <tr><td>QuickTime Player</td><td>Same toolbar. File, New Screen Recording, then Options</td><td>No</td></tr>
+        <tr><td>Reelbird</td><td>Yes, before or after</td><td>Yes. Show, hide, resize and smooth it in the editor.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 id="macos">With the Screenshot toolbar or QuickTime</h2>
+  <p>Apple's page on screenshots and screen recordings (checked against the macOS 15 and macOS 27 versions) lists <strong>Show Mouse Pointer</strong> under the toolbar's Options menu. Tick it and the pointer is recorded. Leave it unticked and it isn't.</p>
+  <ol>
+    <li>Press <kbd>⌘</kbd><kbd>⇧</kbd><kbd>5</kbd>.</li>
+    <li>Click <strong>Options</strong> and check whether <strong>Show Mouse Pointer</strong> has a tick. Remove it to hide the pointer.</li>
+    <li>Choose to record the whole screen or a portion, click <strong>Record</strong>, and stop from the menu bar.</li>
+  </ol>
+  <p>QuickTime Player opens the same toolbar from <strong>File → New Screen Recording</strong>. Apple's QuickTime page says Options controls whether the recording includes the pointer or clicks, without naming the menu items. Apple's pages don't say whether the setting is remembered between recordings, so look at it each time.</p>
+  <p>Either way the choice is made before you start. If you notice mid-demo that the pointer was in the way, you record again.</p>
+
+  <h2 id="reelbird">In Reelbird, after recording</h2>
+  <p>Reelbird hides the system cursor while it records and keeps a log of pointer moves and clicks next to the video. The editor draws the cursor from that log, so it's a layer you can change. It's free and open source, for macOS 15 or later.</p>
+  <ol>
+    <li>Record as usual with <kbd>⌥</kbd><kbd>⇧</kbd><kbd>R</kbd>.</li>
+    <li>Open the take in the editor and open the <strong>Cursor</strong> inspector with <kbd>⌘</kbd><kbd>2</kbd>.</li>
+    <li>Turn <strong>Show cursor</strong> off to remove it entirely. Turn it on and the controls appear: <strong>Size</strong> (0.5× to 3×), <strong>Smoothing</strong>, <strong>Clicks</strong> (Ripple, Ring, Press or None) and <strong>Hide when idle</strong> (never, or after 1, 2, 3 or 5 seconds).</li>
+    <li>Export with <kbd>⌘</kbd><kbd>E</kbd>, or share a link.</li>
+  </ol>
+  <p>To start with the cursor off in every new recording, untick <strong>Show the cursor in new recordings</strong> in <strong>Settings… → Recording</strong>. Preview and export come from the same renderer, so what you see is what you get.</p>
+
+  <h2 id="why">Why hide it, or change it</h2>
+  <ul>
+    <li><strong>Hide when idle</strong> removes a pointer that sits in the middle of a slide while you talk.</li>
+    <li><strong>Size</strong> makes it readable on a phone-sized video.</li>
+    <li><strong>Smoothing</strong> turns a jittery path into a glide. It's also what <a href="/features/auto-zoom/">auto-zoom</a> follows.</li>
+  </ul>
+
+  <h2 id="caveats">Caveats</h2>
+  <ul>
+    <li>Reelbird's cursor is redrawn, not cut out of the pixels. It works on takes recorded in Reelbird, not on a video made elsewhere.</li>
+    <li>Reelbird's own windows are excluded from capture, so a recording won't include its control bar.</li>
+  </ul>
+
+  <h3 id="quicktime">How do I hide the mouse in a QuickTime screen recording?</h3>
+  <p>Open the toolbar with File, New Screen Recording, click Options, and make sure the pointer option isn't ticked before you record. Per Apple's page, that menu controls whether the pointer or clicks are included.</p>
+
+  <h3 id="clicks">Can I show mouse clicks instead of the pointer?</h3>
+  <p>Yes. Apple's <a href="https://support.apple.com/en-us/102618">screen recording page</a> lists Show Mouse Clicks under Options, which draws a black circle around the pointer when you click. In Reelbird, <strong>Clicks</strong> in the Cursor inspector picks a ripple, ring or press effect, or none.</p>
+
+  <h3 id="remove-after">Can I remove the cursor from a video I already have?</h3>
+  <p>Not cleanly, if it was recorded into the pixels. Record again with the pointer off, or record in <a href="/download/">Reelbird</a> so it's a layer. More on the editor in <a href="/docs/shortcuts/">the shortcuts reference</a>.</p>
+</Article>

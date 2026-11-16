@@ -1,0 +1,68 @@
+---
+import Article from "../../../layouts/Article.astro";
+import Code from "../../../components/Code.astro";
+const path = "/guides/record-specific-window-mac/";
+---
+<Article
+  seoTitle="How to record a specific window on Mac (free)"
+  description="Record one window on a Mac: the Screenshot toolbar's window option on newer macOS, and Reelbird's window picker, including other desktops, plus the CLI."
+  path={path} og="guide-record-window"
+  title="How to record a specific window on a Mac"
+  lede="On a recent macOS the Screenshot toolbar (⌘⇧5) has a Record a window tool, so you may not need anything else. On macOS 15 it only records the whole screen or a portion. Reelbird, free and open source, records any window on macOS 15 or later, including windows on other desktops."
+  crumbs={[{ name: "Guides", path: "/guides/" }, { name: "Record a window", path }]}
+  datePublished="2026-11-15"
+  stamp="Published 15 November 2026."
+>
+  <h2 id="options">The options compared</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Tool</th><th>Single window?</th></tr></thead>
+      <tbody>
+        <tr><td>Screenshot toolbar, macOS 15 and earlier</td><td>No. Apple's page lists only the entire screen or a portion.</td></tr>
+        <tr><td>Screenshot toolbar, macOS 26 and 27</td><td>Yes, Record a window</td></tr>
+        <tr><td>QuickTime Player</td><td>Opens the same toolbar through File, New Screen Recording, so the same answer</td></tr>
+        <tr><td>Reelbird, macOS 15 or later</td><td>Yes, with a window picker, and from the command line</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Apple's <a href="https://support.apple.com/en-us/102618">screen recording page</a> lists Record Selected Window as available in macOS Tahoe 26 or later. Its pages for macOS 14 and 15 list only the entire screen or a portion.</p>
+
+  <h2 id="macos">With the Screenshot toolbar</h2>
+  <ol>
+    <li>Press <kbd>⌘</kbd><kbd>⇧</kbd><kbd>5</kbd>.</li>
+    <li>Choose <strong>Record a window</strong>, then click the window you want.</li>
+    <li>Use <strong>Options</strong> for the microphone, a timer and where the file saves, then click <strong>Record</strong>.</li>
+  </ol>
+  <p>On macOS 15, use <strong>Record a portion of the screen</strong> and drag its edges around the window. That follows the screen, not the window, so it keeps recording whatever drifts into the box.</p>
+
+  <h2 id="reelbird">With Reelbird</h2>
+  <ol>
+    <li>Press <kbd>⌥</kbd><kbd>⇧</kbd><kbd>R</kbd> in any app to open the picker.</li>
+    <li>Pick the <strong>Window</strong> tab (the others are <strong>Display</strong> and <strong>Area</strong>). Windows on this desktop are listed front to back. Type in <strong>Find a window</strong> to filter.</li>
+    <li>Windows on other desktops, in full-screen Spaces or minimised appear under <strong>Other desktops &amp; minimized</strong>. Pick one and press Start. Reelbird asks macOS to bring it onto the screen and waits about two seconds. If it doesn't come, the picker tells you to bring it forward yourself, then press Start.</li>
+    <li>Turn on <strong>Microphone</strong>, <strong>Camera</strong> or <strong>System audio</strong> if you want them. Return starts and Esc closes the picker.</li>
+    <li>Stop with <kbd>⌥</kbd><kbd>⇧</kbd><kbd>R</kbd>. The take opens in the editor, or copies a share link if you turned on <strong>Share while recording</strong>.</li>
+  </ol>
+  <p>If you close the window before you start, the picker says it has closed and asks you to pick another. If a window leaves the screen during a take, for instance by switching Space or minimising it, the recording keeps going. It holds the last frame and shows a "screen stopped updating" warning until the window is back.</p>
+
+  <h2 id="cli">From the command line</h2>
+  <p>List what's recordable, then record a window by its ID.</p>
+  <Code code={"reelbird sources\nreelbird record --window 1234 --share"} />
+  <p><code>reelbird sources</code> prints displays, windows, microphones and cameras with IDs. Ctrl-C stops the recording. See the <a href="/docs/cli/">command line docs</a>. Recording from a terminal asks for Screen Recording permission for the terminal app.</p>
+
+  <h2 id="caveats">Caveats</h2>
+  <ul>
+    <li>With a window recording, keystrokes are logged only while that window's app is in front.</li>
+    <li>A window recording is one window. To show several apps at once, pick a display or an area.</li>
+    <li>Reelbird's own windows are never in a recording.</li>
+  </ul>
+
+  <h3 id="specific">How do I screen record a specific window on a Mac?</h3>
+  <p>On macOS 26 or later, press ⌘⇧5 and choose Record a window. On macOS 15, use Reelbird's Window tab, or record an area.</p>
+
+  <h3 id="hidden">Can I record a window on another desktop?</h3>
+  <p>Reelbird lists those windows and tries to bring the one you pick to the front before it starts. See <a href="/guides/record-mac-screen-with-internal-audio/">recording with internal audio</a> if you also want the app's sound.</p>
+
+  <h3 id="crop">Can I crop a browser window to remove its toolbar?</h3>
+  <p>Yes. <strong>Hide Browser Toolbar</strong> in the editor crops the tabs and bookmarks bar off a browser window. Get it from the <a href="/download/">download page</a>.</p>
+</Article>

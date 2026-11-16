@@ -45,13 +45,25 @@ cleanshot-alternative|A free CleanShot X alternative for screen recording|Compar
 use-cases|What people record with Reelbird|Use cases|perch
 use-case-product-demos|Record a product demo video on your Mac|Use case|camera
 use-case-dev-demos|Record a coding demo, or let your agent record it|Use case|perch
+use-case-tutorial-videos|Record a tutorial video on your Mac|Use case|camera
 guides|Step by step, with the caveats|Guides|perch
 guide-internal-audio|Record your Mac screen with internal audio|Guide|headphones
 guide-captions|Add captions to a screen recording on Mac|Guide|headphones
 guide-vertical-video|Turn a screen recording into a 9:16 video|Guide|camera
 guide-webcam-overlay|Record your screen with a webcam overlay|Guide|camera
 guide-r2-links|Self-host Loom-style links on Cloudflare R2|Guide|link
+guide-background-noise|Record your Mac screen without background noise|Guide|headphones
+guide-remove-ums-pauses|Remove ums and pauses from a screen recording|Guide|headphones
+guide-hide-cursor|Hide the cursor in a Mac screen recording|Guide|camera
+guide-show-keystrokes|Show keystrokes in a Mac screen recording|Guide|perch
+guide-record-window|Record one window on your Mac|Guide|camera
+guide-gif|Turn a Mac screen recording into a GIF|Guide|camera
+guide-trim-crop|Trim and crop a screen recording on Mac|Guide|camera
+guide-file-size|Make a Mac screen recording smaller|Guide|perch
+guide-share-recording|Share a screen recording from your Mac|Guide|link
+guide-claude-code|Let Claude Code record your screen|Guide|perch
 faq|Questions, answered|FAQ|perch
+about|Who makes Reelbird, and what pays for it|About|perch
 pricing|The recorder is free. Pro hosts your links.|Pricing|link
 privacy|No account needed, no telemetry|Privacy|sleeping
 terms|Terms of service|Legal|perch

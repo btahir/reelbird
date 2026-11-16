@@ -1,0 +1,57 @@
+---
+import Article from "../../../layouts/Article.astro";
+const path = "/guides/show-keystrokes-screen-recording-mac/";
+---
+<Article
+  seoTitle="Show keystrokes in a Mac screen recording (free)"
+  description="The Mac recorder lists no keystroke option. How to add an overlay with Reelbird: the permissions it needs, shortcuts vs typed text, and blurs."
+  path={path} og="guide-show-keystrokes"
+  title="How to show keystrokes in a Mac screen recording"
+  lede="The Screenshot toolbar and QuickTime Player record the screen, the microphone and optionally the pointer, but Apple's pages list no option for showing the keys you press. Reelbird has a keystroke overlay: turn on Record keystrokes before you record, grant two permissions, and decide in the editor whether it appears."
+  crumbs={[{ name: "Guides", path: "/guides/" }, { name: "Show keystrokes", path }]}
+  datePublished="2026-11-15"
+  stamp="Published 15 November 2026."
+>
+  <h2 id="macos">What macOS gives you</h2>
+  <p>Apple's page on screenshots and screen recordings lists the toolbar's recording options: save location, timer, microphone, floating thumbnail, remembered selection, capture format and <strong>Show Mouse Pointer</strong>. None of them shows keys. QuickTime Player opens the same toolbar. If you need on-screen shortcuts, you need another app.</p>
+
+  <h2 id="reelbird">With Reelbird</h2>
+  <p>Reelbird logs key presses next to the video, on the same clock, and draws the overlay in the editor. Because it's drawn from a log, you choose afterwards whether it shows.</p>
+  <ol>
+    <li><strong>Turn it on before you record.</strong> Open <strong>Settings…</strong>, go to <strong>Recording</strong> and switch on <strong>Record keystrokes for the keystroke overlay</strong>. Keys are only logged when this is on before you start.</li>
+    <li><strong>Grant the permissions.</strong> It needs Accessibility and Input Monitoring. If keys don't show up later, turn Reelbird on under <strong>System Settings → Privacy &amp; Security → Input Monitoring</strong> (add it with the plus button if it isn't listed), then reopen the app.</li>
+    <li><strong>Record</strong> with <kbd>⌥</kbd><kbd>⇧</kbd><kbd>R</kbd>. Press your shortcuts as you demo.</li>
+    <li><strong>Show the overlay.</strong> In the editor, open the <strong>Cursor</strong> inspector (<kbd>⌘</kbd><kbd>2</kbd>) and turn on <strong>Show keystrokes</strong>. Turn it off again whenever you like. The overlay isn't baked in until you export.</li>
+    <li>Export with <kbd>⌘</kbd><kbd>E</kbd>, or share a link.</li>
+  </ol>
+  <p>If you switch the overlay on and no keys were recorded, the inspector says so and points you back to Settings.</p>
+
+  <h2 id="what-shows">What shows, and what doesn't</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Setting</th><th>What appears</th></tr></thead>
+      <tbody>
+        <tr><td>Show keystrokes</td><td>Shortcuts (⌘, ⌃ or ⌥ held) and keys like Return, Esc, Tab and the arrows</td></tr>
+        <tr><td>Show keystrokes and <strong>Include typed text</strong></td><td>Plain typing too. Off by default.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Typed text is never shown while a blur is on screen, nor for keys typed during one. That matters if you <a href="/features/blur-sensitive-info/">blur a password or API key</a> and then type it. The blur hides the field, and the overlay doesn't repeat what you typed into it.</p>
+
+  <h2 id="caveats">Caveats</h2>
+  <ul>
+    <li>If you record a single window, only keys typed while that window's app was in front are logged.</li>
+    <li>You can't add keystrokes to a take that was recorded with Record keystrokes off. Record again.</li>
+    <li>Turning on Record keystrokes means Reelbird listens for key events system-wide while it records. It's a listen-only tap, and it's optional. Without it, screen, audio and cursor recording work as before.</li>
+    <li>A video from another recorder can't gain an overlay afterwards.</li>
+  </ul>
+
+  <h3 id="shortcuts-only">Can I show only shortcuts and not what I type?</h3>
+  <p>Yes. That's the default once <strong>Show keystrokes</strong> is on. <strong>Include typed text</strong> adds plain typing.</p>
+
+  <h3 id="after">Can I turn the overlay on or off after recording?</h3>
+  <p>Yes, as long as keys were logged. The toggle sits in the Cursor inspector. See <a href="/features/auto-zoom/">auto-zoom and the cursor</a> for how typing also drives zooms, and <a href="/docs/troubleshooting/">troubleshooting</a> if keys don't appear.</p>
+
+  <h3 id="permissions">Do I have to grant permissions to record the screen?</h3>
+  <p>Screen recording needs Screen Recording permission. Keystrokes are the optional extra. The <a href="/download/">download page</a> lists every permission and why.</p>
+</Article>

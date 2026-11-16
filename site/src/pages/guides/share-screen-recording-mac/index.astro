@@ -1,0 +1,60 @@
+---
+import Article from "../../../layouts/Article.astro";
+import { PRO } from "../../../config/site";
+const path = "/guides/share-screen-recording-mac/";
+---
+<Article
+  seoTitle="How to share a screen recording on Mac: email, link, AirDrop"
+  description="Share a Mac screen recording by email, Mail Drop, AirDrop or a link. Attachment limits compared, and how to get a link the moment you stop recording."
+  path={path} og="guide-share-recording"
+  title="How to share a screen recording on Mac"
+  lede="A screen recording is usually too big for an email attachment, so most people end up sending a link. Mail Drop, AirDrop and a cloud drive all work for a one-off. If you send recordings often, a recorder that gives you a link when you stop saves the upload step."
+  crumbs={[{ name: "Guides", path: "/guides/" }, { name: "Share a recording", path }]}
+  datePublished="2026-11-15"
+  stamp="Published 15 November 2026. Attachment limits checked on the vendors' own pages that day."
+>
+  <h2 id="options">The options compared</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th scope="col">Method</th><th scope="col">Limit</th><th scope="col">Good for</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Email attachment</th><td>Gmail: 25 MB for personal accounts, and Gmail swaps a larger file for a Google Drive link. Outlook: 20 MB for internet accounts such as Outlook.com, 10 MB by default for Exchange. Both include the email itself.</td><td>Short clips only</td></tr>
+        <tr><th scope="row">Mail Drop (Apple Mail)</th><td>Up to 5 GB per message. Each attachment expires after 30 days. You need an Apple Account.</td><td>One big file to one person</td></tr>
+        <tr><th scope="row">AirDrop</th><td>No size limit stated. Both devices need Wi-Fi and Bluetooth on, within about 10 metres.</td><td>Someone in the same room</td></tr>
+        <tr><th scope="row">iCloud Drive or Google Drive link</th><td>Depends on your storage plan.</td><td>Files you want to keep in a folder</td></tr>
+        <tr><th scope="row">A link from your recorder</th><td>No attachment at all.</td><td>Recordings you send often</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Sources: Apple's <a href="https://support.apple.com/en-us/108329">Mail Drop limits</a> and <a href="https://support.apple.com/guide/mac-help/use-airdrop-to-send-items-to-nearby-devices-mh35868/mac">AirDrop</a> pages, <a href="https://support.google.com/mail/answer/6584">Google's Gmail attachment page</a> and <a href="https://support.microsoft.com/en-us/outlook/reduce-attachment-size-to-send-large-files-with-outlook">Microsoft's Outlook page</a>. Work and school accounts often set their own limits.</p>
+
+  <h2 id="email">Send it by email</h2>
+  <p>Check the file's size first: select it in Finder and press <kbd>⌘</kbd><kbd>I</kbd>. Under the limit, attach it and send. Over it, Mail offers Mail Drop when a message is larger than your email provider allows. The file goes to iCloud and the recipient gets a download link that works for 30 days. Apple notes that the recipient's own mail app may still have a smaller limit that blocks delivery, so a link in the message is the safer bet for anyone outside your company.</p>
+  <p>The recording itself comes from QuickTime Player or the Screenshot toolbar (<kbd>⇧</kbd><kbd>⌘</kbd><kbd>5</kbd>). Either one gives you a movie file, and sharing it is the steps above.</p>
+
+  <h2 id="link">Get a link when you stop recording</h2>
+  <p>Reelbird skips the file step. With <strong>Share while recording</strong> on in the picker (<kbd>⌥</kbd><kbd>⇧</kbd><kbd>R</kbd>), it uploads as you record, and the link is on your clipboard when you press stop. Paste it into chat or an email. The page plays in any browser, and the viewer needs no account.</p>
+  <ul>
+    <li><strong>Same link after edits.</strong> Trim, add captions or blur something, then choose <strong>Update link</strong>. People who already have the link see the new version.</li>
+    <li><strong>Stop sharing</strong> deletes every file under the link, and it stops working.</li>
+    <li><strong>Unlisted, not private.</strong> The ID is random and nothing lists it, but anyone who has the link can watch and forward it. Don't use it for anything that needs access control.</li>
+  </ul>
+
+  <h3 id="where">Where the video lives</h3>
+  <p>Two choices. <strong>Your own bucket</strong> is free: Cloudflare R2, or any S3-compatible storage. Setup takes about ten minutes, once, and R2's free tier covers 10 GB with no charge for people watching. Follow <a href="/guides/self-host-screen-recording-links-cloudflare-r2/">the R2 guide</a> or the <a href="/docs/sharing/">sharing docs</a>. <strong>Reelbird Pro</strong> ({PRO.price} a month) hosts the links for you at <code>watch.reelbird.app</code>, with {PRO.storage} of storage and anonymous view stats, and nothing to set up. Cancel and your existing links keep playing. Details on <a href="/pricing/">pricing</a> and <a href="/features/share-links/">share links</a>.</p>
+
+  <h2 id="caveats">Caveats</h2>
+  <ul>
+    <li>A link is only as private as where you paste it. Blur anything sensitive before you share; <a href="/features/blur-sensitive-info/">Find Sensitive Info</a> finds emails, keys and card numbers on screen.</li>
+    <li>If the recording must stay inside a company, use your company's file sharing instead.</li>
+    <li>Reelbird is Mac only, on macOS 15 or later. <a href="/download/">Download it</a> free.</li>
+  </ul>
+
+  <h2 id="faq">Related questions</h2>
+  <h3>How do I send a screen recording through email?</h3>
+  <p>Attach it if it's under 20 to 25 MB, the usual provider limit. Otherwise use Mail Drop in Apple Mail, or paste a link from a drive or a recorder.</p>
+  <h3>Why won't my screen recording attach to an email?</h3>
+  <p>Because it's over the provider's limit, which counts the message too. A recording of a few minutes usually is. Send a link instead.</p>
+  <h3>Can I share a screen recording without uploading it twice?</h3>
+  <p>Yes. A recorder that uploads while it records, as Reelbird does, has the video online by the time you stop.</p>
+</Article>

@@ -1,0 +1,57 @@
+---
+import Article from "../../../layouts/Article.astro";
+import Code from "../../../components/Code.astro";
+const path = "/guides/claude-code-screen-recording/";
+---
+<Article
+  seoTitle="Can Claude Code record the screen? Yes, with an MCP server"
+  description="Claude Code can't record video on its own as far as its docs say. Add Reelbird's MCP server and it can record, edit, caption and share a screen recording."
+  path={path} og="guide-claude-code"
+  title="Can Claude Code record your screen?"
+  lede="Not by itself, as far as Anthropic's docs say. Claude Code's computer use takes screenshots and clicks, and the docs don't describe video recording. To get a recording, give it a tool that records, such as an MCP server. Reelbird's is free, and one command adds it."
+  crumbs={[{ name: "Guides", path: "/guides/" }, { name: "Claude Code screen recording", path }]}
+  datePublished="2026-11-15"
+  stamp="Published 15 November 2026. Claude Code behaviour checked against code.claude.com that day."
+>
+  <h2 id="answer">The short answer</h2>
+  <p>Claude Code's <a href="https://code.claude.com/docs/en/computer-use">computer use</a> lets it open apps, click, type and take screenshots on a Mac. It's a research preview, needs a Pro, Max or Ultra plan, and doesn't run with the <code>-p</code> flag. The page says nothing about recording video, so for a video you need a tool such as an <a href="https://code.claude.com/docs/en/mcp">MCP server</a>. The docs also say Claude prefers a dedicated MCP server over computer use when one exists, which suits this job.</p>
+
+  <h2 id="add">Add a recorder to Claude Code</h2>
+  <ol>
+    <li><a href="/download/">Install Reelbird</a> (free, macOS 15 or later) and open it once.</li>
+    <li>Add the server:</li>
+  </ol>
+  <Code code="claude mcp add reelbird -- /Applications/Reelbird.app/Contents/Helpers/reelbird mcp" />
+  <ol start="3">
+    <li><strong>Allow Screen Recording</strong> when macOS asks. It goes to the app that runs Claude Code, your terminal or editor, not to Reelbird.</li>
+    <li>Ask for what you want: "Record a 20-second demo of the settings page you just changed, blur any keys and give me the share link."</li>
+  </ol>
+  <p>Claude calls <code>list_sources</code> to find the window, <code>start_recording</code> (which returns a session ID) and <code>stop_recording</code>, which returns the project's path and, if sharing was on, the link. Between those it can use <code>add_marker</code>, <code>redact</code> to find and blur emails and keys, <code>set_edit</code> for zooms and captions, <code>export</code> and <code>share</code>. The full list is in the <a href="/docs/mcp/">MCP docs</a>; <a href="/features/agents/">CLI and MCP for agents</a> shows what it's for.</p>
+
+  <h2 id="cli">From a script instead</h2>
+  <p>The same tool is a command line program, which suits CI or a hook. Link it onto your <code>PATH</code> as in the <a href="/docs/cli/">command line docs</a>, then:</p>
+  <Code code={"reelbird record --display 1 --duration 20 --share\nreelbird captions latest\nreelbird export latest --format mp4 --height 1080"} />
+  <p>Every command takes <code>--json</code>, so a script or agent can read the result.</p>
+
+  <h2 id="read">Have Claude read a recording</h2>
+  <p>It works the other way too. Record yourself reproducing a bug and talking through it, then ask Claude to look at it. <code>describe_take</code> returns the steps (each click, typing and shortcut, with what was clicked), what you said, your markers and the transcript, so Claude can follow the recording without watching the video. <code>get_steps</code> and <code>edit_step</code> read and tidy the steps.</p>
+
+  <h2 id="skill">Turn a recording into a Claude skill</h2>
+  <p>Record yourself doing a task once. <code>export_guide</code> with the <code>skill</code> format, or <code>reelbird guide latest --format skill</code>, writes a <code>SKILL.md</code> with the steps and screenshots, so an agent can repeat the task. The same take also exports as a web page or Markdown. See <a href="/features/step-by-step-guides/">step-by-step guides</a>.</p>
+
+  <h2 id="others">Codex and Cursor</h2>
+  <p>Same server, different setup. For Codex, run <code>codex mcp add reelbird -- /Applications/Reelbird.app/Contents/Helpers/reelbird mcp</code>. For Cursor, add an <code>mcpServers</code> entry with that path and <code>"args": ["mcp"]</code> to <code>~/.cursor/mcp.json</code>. Both are written out on the <a href="/docs/mcp/">MCP page</a>.</p>
+
+  <h2 id="caveats">Caveats</h2>
+  <ul>
+    <li>Reelbird is Mac only, on macOS 15 or later.</li>
+    <li>If recording fails with a permission error, grant Screen Recording to the terminal or editor in System Settings, then restart it. <a href="/docs/troubleshooting/">Troubleshooting</a> has more.</li>
+    <li>The recording captures whatever is on screen. Close anything private first, or have the agent run <code>redact</code> before it shares.</li>
+  </ul>
+
+  <h2 id="faq">Related questions</h2>
+  <h3>Is there a Claude Code screen recording skill?</h3>
+  <p>Anthropic's docs don't describe one. A skill can only tell Claude how to use a tool, so the recording still needs something like the MCP server above.</p>
+  <h3>Can Claude Code watch a video I recorded?</h3>
+  <p>Not as video through this route. <code>describe_take</code> gives it the steps, speech and markers as text instead, which is usually what a bug report needs.</p>
+</Article>

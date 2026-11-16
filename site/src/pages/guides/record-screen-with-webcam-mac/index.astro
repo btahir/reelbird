@@ -13,7 +13,8 @@ const path = "/guides/record-screen-with-webcam-mac/";
   lede="Reelbird records your camera as its own track next to the screen, so the webcam bubble isn't baked in: after recording you can move it, change its shape and size, or switch to camera only or side by side for any part of the video. It's free and open source. Here's how."
   crumbs={[{ name: "Guides", path: "/guides/" }, { name: "Webcam overlay", path }]}
   datePublished="2026-11-07"
-  stamp="Published 7 November 2026. Written for Reelbird 0.4.1."
+  dateModified="2026-11-15"
+  stamp="Published 7 November 2026. Updated 15 November 2026. Written for Reelbird 0.4.1."
 >
   <h2 id="steps">Steps</h2>
   <ol>
@@ -25,6 +26,17 @@ const path = "/guides/record-screen-with-webcam-mac/";
   </ol>
 
   <Shot src={pickerL} dark={pickerD} alt="The picker with Microphone, Camera, System audio and Share while recording switches." sizes="(min-width: 60rem) 560px, 100vw" widths={[560, 1120, 1560]} />
+
+  <h2 id="presentation">Record a presentation with your face on Mac</h2>
+  <p>Open your slides in Keynote, PowerPoint or any other app, then record that app's window with the camera on. Reelbird records the slides and your face as separate tracks, so you pick how they sit together afterwards.</p>
+  <ol>
+    <li><strong>Open the picker</strong> with <kbd>⌥</kbd><kbd>⇧</kbd><kbd>R</kbd> and choose <strong>Window</strong>, then the window your slides play in. Or choose the whole display if you present full screen.</li>
+    <li><strong>Turn on Camera and Microphone.</strong> Turn on System audio too if your slides play sound.</li>
+    <li><strong>Start the recording,</strong> start your slideshow and talk. Press <kbd>⌥</kbd><kbd>⇧</kbd><kbd>L</kbd> to switch between bubble, camera only and screen only as you go.</li>
+    <li><strong>Stop</strong> with <kbd>⌥</kbd><kbd>⇧</kbd><kbd>R</kbd> and open the Camera tab (<kbd>⌘</kbd><kbd>4</kbd>) to choose the bubble's corner, shape and size. Press <kbd>C</kbd> on the timeline to put the camera full screen or side by side with the slides for part of the talk.</li>
+    <li><strong>Export</strong> with <kbd>⌘</kbd><kbd>E</kbd>, or copy a share link.</li>
+  </ol>
+  <p>If your slideshow runs on a second display, record that display instead. On a 9:16 canvas, side by side stacks the slides above your camera.</p>
 
   <h2 id="after">Change it after recording</h2>
   <ul>

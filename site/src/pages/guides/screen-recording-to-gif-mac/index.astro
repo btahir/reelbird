@@ -1,0 +1,62 @@
+---
+import Article from "../../../layouts/Article.astro";
+import Code from "../../../components/Code.astro";
+const path = "/guides/screen-recording-to-gif-mac/";
+---
+<Article
+  seoTitle="Screen record on Mac as a GIF: how to make one, free"
+  description="macOS has no GIF export for screen recordings. Reelbird makes one with ⌘E: size and frame rate options, the CLI command, and when an MP4 is better."
+  path={path} og="guide-gif"
+  title="How to make a GIF from a screen recording on Mac"
+  lede="macOS has no built-in way to save a screen recording as a GIF. Reelbird, a free and open-source screen recorder, exports a recording as a GIF from its export panel (⌘E) or from the command line, and you choose the size and frame rate. For anything longer than a few seconds, a short MP4 is usually the better file."
+  crumbs={[{ name: "Guides", path: "/guides/" }, { name: "Screen recording to GIF", path }]}
+  datePublished="2026-11-15"
+  stamp="Published 15 November 2026."
+>
+  <h2 id="short-answer">The short answer</h2>
+  <p>Apple's own tools record to a video file and stop there. QuickTime Player's <strong>File &gt; Export As</strong> offers 4K, 1080p, 720p, 480p and Audio Only, and no GIF (<a href="https://support.apple.com/guide/quicktime-player/export-movies-qtp20e395859/mac">Apple's export guide</a>). The Shortcuts app has a Make GIF action, but Apple's example builds a GIF from photos, and Apple doesn't document it converting a screen recording. So you need another app.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Route</th><th>Makes a GIF?</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Screenshot toolbar (<kbd>⇧</kbd><kbd>⌘</kbd><kbd>5</kbd>)</td><td>No</td><td>Records a video</td></tr>
+        <tr><td>QuickTime Player</td><td>No</td><td>Export As lists 4K, 1080p, 720p, 480p, Audio Only</td></tr>
+        <tr><td>Reelbird</td><td>Yes</td><td>Export panel or <code>reelbird export</code>; silent, loops</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 id="steps">Make the GIF in Reelbird</h2>
+  <ol>
+    <li><strong>Record</strong> with <kbd>⌥</kbd><kbd>⇧</kbd><kbd>R</kbd>, and press it again to stop. Keep it short. Do one thing per GIF.</li>
+    <li><strong>Open the take in the editor</strong> and trim it. Drag the edges of the video on the timeline, or press <kbd>S</kbd> to split and <kbd>Delete</kbd> to cut a part out. The <a href="/guides/trim-crop-screen-recording-mac/">trim and crop guide</a> has the details.</li>
+    <li><strong>Press <kbd>⌘</kbd><kbd>E</kbd></strong> to open Export. Pick <strong>GIF</strong> at the top. (<kbd>⌘</kbd><kbd>K</kbd> and <strong>Export as GIF…</strong> gets you there too.)</li>
+    <li><strong>Choose Resolution and Frame rate.</strong> Picking GIF sets 480p and 15 fps. The menus offer 1080p, 720p and 480p, and 15, 24 or 30 fps. The <strong>Estimated size</strong> line updates as you change them.</li>
+    <li><strong>Pick a folder</strong> with <strong>Change…</strong> next to Save to, then press <strong>Export</strong>. When it finishes, <strong>Show in Finder</strong> or <strong>Copy File</strong> puts the GIF where you need it.</li>
+  </ol>
+
+  <h2 id="what-you-get">What the GIF contains</h2>
+  <ul>
+    <li><strong>No audio.</strong> A GIF can't carry sound, and Reelbird skips the audio mix for it.</li>
+    <li><strong>It loops forever.</strong></li>
+    <li><strong>The edit is in it.</strong> Reelbird draws the GIF with the same renderer as its video exports, so the background, rounded corners, <a href="/features/auto-zoom/">auto-zoom</a>, the smoothed cursor, blurs and any captions you chose are drawn into the frames. Cuts and speed changes apply too.</li>
+    <li><strong>The canvas you chose.</strong> A 9:16 or 1:1 canvas gives a vertical or square GIF.</li>
+  </ul>
+  <p>Reelbird sets no cap on GIF length. The practical limit is file size, which grows with length, resolution and frame rate. Check the estimate before you export.</p>
+
+  <h2 id="cli">From the command line</h2>
+  <Code code={"reelbird export latest --format gif --height 480 --fps 15 --out ~/Desktop/demo.gif"} />
+  <p><code>--format</code> takes <code>mp4</code>, <code>hevc</code>, <code>prores</code> or <code>gif</code>. Leave out <code>--height</code> and <code>--fps</code> for a GIF and Reelbird uses 15 fps and at most 540 pixels tall. Details are in the <a href="/docs/cli/">command-line reference</a>.</p>
+
+  <h2 id="when-not">When an MP4 or a link is better</h2>
+  <p>A GIF stores every frame as an image, so it is large next to a video of the same clip. The export panel describes GIF as best for short clips that loop silently in docs, READMEs and chats. For a minute of walkthrough, or anything with a voice, use an MP4, or send a link and skip the file. See <a href="/guides/reduce-screen-recording-file-size-mac/">how to make a screen recording smaller</a> and <a href="/features/share-links/">share links</a>, which are free to your own storage bucket and $5 a month with Reelbird Pro.</p>
+
+  <h2 id="faq">Related questions</h2>
+  <h3>How do I make a GIF from a screen recording I already have?</h3>
+  <p>Reelbird edits its own recordings, so record with it. A recording from the Screenshot toolbar or another app isn't a Reelbird project, and Reelbird has no import for one.</p>
+  <h3>Can I use a GIF in a GitHub README?</h3>
+  <p>Yes, a GIF is an image and embeds anywhere images do. Reelbird's own README uses one. Keep it small so the page loads quickly.</p>
+  <h3>Does Reelbird add a watermark to GIFs?</h3>
+  <p>No. Recording, editing and exporting are free with no watermark. <a href="/download/">Download Reelbird</a> to try it.</p>
+</Article>

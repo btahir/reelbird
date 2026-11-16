@@ -22,7 +22,7 @@ const faq = [
   answer="Reelbird is a free, open-source Loom alternative for Mac that you can self-host. Like Loom, it copies a share link the moment you stop recording. Unlike Loom, the link points at a storage bucket you own, such as Cloudflare R2, with no server to run, or at Reelbird Pro's hosting for $5 a month. There's no 5-minute limit, no 25-video cap and no 720p ceiling, and every take stays on your Mac as MP4 files. Later you can add auto-zoom, captions and blurs and update the video under the same link."
   verdict="Reelbird vs Loom in one line: Loom is the better team tool on every platform; Reelbird is the free Mac recorder that gives you the link, the files and the polish without a plan to upgrade."
   rival="loom"
-  dateModified="2026-11-07"
+  dateModified="2026-11-15"
   rows={[
     ["Price", "Free, MIT licensed. Optional Reelbird Pro, $5 a month, hosts your links", "Starter free. Business $18 and Business + AI $24 per user a month, billed monthly"],
     ["Free-plan limits", "None set by Reelbird", "25 videos per person, 5 minutes each, up to 720p"],
@@ -64,6 +64,18 @@ const faq = [
   }}
   faq={faq}
 >
+  <section class="wrap alt-extra" aria-labelledby="loom-free-limits">
+    <h2 id="loom-free-limits">What are Loom's free plan limits?</h2>
+    <p>Loom's free Starter plan has these limits, checked on <a href="https://www.loom.com/pricing">Loom's pricing page</a> on 15 November 2026:</p>
+    <ul>
+      <li>Up to 25 videos per person.</li>
+      <li>Screen recordings stop at 5 minutes each.</li>
+      <li>Video quality up to 720p. Business and above go to 4K.</li>
+      <li>Upload and download is listed as a Business feature, so Starter users can't download their videos.</li>
+      <li>No search, password-protected videos, Loom branding removal or Loom AI features.</li>
+    </ul>
+    <p>Business is $18 and Business + AI $24 per user a month, billed monthly, with up to 17% off yearly. Reelbird has none of these limits: recording, length, quality and export are free, and every take is MP4 on your Mac. Links go to your own bucket for free, or Reelbird Pro hosts them. <a href="/pricing/">Pricing</a>.</p>
+  </section>
   <section class="wrap alt-extra" aria-labelledby="self-hosted">
     <h2 id="self-hosted">A self-hosted Loom alternative, with your own storage</h2>
     <p>Loom keeps your videos on Loom's cloud. Reelbird's free links go to an S3-compatible bucket you own, and that's the whole setup: Reelbird uploads a small viewer page and the video to the bucket, signed with your keys, so there's no server, database or Docker container to run.</p>

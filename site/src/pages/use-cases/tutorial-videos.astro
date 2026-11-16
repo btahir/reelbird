@@ -1,0 +1,59 @@
+---
+import Article from "../../layouts/Article.astro";
+const path = "/use-cases/tutorial-videos/";
+---
+<Article
+  seoTitle="How to record a tutorial video on Mac, free: Reelbird"
+  description="Record a tutorial or training video on a Mac: record a window with voice, tighten the pace, add captions, export 16:9 and 9:16, and get a written guide."
+  path={path} og="use-case-tutorial-videos"
+  title="How to record a tutorial or training video on your Mac"
+  lede="A tutorial teaches one task, and people replay it, pause it and skim it. Plan the steps, record a window while you talk, then tighten the pace, zoom in on the clicks, add captions and export for YouTube. The same take also gives you the written steps. Reelbird is free and does all of it on a Mac."
+  crumbs={[{ name: "Use cases", path: "/use-cases/" }, { name: "Tutorial videos", path }]}
+  datePublished="2026-11-15"
+  stamp="Published 15 November 2026."
+>
+  <h2 id="plan">Plan it on one page</h2>
+  <ul>
+    <li><strong>One task per video.</strong> "Set up a webhook" is a tutorial. "Everything about webhooks" is a course. Split it.</li>
+    <li><strong>Write the steps first.</strong> A numbered list of what you'll click, with the result you'll show at the end. You'll narrate from it and drop a marker at each step.</li>
+    <li><strong>Prepare the screen.</strong> Close other windows, make text bigger than feels necessary and start from the same state your learner will have.</li>
+  </ul>
+
+  <h2 id="record">Record it</h2>
+  <ol>
+    <li>Press <kbd>⌥</kbd><kbd>⇧</kbd><kbd>R</kbd>. Choose a <strong>window</strong> for one app, or an <strong>area</strong> you drag out. A window keeps notifications and desktop clutter out.</li>
+    <li>Turn on <strong>Microphone</strong> and, if the lesson has sound, <strong>System audio</strong>. They record as separate tracks, so you can lower the app sound later. See <a href="/guides/record-mac-screen-with-internal-audio/">recording with internal audio</a>.</li>
+    <li>Turn on <strong>Camera</strong> if a face helps with the intro or the explanations, and <strong>Record keystrokes</strong> in Settings › Recording so typing gets zooms and becomes steps in the written guide.</li>
+    <li>Say what you're about to do before you do it, then why. Press <kbd>⌥</kbd><kbd>⇧</kbd><kbd>M</kbd> at the start of each step to drop a marker.</li>
+    <li>Stop with <kbd>⌥</kbd><kbd>⇧</kbd><kbd>R</kbd>. Re-do one flubbed sentence by pausing and saying it again; you can cut the gap afterwards.</li>
+  </ol>
+
+  <h2 id="edit">Edit for someone who is learning</h2>
+  <ul>
+    <li><strong>Clean Up</strong> (<kbd>W</kbd>) shortens long pauses and cuts ums and dead time at the start and end. Review each change, or undo the lot. Pauses get shorter, not removed, so the pace still lets people follow.</li>
+    <li><strong>Speed Up Typing</strong> plays typing and waiting at speed, so a five-minute build or a long command doesn't stall the lesson. Slow down on the parts you want them to copy.</li>
+    <li><strong>Zoom</strong> follows your clicks automatically, so small buttons and menu text are readable on a phone. Use the slider for subtle or punchy, and move any zoom that lands wrong. <a href="/features/auto-zoom/">More on auto-zoom</a>.</li>
+    <li><strong>Captions</strong> (<kbd>⌘</kbd><kbd>7</kbd>) are made on your Mac. For tutorials, Classic, Highlight or Marker read best. They help viewers who watch muted or in a second language. <a href="/guides/add-captions-to-screen-recording-mac/">How to add captions</a>.</li>
+    <li><strong>Chapters.</strong> Choose <strong>Use Markers as Chapters</strong> and the markers you dropped become the chapter list on the share page, so people can jump to the step they're stuck on.</li>
+  </ul>
+
+  <h2 id="export">Export two cuts</h2>
+  <ol>
+    <li><strong>16:9 for YouTube or your help centre.</strong> Press <kbd>⌘</kbd><kbd>E</kbd> and export MP4 at the recording's size or a height you choose.</li>
+    <li><strong>9:16 for a short clip</strong> of the best step. Set the Canvas to 9:16, switch the captions to a short-form style and export again. The edit is a setting, so the landscape version stays. See <a href="/guides/screen-recording-to-vertical-video/">turning a screen recording into a vertical video</a>.</li>
+  </ol>
+
+  <h2 id="written">The written version, from the same take</h2>
+  <p>Many learners would rather read. Open the <strong>Guide</strong> panel (<kbd>⌘</kbd><kbd>9</kbd>) and every click, run of typing and shortcut is a numbered step with a screenshot and what you clicked. Reword or hide steps, then export a web page or Markdown with images for your docs. On a share link, viewers get the video, the guide and a click-through of it. Read <a href="/features/step-by-step-guides/">how guides work</a>.</p>
+
+  <h2 id="share">Hand it out</h2>
+  <p>With <strong>Share while recording</strong> on, the link is on your clipboard when you stop, and <strong>Update link</strong> keeps it the same after you edit. Put the link in your course notes once and fix mistakes later without sending a new one. <a href="/features/share-links/">About share links</a>.</p>
+
+  <h2 id="limits">What it doesn't do</h2>
+  <ul>
+    <li>No quizzes, progress tracking or course hosting. Use it to make the lessons, then host them wherever your course lives.</li>
+    <li>No joining several takes into one video in the editor yet. Record each lesson in one go, or join exports elsewhere.</li>
+    <li>Mac only, macOS 15 or later.</li>
+  </ul>
+  <p>Selling a product instead of teaching one? See <a href="/use-cases/product-demos/">product demo videos</a>.</p>
+</Article>

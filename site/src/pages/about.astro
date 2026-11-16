@@ -1,0 +1,33 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHead from "../components/PageHead.astro";
+import { GITHUB_URL, GITHUB_ISSUES_URL, LEGAL, LICENSE_NAME, MIN_MACOS, PRO } from "../config/site";
+const crumbs = [{ name: "About", path: "/about/" }];
+---
+<Base title="About Reelbird: who makes it and how it's paid for" description={`Reelbird is a free, open-source screen recorder for the Mac, made by ${LEGAL.operator}. The app is ${LICENSE_NAME} licensed; optional Pro hosting pays for it.`} og="about" crumbs={crumbs}>
+  <PageHead title="About Reelbird" lede={`Reelbird is a free, open-source screen recorder for the Mac. It copies a share link the moment you stop recording and lets you polish the same take later, under the same link. It's made by ${LEGAL.operator}.`} crumbs={crumbs} />
+  <div class="wrap">
+    <div class="prose body">
+      <h2 id="why">Why it exists</h2>
+      <p>Recorders tend to do one of two jobs. Some hand you a link quickly, and the video looks like a raw capture. Others make a polished video, and you wait for the export before you can send anything. Reelbird does both from one take: the link is ready when you stop, and auto-zoom, a smooth cursor and captions can catch up later without the link changing. <a href="/compare/">How it compares with other Mac recorders</a>.</p>
+
+      <h2 id="open">Open source</h2>
+      <p>The whole app is on <a href={GITHUB_URL}>GitHub</a> under the <a href={`${GITHUB_URL}/blob/main/LICENSE`}>{LICENSE_NAME} licence</a>: the recorder, the editor, the command line tool and the MCP server. It's a native Swift app for {MIN_MACOS} and later, with no third-party dependencies. You can <a href="/download/">download it</a>, signed and notarised by Apple, or build it from source. A take is a folder of standard MP4s and JSON, described in the <a href="/docs/format/">project format</a>, so nothing you record is locked in.</p>
+
+      <h2 id="money">How it's paid for</h2>
+      <p>Recording, editing and exporting are free, with no watermark, no limits and no account. Share links to a storage bucket you own are free too. Hosting video costs money every month, so that part is the paid plan: <a href="/pricing/">Reelbird Pro</a>, {PRO.price} a month, hosts your links and shows how they were watched. There are no ads, and the app has <a href="/privacy/">no telemetry</a>.</p>
+
+      <h2 id="contact">Contact</h2>
+      <ul>
+        <li><strong>Questions, Pro billing and anything else:</strong> <a href={`mailto:${LEGAL.email}`}>{LEGAL.email}</a>.</li>
+        <li><strong>Bugs and feature requests:</strong> <a href={GITHUB_ISSUES_URL}>GitHub issues</a>.</li>
+        <li><strong>Security problems:</strong> the repository's <a href={`${GITHUB_URL}/blob/main/SECURITY.md`}>security policy</a>.</li>
+        <li><strong>Contributing:</strong> the <a href={`${GITHUB_URL}/blob/main/CONTRIBUTING.md`}>contributing guide</a>.</li>
+      </ul>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .body { padding-bottom: var(--section); }
+</style>

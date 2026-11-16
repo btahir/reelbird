@@ -1,0 +1,59 @@
+---
+import Article from "../../../layouts/Article.astro";
+const path = "/guides/screen-record-mac-without-background-noise/";
+---
+<Article
+  seoTitle="Screen record on Mac without background noise"
+  description="Two fixes. Record with no microphone at all, or keep the mic and remove room noise afterwards. What macOS offers and what Reelbird adds, free."
+  path={path} og="guide-background-noise"
+  title="How to screen record on a Mac without background noise"
+  lede="It depends which noise you mean. If you want only the sound your Mac plays and none of the room, record with the microphone off. If you want your voice without the fan, keyboard and traffic behind it, clean the voice after recording. Reelbird does that automatically, on your Mac."
+  crumbs={[{ name: "Guides", path: "/guides/" }, { name: "Recording without background noise", path }]}
+  datePublished="2026-11-15"
+  stamp="Published 15 November 2026."
+>
+  <h2 id="options">Which problem do you have?</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>You want</th><th>Do this</th></tr></thead>
+      <tbody>
+        <tr><td>No room sound at all, only what the Mac plays</td><td>Record with the microphone off and system audio on. See <a href="/guides/record-mac-screen-with-internal-audio/">recording with internal audio</a>.</td></tr>
+        <tr><td>No sound at all</td><td>Turn off the microphone (and system audio) before you record.</td></tr>
+        <tr><td>Your voice, without the room behind it</td><td>Record the mic, then remove the noise from that track afterwards (below).</td></tr>
+        <tr><td>Your voice, but a noisy sound from the Mac</td><td>Keep the tracks separate and lower or mute one of them after recording.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 id="macos">What macOS does itself</h2>
+  <p>The Screenshot toolbar (<kbd>⇧</kbd><kbd>⌘</kbd><kbd>5</kbd>) and QuickTime Player let you choose a microphone, or none. In the toolbar it is under <strong>Options</strong>; in QuickTime Player it is the arrow next to the Record button. That is all the page says about the microphone, per <a href="https://support.apple.com/en-us/102618">Apple's screen recording page</a>: you pick an input, and nothing there removes noise.</p>
+  <p>Apple does have a noise filter for the mic, called Voice Isolation. <a href="https://support.apple.com/guide/mac-help/use-mic-modes-on-your-mac-mchle82b42f0/mac">Apple's Mic Modes page</a> describes three modes (Voice Isolation, Wide Spectrum, Standard) and says it works in apps that support them, such as FaceTime. During a video call the control is in the menu bar under Video or Audio (macOS Sonoma 14 or later; Control Center on Ventura 13 and Monterey 12), per <a href="https://support.apple.com/en-us/105117">Apple's video effects page</a>. Neither page says Mic Modes apply to screen recordings, so don't count on it for ⇧⌘5 or QuickTime. Test a short take first.</p>
+  <p>Apple's page also lists <strong>Include System Audio</strong> in the Screenshot toolbar's Options, but only on macOS 27 or later. Apple's page lists no such option before that.</p>
+
+  <h2 id="reelbird">What Reelbird does</h2>
+  <p>Reelbird records the microphone and system audio as separate tracks, then cleans the voice track after the fact. The raw microphone recording is never changed, so you can undo any of it. Open the take and use the Audio inspector (<kbd>⌘</kbd><kbd>6</kbd>):</p>
+  <ol>
+    <li><strong>Enhance voice</strong> is on by default. On Macs that have Apple's sound isolation (AUSoundIsolation), it removes room noise and hum, then evens out the voice. Choose <strong>Light</strong>, <strong>Medium</strong>, <strong>Strong</strong> or <strong>Max</strong>. Medium caps noise reduction at 12 dB, Strong at 24 dB, Max has no cap. Stronger settings can sound processed.</li>
+    <li>Drag the <strong>Original ↔ Enhanced</strong> slider if it sounds too processed, and hold <strong>Hold to hear original</strong> to compare with the voice as recorded.</li>
+    <li><strong>Auto level</strong> (on by default) brings your voice to a steady −16 LUFS.</li>
+    <li>With system audio recorded, <strong>Lower under voice</strong> turns it down by about 12 dB while you speak, so music and notifications don't fight you.</li>
+    <li>To drop the room entirely, press the speaker button next to <strong>Voice</strong> to mute the microphone. Your system audio track stays.</li>
+  </ol>
+  <p>It all happens on your Mac. Nothing is uploaded unless you share a link. See <a href="/features/audio-captions/">audio and captions</a> for what each stage does. From a terminal, <code>reelbird enhance latest --strength medium</code> runs the same cleanup, as in the <a href="/docs/cli/">command line docs</a>.</p>
+
+  <h2 id="limits">What it can't do</h2>
+  <ul>
+    <li>Noise removal works on the voice track. If a loud sound lands on top of your words, it can leave artefacts. Record in the quietest room you have.</li>
+    <li>On a Mac without Apple's sound isolation, Reelbird skips the noise removal step and still levels and de-esses the voice.</li>
+    <li>Bluetooth headsets drop to a low-quality mode when their mic is on. A wired or built-in mic usually sounds better.</li>
+    <li>Reelbird needs macOS 15 or later and runs only on a Mac. It's <a href="/download/">free and open source</a>.</li>
+  </ul>
+
+  <h2 id="related">Related questions</h2>
+  <h3>How do I screen record on a Mac with no sound?</h3>
+  <p>Turn off the microphone in the Screenshot toolbar's Options or in QuickTime's menu, and don't record system audio. The file has no audio track.</p>
+  <h3>How do I screen record on a Mac without external sound, only the Mac's audio?</h3>
+  <p>Record system audio with the microphone off. Apple's own tools do this only on macOS 27 or later; Reelbird does it on macOS 15 or later. Steps are in the <a href="/guides/record-mac-screen-with-internal-audio/">internal audio guide</a>.</p>
+  <h3>Can I remove noise from a recording I've already made?</h3>
+  <p>Yes, if the take was recorded in Reelbird. Its microphone is saved as its own track, so Enhance voice can be turned on at any time.</p>
+</Article>

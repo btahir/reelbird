@@ -8,7 +8,8 @@ import Faq from "../components/Faq.astro";
 import CtaBand from "../components/CtaBand.astro";
 import VsBand from "../components/VsBand.astro";
 import Icon from "../components/Icon.astro";
-import { GITHUB_URL, SITE_DESCRIPTION, APP_VERSION, PRO } from "../config/site";
+import { GITHUB_URL, SITE_DESCRIPTION, APP_VERSION, RELEASE_DATE, PRO } from "../config/site";
+import { dateLabel } from "../data/compare";
 import { HOME_FAQ } from "../data/faq";
 import { softwareApplication, softwareSourceCode, videoObject } from "../lib/jsonld";
 import pickerL from "../assets/shots/picker-raw-light.webp";
@@ -51,7 +52,7 @@ const facts: [string, string, string?][] = [
   ["Install", "Download or build from source", "/download/"],
   ["Account", "None needed"],
   ["Telemetry", "None"],
-  ["Version", `${APP_VERSION}, October 2026`, "/changelog/"],
+  ["Version", `${APP_VERSION}, ${dateLabel(RELEASE_DATE).replace(/^\d+ /, "")}`, "/changelog/"],
   ["Source", "github.com/btahir/reelbird", GITHUB_URL],
 ];
 ---

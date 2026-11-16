@@ -1,0 +1,30 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHead from "../components/PageHead.astro";
+import { GITHUB_URL, GITHUB_ISSUES_URL, LEGAL, PRO } from "../config/site";
+const crumbs = [{ name: "Contact", path: "/contact/" }];
+---
+<Base title="Contact Reelbird" description={`Email ${LEGAL.email} for questions and Pro billing, or open a GitHub issue for bugs in Reelbird, the free, open-source Mac screen recorder.`} og="about" crumbs={crumbs}>
+  <PageHead title="Contact" lede={`Email ${LEGAL.email}, or open an issue on GitHub for bugs.`} crumbs={crumbs} />
+  <div class="wrap">
+    <div class="prose body">
+      <h2 id="email">Email</h2>
+      <p><a href={`mailto:${LEGAL.email}`}>{LEGAL.email}</a> reaches {LEGAL.operator}, which makes Reelbird and runs Reelbird Pro. Use it for questions about the app, Pro billing, and requests about your data. For billing, write from the email address on your Pro account.</p>
+
+      <h2 id="bugs">Bugs and feature requests</h2>
+      <p>Open an issue on <a href={GITHUB_ISSUES_URL}>GitHub</a>. Say which version of Reelbird and macOS you're on; <a href="/docs/troubleshooting/">troubleshooting</a> covers the common problems first.</p>
+
+      <h2 id="security">Security</h2>
+      <p>Don't post a security problem in a public issue. Follow the repository's <a href={`${GITHUB_URL}/blob/main/SECURITY.md`}>security policy</a>.</p>
+
+      <h2 id="pro">Reelbird Pro</h2>
+      <p>Manage billing or cancel from your <a href={PRO.accountURL}>account page</a>. What Pro includes is on the <a href="/pricing/">pricing page</a>.</p>
+
+      <p><a href="/about/">About Reelbird</a></p>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .body { padding-bottom: var(--section); }
+</style>

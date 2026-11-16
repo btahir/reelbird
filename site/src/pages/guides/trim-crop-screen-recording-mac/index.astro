@@ -1,0 +1,62 @@
+---
+import Article from "../../../layouts/Article.astro";
+import Code from "../../../components/Code.astro";
+const path = "/guides/trim-crop-screen-recording-mac/";
+---
+<Article
+  seoTitle="How to trim a screen recording on Mac (and crop or cut it)"
+  description="Trim a Mac screen recording in QuickTime Player, or use Reelbird to trim, cut the middle, crop, change aspect ratio and speed up parts. Free."
+  path={path} og="guide-trim-crop"
+  title="How to trim, cut and crop a screen recording on Mac"
+  lede="QuickTime Player, which comes with your Mac, trims the start and end of a recording and can split it into clips. It has no crop. Reelbird, a free screen recorder, does all of it in one editor: trim, cut a section out of the middle (the gap closes), crop the frame, change the aspect ratio and speed up parts."
+  crumbs={[{ name: "Guides", path: "/guides/" }, { name: "Trim and crop", path }]}
+  datePublished="2026-11-15"
+  stamp="Published 15 November 2026."
+>
+  <h2 id="options">Which tool does what</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Job</th><th>QuickTime Player</th><th>Reelbird</th></tr></thead>
+      <tbody>
+        <tr><td>Trim the start and end</td><td>Yes, Edit &gt; Trim</td><td>Yes</td></tr>
+        <tr><td>Cut a section from the middle</td><td>Yes, by splitting into clips and deleting</td><td>Yes, split then Delete; the gap closes</td></tr>
+        <tr><td>Crop the frame</td><td>Not in Apple's guide</td><td>Yes, Canvas tab</td></tr>
+        <tr><td>Change aspect ratio</td><td>No</td><td>Yes: Original, 16:9, 9:16, 1:1, 4:3</td></tr>
+        <tr><td>Speed up a part</td><td>No</td><td>Yes, 0.25× to 4×</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 id="quicktime">With QuickTime Player</h2>
+  <p>Apple documents these steps in the <a href="https://support.apple.com/guide/quicktime-player/trim-a-movie-or-clip-qtpf2115f6fd/mac">QuickTime Player User Guide</a>.</p>
+  <ol>
+    <li>Open the recording in QuickTime Player and choose <strong>Edit &gt; Trim</strong>.</li>
+    <li>Drag the yellow handles on the trimming bar. What lies outside them is removed. Press and hold a handle to see individual frames.</li>
+    <li>Click <strong>Trim</strong>.</li>
+  </ol>
+  <p>To remove a section from the middle, choose <strong>View &gt; Show Clips</strong>, put the playhead where you want a cut, choose <strong>Edit &gt; Split Clip</strong>, repeat, and delete the clips you don't want, as <a href="https://support.apple.com/guide/quicktime-player/split-a-movie-into-clips-qtpa2d90df3d/mac">Apple's split guide</a> describes. Click <strong>Done</strong> when you finish. Apple's guide doesn't name a specific menu command for the delete step. It lists no crop either.</p>
+
+  <h2 id="reelbird">With Reelbird</h2>
+  <ol>
+    <li><strong>Open the take</strong> from the card that appears when you stop, or from the library (<kbd>⇧</kbd><kbd>⌘</kbd><kbd>L</kbd>).</li>
+    <li><strong>Trim the ends.</strong> Click the video lane to select a part and drag its edges. At the very start or end of the recording, that moves the trim.</li>
+    <li><strong>Cut from the middle.</strong> Put the playhead where the bad bit starts and press <kbd>S</kbd> to split, move to where it ends and press <kbd>S</kbd> again. Click the part between and press <kbd>Delete</kbd>. The cut closes up, leaving a small scissors chip at the join. Click the chip to bring the part back. The sound dips briefly at each join so there is no click.</li>
+    <li><strong>Crop the frame.</strong> Open the Canvas tab (<kbd>⌘</kbd><kbd>5</kbd>), press <strong>Crop…</strong> and drag the edges on the preview. <strong>Done</strong> applies it, <strong>Reset</strong> shows the whole recording again. For a browser window, <strong>Hide Browser Toolbar</strong> removes the tabs and address bar in one click.</li>
+    <li><strong>Change the aspect ratio.</strong> The same tab has <strong>Original</strong>, <strong>16:9</strong> (YouTube), <strong>9:16</strong> (Reels, Shorts), <strong>1:1</strong> (feeds) and <strong>4:3</strong> (slides).</li>
+    <li><strong>Change speed.</strong> Select a part and press <kbd>R</kbd> for 2×, or use the <strong>Speed</strong> button for anything from 0.25× to 4×. Sound above 2× is muted unless you keep it.</li>
+    <li><strong>Export</strong> with <kbd>⌘</kbd><kbd>E</kbd>.</li>
+  </ol>
+  <p>From the terminal, trimming looks like this:</p>
+  <Code code={"reelbird edit latest --trim 0:05-end"} />
+
+  <h2 id="non-destructive">Nothing is lost</h2>
+  <p>Trims, splits and cuts are saved as settings in the project's <code>edit.json</code>, next to the original tracks, so a cut part can always come back. <kbd>⌘</kbd><kbd>Z</kbd> undoes any step. Zooms, cursor, captions and overlays stay in step with a cut, because the cut applies to every track at once. All shortcuts are in the <a href="/docs/shortcuts/">shortcuts reference</a>, and <kbd>⌘</kbd><kbd>/</kbd> shows them in the editor.</p>
+
+  <h2 id="faq">Related questions</h2>
+  <h3>How do I clip a short piece out of a long recording?</h3>
+  <p>Trim both ends until only the piece is left. In QuickTime that is one Trim. In Reelbird, drag the two edges of the video, or use <code>--trim</code> with a start and end time.</p>
+  <h3>How do I make a screen recording vertical?</h3>
+  <p>Choose 9:16 on the Canvas tab. The <a href="/guides/screen-recording-to-vertical-video/">vertical video guide</a> covers the rest.</p>
+  <h3>Can I trim before I record?</h3>
+  <p>You can't. Record the whole thing, then cut. To mark spots for later, press <kbd>⌥</kbd><kbd>⇧</kbd><kbd>M</kbd> while recording and Reelbird shows a flag on the timeline.</p>
+</Article>

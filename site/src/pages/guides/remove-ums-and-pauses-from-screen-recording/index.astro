@@ -1,0 +1,66 @@
+---
+import Article from "../../../layouts/Article.astro";
+import Code from "../../../components/Code.astro";
+const path = "/guides/remove-ums-and-pauses-from-screen-recording/";
+---
+<Article
+  seoTitle="Remove ums and pauses from a screen recording on Mac"
+  description="Remove ums, silence and long pauses from a Mac screen recording in one click, on your Mac. What Clean Up changes, how to undo it, what it misses."
+  path={path} og="guide-remove-ums-pauses"
+  title="How to remove ums and pauses from a screen recording"
+  lede="Reelbird's Clean Up (the wand under the video, key W) shortens long pauses, cuts most ums, trims dead time at the start and end, and speeds up silent stretches where something is happening on screen. It runs on your Mac. You can review every change and undo the whole pass."
+  crumbs={[{ name: "Guides", path: "/guides/" }, { name: "Remove ums and pauses", path }]}
+  datePublished="2026-11-15"
+  stamp="Published 15 November 2026."
+>
+  <h2 id="steps">Steps</h2>
+  <ol>
+    <li>Open a take in the editor. It needs a recording with a microphone or system audio.</li>
+    <li>Click <strong>Clean Up</strong> under the video, press <kbd>W</kbd>, or choose <strong>Timeline › Clean Up</strong>. If the take has no transcript yet, Reelbird makes one first (the button says "Transcribing…", then "Cleaning up…"). Captions stay as they were.</li>
+    <li>A bar appears with a summary such as "1:12 shorter · 9 pauses · 6 ums". Click <strong>Review</strong> to play each change, starting a second before it, then put it back, apply a suggestion or dismiss it.</li>
+    <li><strong>Undo</strong> puts back everything Clean Up changed in one step. Press Clean Up again later and it adds only new finds. It won't redo a cut you put back.</li>
+  </ol>
+
+  <h2 id="what">What it changes</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Finds</th><th>What happens</th></tr></thead>
+      <tbody>
+        <tr><td>Pauses of 0.75 s or more between words</td><td>Shortened, not deleted. It keeps a natural 0.35 to 0.8 s of air.</td></tr>
+        <tr><td>Ums and uhs</td><td>Cut when confident; otherwise offered as a suggestion.</td></tr>
+        <tr><td>Dead time at the start and end</td><td>Trimmed, with a little lead-in and tail kept.</td></tr>
+        <tr><td>Silence while the screen changes or you click</td><td>Sped up instead of cut.</td></tr>
+        <tr><td>Retakes ("let me redo that")</td><td>Mostly offered as suggestions; the later take is the one it keeps.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Cuts land at the quietest moment, with a soft join so there's no click. Nothing is cut within 0.4 s of a click or key press. The original recording is never changed; the cuts are saved as edits.</p>
+
+  <h2 id="private">On your Mac</h2>
+  <p>The transcript comes from Apple's on-device speech recognition (SpeechAnalyzer on macOS 26 and later, which downloads a language model the first time, and on-device recognition on macOS 15). The audio and screen analysis also run locally. Nothing is uploaded.</p>
+
+  <h2 id="limits">What it can't do</h2>
+  <ul>
+    <li><strong>Ums need a transcript.</strong> Without one, Clean Up still shortens pauses from the audio level, but finds no ums or retakes. Apple's recogniser leaves "um" out of its text, so Reelbird looks for a long word with a voiced burst before it. That is a heuristic. It can miss ums and it can suggest cuts you decline, which is why doubtful ones come back as suggestions.</li>
+    <li><strong>Only ums and uhs.</strong> It never cuts "like", "so", "well" or "you know". If you want those gone, trim them by hand.</li>
+    <li><strong>Languages.</strong> Captions work in the languages Apple supports on your Mac. The list of words Clean Up never cuts is English, so expect the best results in English.</li>
+    <li><strong>It won't read your mind about pacing.</strong> Pauses you meant for effect get shortened too. Use Review to put them back.</li>
+  </ul>
+
+  <h2 id="speed">Speed Up Typing</h2>
+  <p><strong>Timeline › Speed Up Typing</strong> is separate. It finds stretches of typing (record with keystrokes on) and idle waiting, and speeds each up. It lists each as its own speed segment on the timeline, so you can change or delete one. Clean Up also speeds up silent typing and waiting.</p>
+
+  <h2 id="cli">From a terminal or an agent</h2>
+  <p>The command line tool and MCP server do the same. Run <code>reelbird captions</code> first if you want ums found.</p>
+  <Code code={"reelbird captions latest\nreelbird cleanup latest --dry-run   # report only\nreelbird cleanup latest             # apply\nreelbird cleanup latest --undo      # take it all back"} />
+  <p>The MCP tool is <code>clean_up</code> (with <code>dry_run</code> and <code>undo</code>). To cut every silence instead, use <code>reelbird silences latest --apply</code> or <code>detect_silences</code>, which finds silence of 1.2 s or more at −45 dBFS by default. That deletes it, so the result can sound abrupt. See the <a href="/docs/cli/">command line docs</a> and <a href="/features/agents/">agents</a>.</p>
+
+  <h2 id="related">Related questions</h2>
+  <h3>Does the Mac's Screenshot toolbar remove silence?</h3>
+  <p>Apple's <a href="https://support.apple.com/en-us/102618">screen recording page</a> lists recording options such as the microphone and a timer, and nothing for removing ums or silence. You need an editor for that.</p>
+  <h3>How do I remove silence from a video?</h3>
+  <p>Clean Up shortens pauses. For a hard cut of all silence, <code>reelbird silences --apply</code>. Either one works on recordings made in Reelbird.</p>
+  <h3>Can I fix captions too?</h3>
+  <p>Yes. See <a href="/guides/add-captions-to-screen-recording-mac/">adding captions to a screen recording</a>.</p>
+  <p>Reelbird is <a href="/download/">free and open source</a>, for macOS 15 or later.</p>
+</Article>
