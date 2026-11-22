@@ -1,0 +1,53 @@
+---
+import Article from "../../../layouts/Article.astro";
+const path = "/guides/record-meeting-mac/";
+---
+<Article
+  seoTitle="How to record a Zoom, Meet or Teams call on Mac, both sides"
+  description="Record a video call on your Mac with the other people's audio and your own voice on separate tracks, then add captions and cut the dead air. Free, macOS 15 or later."
+  path={path} og="guide-record-meeting"
+  title="How to record a Zoom, Meet or Teams call on your Mac"
+  lede="To record a call with both sides, you need two sounds: what your Mac plays (the other people) and your microphone (you). Reelbird records both, plus the call window, as separate tracks, with no virtual audio driver. Ask everyone first."
+  crumbs={[{ name: "Guides", path: "/guides/" }, { name: "Record a meeting", path }]}
+  datePublished="2026-11-22"
+  stamp="Published 22 November 2026. Written for Reelbird 0.4.1."
+>
+  <h2 id="consent">First: tell people you're recording</h2>
+  <p>Say so at the start of the call and get a yes. Recording laws differ by country and state, and some require every person's consent. If the meeting app's own recording is available to you, it's often the better choice for a team call, because everyone sees that it's on. Use your own recorder when you want the file on your Mac, your own captions, or a short clip to share.</p>
+
+  <h2 id="steps">Steps</h2>
+  <ol>
+    <li><strong>Plug in headphones.</strong> Without them, your microphone also picks up the other people from your speakers, and they're recorded twice, a fraction of a second apart.</li>
+    <li><strong>Open the picker</strong> with <kbd>⌥</kbd><kbd>⇧</kbd><kbd>R</kbd>. Choose <strong>Window</strong> and the call's window, or the whole display if you'll switch windows or share your screen during the call.</li>
+    <li><strong>Turn on System audio</strong> for the other people, and <strong>Microphone</strong> for you. The first time, allow Screen &amp; System Audio Recording and Microphone when macOS asks, then choose Quit &amp; Reopen.</li>
+    <li><strong>Turn on Do Not Disturb</strong> so notification sounds don't end up in the recording.</li>
+    <li><strong>Start recording,</strong> then press <kbd>⌥</kbd><kbd>⇧</kbd><kbd>M</kbd> to drop a marker whenever something worth finding later happens: a decision, a question, a bug.</li>
+    <li><strong>Stop</strong> with <kbd>⌥</kbd><kbd>⇧</kbd><kbd>R</kbd>. The take opens in the editor, with the call audio and your voice on their own tracks.</li>
+  </ol>
+  <p>This needs macOS 15 or later, where Apple's ScreenCaptureKit records system audio on the same clock as the screen. Reelbird records in 2-second segments, so a crash or a full disk late in a long call doesn't lose the hour before it.</p>
+
+  <h2 id="after">After the call</h2>
+  <ul>
+    <li><strong>Balance the voices</strong> in the Audio inspector (<kbd>⌘</kbd><kbd>6</kbd>). Auto level brings your voice to a steady level. <em>Lower under voice</em> turns the other people down while you talk, which suits a narrated demo; for a conversation, turn it off so everyone stays at the same level.</li>
+    <li><strong>Cut the dead air.</strong> Clean Up (<kbd>W</kbd>) shortens long pauses and cuts ums, with Review and Undo. <a href="/guides/remove-ums-and-pauses-from-screen-recording/">How Clean Up works</a>.</li>
+    <li><strong>Captions,</strong> transcribed on your Mac, in the video or as SRT and VTT files. Captions transcribe your microphone track, so the other people's speech isn't in them. <a href="/guides/add-captions-to-screen-recording-mac/">Captions guide</a>.</li>
+    <li><strong>Jump to your markers</strong> on the timeline, split there with <kbd>S</kbd>, and keep just the part you need.</li>
+    <li><strong>Blur</strong> names, emails or chat messages on screen with <kbd>B</kbd>, or let <a href="/features/blur-sensitive-info/">Find Sensitive Info</a> suggest them.</li>
+    <li><strong>Share</strong> a link with <kbd>⇧</kbd><kbd>⌘</kbd><kbd>E</kbd>, or export MP4 with <kbd>⌘</kbd><kbd>E</kbd>. See <a href="/guides/share-screen-recording-mac/">sharing a recording</a>.</li>
+  </ul>
+
+  <h2 id="limits">What it doesn't do</h2>
+  <ul>
+    <li>It doesn't join meetings for you or record calls you aren't in. There's no meeting bot.</li>
+    <li>No meeting notes, summaries or speaker names. For those, use the meeting app's own recording or a notes tool.</li>
+    <li>It's Mac only. People on the call can be on anything.</li>
+  </ul>
+
+  <h2 id="faq">Related questions</h2>
+  <h3>Why does my Mac screen recording of a Zoom call have no sound from the other people?</h3>
+  <p>QuickTime Player records a microphone, not what your Mac plays. You need a recorder that captures system audio. <a href="/guides/record-mac-screen-with-internal-audio/">Recording internal audio on Mac</a> explains why.</p>
+  <h3>Can I record only the other people, without my voice?</h3>
+  <p>Yes. Turn Microphone off in the picker, or mute the Voice track in the Audio inspector after recording. The microphone file stays on disk if you change your mind.</p>
+  <h3>Will the others know I'm recording?</h3>
+  <p>Not from Reelbird: it records your own screen and sound and sends no notice to the call. That's why you tell them yourself.</p>
+</Article>

@@ -1,0 +1,58 @@
+---
+import Article from "../../../layouts/Article.astro";
+const path = "/guides/record-bug-report-mac/";
+---
+<Article
+  seoTitle="How to record a bug report on Mac: video, steps and a link"
+  description="Record a bug on your Mac so a developer can reproduce it: what to show, a marker where it breaks, the steps written out from your clicks, secrets blurred, and one link to paste in the ticket. Free."
+  path={path} og="guide-bug-report"
+  title="How to record a bug report on your Mac"
+  lede="A short video of a bug answers the question every developer asks first: what exactly did you do? Record the steps from a known start, mark the moment it breaks, blur anything private, and paste one link into the ticket. With Reelbird the written steps come from the same recording, so you don't type them out."
+  crumbs={[{ name: "Guides", path: "/guides/" }, { name: "Record a bug report", path }]}
+  datePublished="2026-11-22"
+  stamp="Published 22 November 2026. Written for Reelbird 0.4.1."
+>
+  <h2 id="what">What a good bug video shows</h2>
+  <ul>
+    <li><strong>A known starting point.</strong> Start from a page or screen anyone can open: the URL, a fresh launch, or right after signing in.</li>
+    <li><strong>Every step, at normal speed.</strong> Don't skip ahead. The step you think doesn't matter is often the one that does.</li>
+    <li><strong>The address bar and any error.</strong> For a web app, keep the browser's address bar in the shot. If the developer tools console shows an error, open it before you start.</li>
+    <li><strong>What you expected.</strong> Say it out loud, or write it in the ticket: "I expected the invoice to save; it showed a blank page."</li>
+    <li><strong>Short.</strong> Under a minute is ideal. If it takes three tries to make the bug appear, keep only the try that did.</li>
+  </ul>
+
+  <h2 id="steps">Record it</h2>
+  <ol>
+    <li><strong>Open the picker</strong> with <kbd>⌥</kbd><kbd>⇧</kbd><kbd>R</kbd> and choose the app's window. Choose the whole display if the bug involves more than one window.</li>
+    <li><strong>Turn on Microphone</strong> if you'll narrate, and <strong>System audio</strong> if the bug makes a sound.</li>
+    <li><strong>Turn on Record keystrokes</strong> in <strong>Settings… → Recording</strong> if typing or shortcuts matter. The overlay shows shortcuts; typed text only if you turn it on.</li>
+    <li><strong>Start recording</strong> and walk through the steps.</li>
+    <li><strong>Press <kbd>⌥</kbd><kbd>⇧</kbd><kbd>M</kbd> the moment it breaks.</strong> That drops a marker, so the developer can jump straight there.</li>
+    <li><strong>Stop</strong> with <kbd>⌥</kbd><kbd>⇧</kbd><kbd>R</kbd>.</li>
+  </ol>
+
+  <h2 id="steps-text">Get the steps written out for you</h2>
+  <p>Reelbird logs each click, run of typing and shortcut while you record. Open the take's <strong>Guide</strong> panel (<kbd>⌘</kbd><kbd>9</kbd>) and they're already a numbered list of steps, each with a picture of the screen just before it. Rewrite a step or hide the ones that don't matter. On a share link they show as a Guide and a Click-through next to the video, and you can export them as Markdown to paste under "Steps to reproduce". More in <a href="/features/step-by-step-guides/">step-by-step guides</a>.</p>
+
+  <h2 id="private">Blur what shouldn't be in a ticket</h2>
+  <p>Bug reports often show real customer data. <a href="/features/blur-sensitive-info/">Find Sensitive Info</a> reads the screen on your Mac and suggests blurs for emails, API keys and tokens, card numbers and phone numbers, following the text as it scrolls. Press <kbd>B</kbd> to blur anything else by hand. Blurs are drawn into the exported video and the shared one, and can't be reversed from them.</p>
+
+  <h2 id="share">Put it in the ticket</h2>
+  <ul>
+    <li><strong>A link</strong> is easiest: <kbd>⇧</kbd><kbd>⌘</kbd><kbd>E</kbd> shares the take and copies the link. Paste it into Jira, Linear, GitHub or an email. Anyone with the link can watch it, with no account.</li>
+    <li><strong>A file</strong> if your tracker wants an attachment: <kbd>⌘</kbd><kbd>E</kbd> exports MP4, and HEVC keeps it smaller. <a href="/guides/reduce-screen-recording-file-size-mac/">Making a recording smaller</a>.</li>
+    <li><strong>A GIF</strong> for a GitHub issue or a README, where a short loop plays inline. <a href="/guides/screen-recording-to-gif-mac/">Screen recording to GIF</a>.</li>
+  </ul>
+  <p>If you edit the take after sharing it, say to trim it or blur something you missed, choose <strong>Update link</strong>: the link already in the ticket plays the new version.</p>
+
+  <h2 id="agents">Hand it to a coding agent</h2>
+  <p>If the person fixing it uses Claude Code, Codex or Cursor, Reelbird's MCP server lets the agent read the take as text: the steps, what you said and your markers, without watching the video. See <a href="/use-cases/dev-demos/">coding and PR demos</a>.</p>
+
+  <h2 id="faq">Related questions</h2>
+  <h3>How long should a bug report video be?</h3>
+  <p>As short as it can be while still starting from a known point. Under a minute is usually enough. Trim the start and end, and cut failed tries with <kbd>S</kbd> and <kbd>Delete</kbd>.</p>
+  <h3>Should I narrate a bug report?</h3>
+  <p>It helps: say what you expected and what happened. If you'd rather not, write it in the ticket. The steps list covers what you did either way.</p>
+  <h3>Can I record a bug report on iPhone with this?</h3>
+  <p>No. Reelbird records the Mac's own screen, on macOS 15 or later.</p>
+</Article>

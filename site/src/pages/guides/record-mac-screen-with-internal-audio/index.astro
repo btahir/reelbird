@@ -10,14 +10,28 @@ import pickerD from "../../../assets/shots/picker-dark.webp";
 import audioL from "../../../assets/shots/editor-audio-light.webp";
 import audioD from "../../../assets/shots/editor-audio-dark.webp";
 const path = "/guides/record-mac-screen-with-internal-audio/";
-const title = "Record your Mac screen with internal audio, free";
-const description = "How to record system audio, mic and screen together on macOS 15 and later, with no virtual audio driver, using Reelbird. Step by step, with caveats.";
+const title = "Mac screen recorder with internal audio: free, no audio driver";
+const description = "Record your Mac screen with internal (system) audio and your mic on separate tracks, free and with no virtual audio driver. QuickTime, the Screenshot toolbar, BlackHole and Reelbird compared.";
 const crumbs = [{ name: "Guides", path: "/guides/" }, { name: "Record with internal audio", path }];
 ---
-<Base title={title} description={description} og="guide-internal-audio" crumbs={crumbs} type="article" schema={[article({ title, description, path, datePublished: "2026-10-12", dateModified: "2026-11-15" })]}>
+<Base title={title} description={description} og="guide-internal-audio" crumbs={crumbs} type="article" schema={[article({ title, description, path, datePublished: "2026-10-12", dateModified: "2026-11-22" })]}>
   <PageHead title="How to record your Mac screen with internal audio" lede="On macOS 15 and later, Reelbird records the sound your Mac plays (system audio) together with your screen and microphone, with no virtual audio driver to install. It's free and open source. Here's how, start to finish." crumbs={crumbs} />
   <div class="wrap">
     <div class="prose body">
+      <h2 id="short-answer">Short answer</h2>
+      <p>A Mac can't record its own sound with QuickTime Player, and the Screenshot toolbar only can on macOS 27 or later. On macOS 15 and later you can use a screen recorder that captures system audio itself, such as Reelbird (free, open source), with no virtual audio driver to install. The options:</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th scope="col">Way to record</th><th scope="col">Internal audio</th><th scope="col">Mic on its own track</th><th scope="col">Setup</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">QuickTime Player</th><td>No, microphone only</td><td>No</td><td>None</td></tr>
+            <tr><th scope="row">Screenshot toolbar (<kbd>⌘</kbd><kbd>⇧</kbd><kbd>5</kbd>)</th><td>Only on macOS 27 or later</td><td>No</td><td>None</td></tr>
+            <tr><th scope="row">A virtual audio driver, such as BlackHole</th><td>Yes, routed through the driver</td><td>Depends on the recorder</td><td>Install a driver and set up a combined output in Audio MIDI Setup</td></tr>
+            <tr><th scope="row">Reelbird</th><td>Yes, on macOS 15 or later</td><td>Yes, mute or balance it after recording</td><td>Install the app, allow one permission</td></tr>
+          </tbody>
+        </table>
+      </div>
+
       <h2 id="before">Before you start</h2>
       <ul>
         <li>A Mac on <strong>macOS 15 or later</strong>. System audio capture comes from Apple's ScreenCaptureKit, which records it on the same clock as the screen.</li>
@@ -69,7 +83,16 @@ const crumbs = [{ name: "Guides", path: "/guides/" }, { name: "Record with inter
         <li>macOS asks every so often to confirm apps that record the screen. Choose to keep allowing Reelbird.</li>
         <li>If the recording bar warns that the microphone is silent, check that the right input is selected and not muted.</li>
       </ul>
-      <p class="muted">Published 12 October 2026. Updated 15 November 2026.</p>
+      <h2 id="faq">Related questions</h2>
+      <h3>Can a Mac record internal audio without an app?</h3>
+      <p>Only on macOS 27 or later, with <strong>Include System Audio</strong> in the Screenshot toolbar's Options. Before that, macOS's own recorders record a microphone, not the sound your Mac plays.</p>
+      <h3>Do I need BlackHole or Soundflower to record internal audio?</h3>
+      <p>Not on macOS 15 or later. Reelbird records system audio through Apple's ScreenCaptureKit, so there's no driver to install and your speakers keep working normally while you record.</p>
+      <h3>Can I record a video call's audio this way?</h3>
+      <p>Yes, with System audio for the other people and Microphone for you, after telling everyone you're recording. See <a href="/guides/record-meeting-mac/">recording a Zoom, Meet or Teams call on Mac</a>.</p>
+      <h3>Why is my recording of a streaming video silent or black?</h3>
+      <p>Protected video can record as black or silent. That's macOS protecting the content, and no screen recorder setting changes it.</p>
+      <p class="muted">Published 12 October 2026. Updated 22 November 2026.</p>
     </div>
 
     <div class="cta">

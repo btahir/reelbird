@@ -1,0 +1,76 @@
+---
+import Article from "../../../layouts/Article.astro";
+import { PRO } from "../../../config/site";
+const path = "/guides/download-loom-videos/";
+---
+<Article
+  seoTitle="How to download your Loom videos, and move off Loom"
+  description="Who can download Loom videos on which plan, the steps, what a download leaves out, and how to keep recording without the 25-video cap. Checked on Atlassian's own pages."
+  path={path} og="guide-download-loom"
+  title="How to download your Loom videos (and move off Loom)"
+  lede="On Loom's free Starter plan you can't download your videos at all. On paid plans you can, one video at a time, as MP4. Here is who can download what, the steps, what the file leaves out, and what to do if you're moving your recording somewhere else."
+  crumbs={[{ name: "Guides", path: "/guides/" }, { name: "Download Loom videos", path }]}
+  datePublished="2026-11-22"
+  stamp="Published 22 November 2026. Loom's plans and download rules checked on Atlassian's and Loom's own pages that day."
+>
+  <h2 id="who">Who can download Loom videos</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th scope="col">Loom plan</th><th scope="col">Who can download</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Starter (free)</th><td>Nobody. Admins and creators on Starter can't download, and neither can viewers.</td></tr>
+        <tr><th scope="row">Business and Business + AI</th><td>Admins and creators. Viewers who are signed in to Loom too, if the creator turned on downloads for that video.</td></tr>
+        <tr><th scope="row">Education</th><td>Admins only.</td></tr>
+        <tr><th scope="row">Enterprise</th><td>Admins and members, unless an admin turned downloads off for the workspace.</td></tr>
+        <tr><th scope="row">Creator Lite, on any plan</th><td>Nobody.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Source: <a href="https://support.atlassian.com/loom/docs/download-your-loom-video/">Atlassian's Loom help, "Download your Loom video"</a>. Loom's <a href="https://www.loom.com/pricing">pricing page</a> lists "Upload and download videos" from Business ($18 per user a month, billed monthly), not on Starter.</p>
+
+  <h2 id="steps">Download a Loom video, step by step</h2>
+  <ol>
+    <li>Open your <strong>Library</strong> at <code>loom.com/my-videos</code> and open the video.</li>
+    <li>Open the menu above the video.</li>
+    <li>Choose <strong>Download</strong>. You get an MP4 file.</li>
+  </ol>
+  <p>To let signed-in viewers download a video, open it, choose <strong>Settings</strong> and turn on <strong>Allow downloads</strong>. To set that for every new video, use <strong>Settings → Set defaults… → Audience → Downloads</strong>.</p>
+
+  <h2 id="all">Can I download all my Loom videos at once?</h2>
+  <p>Not from Loom's help pages: we found no bulk download or "export all videos" option there on 22 November 2026. Downloading is one video at a time. If you have a lot of videos, plan for that before you change plans.</p>
+
+  <h2 id="left-out">What a Loom download leaves out</h2>
+  <ul>
+    <li>Calls to action, chapters and closed captions aren't in the file.</li>
+    <li>Filler word and silence removal isn't applied, so you get the uncut take.</li>
+    <li>Videos over 20 GB and videos that use Variables can't be downloaded.</li>
+    <li>For meeting recordings, only the meeting's organizer can download.</li>
+  </ul>
+  <p>If you need the captions, copy the transcript from Loom before you go.</p>
+
+  <h2 id="starter">If you're on the free Starter plan</h2>
+  <p>You have two choices for videos you already made:</p>
+  <ol>
+    <li><strong>Leave them on Loom.</strong> Atlassian says that if you're over the 25-video limit you keep access to all your videos, but you can't record a new one until you upgrade or delete some (<a href="https://support.atlassian.com/loom/docs/downgrade-your-account/">downgrade page</a>, <a href="https://support.atlassian.com/loom/docs/loom-starter-free-video-and-screenshot-storage-limit-explained/">Starter limit page</a>). Archived videos count toward the 25.</li>
+    <li><strong>Upgrade for long enough to download them,</strong> then download each one as above. Check Loom's current price before you do.</li>
+  </ol>
+  <p>Either way, new recordings can go somewhere that doesn't cap them.</p>
+
+  <h2 id="move">Keep recording somewhere else</h2>
+  <p>If you record on a Mac, Reelbird works the way Loom does where it counts: press <kbd>⌥</kbd><kbd>⇧</kbd><kbd>R</kbd>, record, stop, and a share link is on your clipboard. What's different:</p>
+  <ul>
+    <li><strong>Every take is already a file.</strong> Recordings are standard MP4 tracks on your Mac, and you can export MP4, HEVC, ProRes or GIF. There's nothing to download later.</li>
+    <li><strong>No caps.</strong> No 5-minute stop, no 25-video limit, no 720p ceiling. Reelbird is free and MIT licensed.</li>
+    <li><strong>Links where you choose.</strong> Free links go to a bucket you own, such as Cloudflare R2 (<a href="/guides/self-host-screen-recording-links-cloudflare-r2/">setup guide</a>). Or <a href="/pricing/">Reelbird Pro</a>, {PRO.price} a month, hosts them for you with view counts.</li>
+    <li><strong>Captions and Clean Up are on your Mac,</strong> and they go into the exported file. See <a href="/guides/add-captions-to-screen-recording-mac/">captions</a> and <a href="/guides/remove-ums-and-pauses-from-screen-recording/">removing ums and pauses</a>.</li>
+  </ul>
+  <p>What Reelbird doesn't have: comments, team workspaces, and apps for Windows, the web or phones. It doesn't import Loom videos either. Cap, another open-source recorder, has a Loom importer on its Pro plan (checked 7 November 2026). The full comparison is on <a href="/loom-alternative/">Reelbird vs Loom</a>.</p>
+
+  <h2 id="faq">Related questions</h2>
+  <h3>Why can't I download my Loom video?</h3>
+  <p>Most likely you're on Starter, which has no downloads, or you're a Creator Lite. It can also be a workspace where an admin turned downloads off, a video over 20 GB, a video with Variables, or a meeting recording you didn't organize.</p>
+  <h3>Can viewers download a Loom video?</h3>
+  <p>Only if the creator is on a paid plan, turned on Allow downloads for that video, and the viewer is signed in to Loom on a paid plan.</p>
+  <h3>Do Loom downloads include captions?</h3>
+  <p>No. Closed captions, chapters and calls to action stay on Loom.</p>
+</Article>

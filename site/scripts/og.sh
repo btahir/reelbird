@@ -48,6 +48,9 @@ use-case-dev-demos|Record a coding demo, or let your agent record it|Use case|pe
 use-case-tutorial-videos|Record a tutorial video on your Mac|Use case|camera
 guides|Step by step, with the caveats|Guides|perch
 guide-internal-audio|Record your Mac screen with internal audio|Guide|headphones
+guide-record-meeting|Record a Zoom, Meet or Teams call on Mac|Guide|headphones
+guide-bug-report|Record a bug report on your Mac|Guide|camera
+guide-download-loom|Download your Loom videos, and move off Loom|Guide|link
 guide-captions|Add captions to a screen recording on Mac|Guide|headphones
 guide-vertical-video|Turn a screen recording into a 9:16 video|Guide|camera
 guide-webcam-overlay|Record your screen with a webcam overlay|Guide|camera

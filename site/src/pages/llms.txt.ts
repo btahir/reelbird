@@ -68,6 +68,9 @@ ${docs.map((d) => `- [${d.data.title}](${u(`/docs/${d.id}.md`)}): ${d.data.descr
 - [Hide the cursor in a Mac screen recording](${u("/guides/hide-cursor-screen-recording-mac/")})
 - [Show keystrokes in a Mac screen recording](${u("/guides/show-keystrokes-screen-recording-mac/")})
 - [Can Claude Code record the screen?](${u("/guides/claude-code-screen-recording/")})
+- [Record a Zoom, Meet or Teams call on Mac](${u("/guides/record-meeting-mac/")})
+- [Record a bug report on Mac](${u("/guides/record-bug-report-mac/")})
+- [Download your Loom videos, and move off Loom](${u("/guides/download-loom-videos/")})
 
 ## Use cases
 
