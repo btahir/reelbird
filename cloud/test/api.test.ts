@@ -9,7 +9,7 @@ const { migrate } = await import("../src/migrate");
 const { app } = await import("../src/index");
 const { R2 } = await import("../src/r2");
 const { config } = await import("../src/config");
-const { signPayload, verifySignature, qualifies } = await import("../src/billing");
+const { signPayload, verifySignature, qualifies, billing, checkoutParams, createCheckoutURL, isProCheckout } = await import("../src/billing");
 const { captured } = await import("../src/mail");
 const { ShortIDForTest } = { ShortIDForTest: () => {
   const a = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
@@ -357,6 +357,42 @@ test("open-source support tiers and other links grant nothing", async () => {
   await stripeEvent("checkout.session.completed", checkout("cus_dan", "sub_dan_donation", { payment_link: "plink_1UJiDnBbj7zje3qWA0UXs9Hn", client_reference_id: ref, customer_details: { email: "dan@example.com" } }));
   await stripeEvent("customer.subscription.created", sub("sub_dan_donation", "cus_dan", "active", DONATION));
   expect(await plan(dan.token)).toBe("free");
+});
+
+test("/upgrade asks Stripe for a Reelbird-branded Checkout Session; checkouts from it make Pro", async () => {
+  const p = checkoutParams({ id: "00000000-0000-4000-8000-000000000001", email: "gil@example.com" });
+  expect(p.get("mode")).toBe("subscription");
+  expect(p.get("line_items[0][price]")).toBe(billing.proPrice);
+  expect(p.get("client_reference_id")).toBe("00000000-0000-4000-8000-000000000001");
+  expect(p.get("customer_email")).toBe("gil@example.com");
+  expect(p.get("metadata[app]")).toBe("reelbird");
+  expect(p.get("success_url")).toBe(`${base}/account?welcome=pro&session_id={CHECKOUT_SESSION_ID}`);
+  expect(p.get("branding_settings[display_name]")).toBe("Reelbird");
+  expect(p.get("branding_settings[icon][url]")).toMatch(new RegExp(`^${base}/assets/icon-512`));
+  expect(p.get("branding_settings[button_color]")).toBe("#ff5a36");
+
+  const key = billing.secretKey;
+  try {
+    billing.secretKey = null;
+    expect(await createCheckoutURL({ id: "x", email: "gil@example.com" })).toBeNull();
+    billing.secretKey = "rk_test_x";
+    const ok = (async () => Response.json({ url: "https://checkout.stripe.com/c/pay/cs_test_1" })) as unknown as typeof fetch;
+    expect(await createCheckoutURL({ id: "x", email: "gil@example.com" }, ok)).toBe("https://checkout.stripe.com/c/pay/cs_test_1");
+    const bad = (async () => Response.json({ error: { code: "resource_missing" } }, { status: 400 })) as unknown as typeof fetch;
+    expect(await createCheckoutURL({ id: "x", email: "gil@example.com" }, bad)).toBeNull();
+  } finally {
+    billing.secretKey = key;
+  }
+
+  expect(isProCheckout({ payment_link: PRO_LINK })).toBe(true);
+  expect(isProCheckout({ payment_link: null, metadata: { app: "reelbird" } })).toBe(true);
+  expect(isProCheckout({ payment_link: null, metadata: { app: "dibs" } })).toBe(false);
+  expect(isProCheckout({ payment_link: "plink_1UJiDnBbj7zje3qWA0UXs9Hn", metadata: { app: "reelbird" } })).toBe(false);
+
+  const gil = await appLogin("gil@example.com");
+  const ref = new URL((await call("/upgrade", { cookie: gil.cookie })).headers.get("location")!).searchParams.get("client_reference_id")!;
+  await stripeEvent("checkout.session.completed", checkout("cus_gil", "sub_gil", { payment_link: null, metadata: { app: "reelbird", plan: "pro" }, client_reference_id: ref }));
+  expect(await plan(gil.token)).toBe("pro");
 });
 
 test("a 100%-off code (no payment required) makes Pro even before the subscription event", async () => {

@@ -8,7 +8,7 @@ import { credentials, deleteShare, limits, listShares, measureRecent, purgeDelet
 import { serveShare } from "./gateway";
 import { ingest, VIEWER_SCRIPT } from "./events";
 import { shareStats } from "./stats";
-import { billing, linkOnSignIn, portalURL, subscriptionState, upgradeURL, webhook } from "./billing";
+import { billing, createCheckoutURL, linkOnSignIn, portalURL, subscriptionState, upgradeURL, webhook } from "./billing";
 import * as pages from "./pages";
 import { asset, serveAsset } from "./assets";
 import { canSendMail, sendMail } from "./mail";
@@ -168,7 +168,7 @@ app.post("/account/macs/:id/revoke", async (c) => {
   return c.redirect("/account#macs");
 });
 
-// MARK: Billing (Stripe Payment Link + webhook + no-code customer portal)
+// MARK: Billing (branded Stripe Checkout, Payment Link fallback, webhook, no-code customer portal)
 
 app.post("/stripe/webhook", webhook);
 
@@ -176,7 +176,7 @@ app.get("/upgrade", async (c) => {
   const user = await auth.webUser(c);
   if (!user) return c.redirect("/login?next=/upgrade");
   if (user.plan === "pro") return c.redirect("/account");
-  return c.redirect(upgradeURL(user));
+  return c.redirect((await createCheckoutURL(user)) ?? upgradeURL(user));
 });
 
 app.get("/billing", async (c) => {

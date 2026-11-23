@@ -1,12 +1,16 @@
-// Stripe billing without an SDK or a secret key. People pay through the one "Reelbird Pro" Payment
-// Link ($5/month); Stripe's webhooks tell us who pays, and Stripe's no-code customer portal handles
-// cancelling. The only secret is the webhook signing secret.
+// Stripe billing without an SDK. /upgrade opens a Reelbird-branded Checkout Session ($5/month Pro) made
+// with a restricted key (STRIPE_SECRET_KEY, Checkout Sessions write): the Stripe account is shared, and a
+// Payment Link would show the account's own name. Without the key, or when Stripe errors, /upgrade uses
+// the Pro Payment Link instead. Stripe's webhooks tell us who pays, and Stripe's no-code customer portal
+// handles cancelling.
 //
 // Pro = an active (or trialing) subscription to the Reelbird Pro product. Nothing else on the Stripe
 // account (the open-source support tiers, other apps) grants or changes anything here.
 import { createHmac, timingSafeEqual } from "node:crypto";
 import type { Context } from "hono";
 import postgres from "postgres";
+import { asset } from "./assets";
+import { config } from "./config";
 import { sql } from "./db";
 
 /** The pool, or the transaction a webhook runs in. */
@@ -14,6 +18,10 @@ type Q = postgres.Sql | postgres.TransactionSql;
 
 export const billing = {
   webhookSecret: process.env.STRIPE_WEBHOOK_SECRET?.trim() || null,
+  /** Restricted key for creating branded Checkout Sessions. Without it, /upgrade uses the Payment Link. */
+  secretKey: process.env.STRIPE_SECRET_KEY?.trim() || null,
+  /** The $5/month Reelbird Pro price. */
+  proPrice: process.env.STRIPE_PRO_PRICE?.trim() || "price_1USVjUBbj7zje3qWrQ56SdEO",
   /** Payment Link for Pro. Gets ?client_reference_id=<account id>&prefilled_email=… appended. */
   proLink: process.env.STRIPE_PRO_LINK?.trim() || "https://buy.stripe.com/5kQ8wO88gaXs9h57Yn3ks05",
   /** The same link's ID: only its checkouts link a Stripe customer to an account. */
@@ -86,10 +94,16 @@ async function upsertSubscription(q: Q, s: Obj, eventAt: Date) {
   await recompute(s.customer, q);
 }
 
+/** A checkout from /upgrade: our branded session (metadata.app "reelbird") or the Pro Payment Link. */
+export function isProCheckout(session: Obj) {
+  if (session.payment_link) return session.payment_link === billing.proLinkId;
+  return session.metadata?.app === "reelbird";
+}
+
 /** Links the paying customer to the account that started checkout. */
 async function checkoutCompleted(q: Q, session: Obj) {
   if (session.mode !== "subscription" || typeof session.customer !== "string") return;
-  if (session.payment_link !== billing.proLinkId) return; // only the Reelbird Pro link
+  if (!isProCheckout(session)) return; // only our Checkout Sessions and the Reelbird Pro link
   const ref = typeof session.client_reference_id === "string" && /^[0-9a-f-]{36}$/i.test(session.client_reference_id)
     ? session.client_reference_id : null;
   const email = (session.customer_details?.email ?? session.customer_email ?? "").toLowerCase() || null;
@@ -161,7 +175,52 @@ export async function linkOnSignIn(user: { id: string; email: string }) {
   await recompute(c.customer_id);
 }
 
-/** The Payment Link for an account, so the payment is linked to it. */
+/** Pinned so the request shape doesn't follow the account's default API version. */
+const STRIPE_VERSION = "2026-11-18.endive";
+
+/** The form body for POST /v1/checkout/sessions: Pro for this account, with Reelbird's name, icon and coral button. */
+export function checkoutParams(user: { id: string; email: string }) {
+  return new URLSearchParams({
+    mode: "subscription",
+    "line_items[0][price]": billing.proPrice,
+    "line_items[0][quantity]": "1",
+    client_reference_id: user.id,
+    customer_email: user.email,
+    allow_promotion_codes: "true",
+    payment_method_collection: "if_required",
+    success_url: `${config.publicURL}/account?welcome=pro&session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${config.publicURL}/account`,
+    "metadata[app]": "reelbird",
+    "metadata[plan]": "pro",
+    "subscription_data[metadata][app]": "reelbird",
+    "subscription_data[metadata][plan]": "pro",
+    "branding_settings[display_name]": "Reelbird",
+    "branding_settings[icon][type]": "url",
+    "branding_settings[icon][url]": `${config.publicURL}${asset("icon-512.png")}`,
+    "branding_settings[button_color]": "#ff5a36",
+  });
+}
+
+/** A branded Checkout Session URL for this account, or null (no key, or Stripe said no): use upgradeURL then. */
+export async function createCheckoutURL(user: { id: string; email: string }, fetchImpl: typeof fetch = fetch) {
+  if (!billing.secretKey) return null;
+  try {
+    const res = await fetchImpl("https://api.stripe.com/v1/checkout/sessions", {
+      method: "POST",
+      headers: { authorization: `Bearer ${billing.secretKey}`, "content-type": "application/x-www-form-urlencoded", "stripe-version": STRIPE_VERSION },
+      body: checkoutParams(user),
+      signal: AbortSignal.timeout(8000),
+    });
+    const body = (await res.json().catch(() => null)) as { url?: unknown; error?: { code?: string; type?: string } } | null;
+    if (res.ok && typeof body?.url === "string") return body.url;
+    console.error(`[billing] checkout session failed: ${res.status} ${body?.error?.code ?? body?.error?.type ?? "unknown"}`);
+  } catch (e) {
+    console.error(`[billing] checkout session failed: ${e instanceof Error ? e.name : "error"}`);
+  }
+  return null;
+}
+
+/** The Payment Link for an account, so the payment is linked to it (the fallback for createCheckoutURL). */
 export function upgradeURL(user: { id: string; email: string }) {
   const u = new URL(billing.proLink);
   u.searchParams.set("client_reference_id", user.id);
