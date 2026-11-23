@@ -198,6 +198,7 @@ export function checkoutParams(user: { id: string; email: string }) {
     "branding_settings[icon][type]": "url",
     "branding_settings[icon][url]": `${config.publicURL}${asset("icon-512.png")}`,
     "branding_settings[button_color]": "#ff5a36",
+    "branding_settings[background_color]": "#ff5a36",
   });
 }
 
